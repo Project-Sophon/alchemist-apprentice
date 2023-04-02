@@ -10,15 +10,15 @@ impl Plugin for RootUiPlugin {
 
 #[derive(Reflect, Component, Default)]
 #[reflect(Component)]
-pub struct UiRoot {}
+pub struct UiRoot;
 
 #[derive(Reflect, Component, Default)]
 #[reflect(Component)]
-pub struct UiLeft {} // todo: rename
+pub struct UiLeft; // todo: rename
 
 #[derive(Reflect, Component, Default)]
 #[reflect(Component)]
-pub struct UiRight {} // todo: rename
+pub struct UiRight; // todo: rename
 
 fn root_ui_setup(mut commands: Commands) {
     commands
@@ -31,7 +31,7 @@ fn root_ui_setup(mut commands: Commands) {
                 },
                 ..default()
             },
-            UiRoot {},
+            UiRoot,
             Name::new("UI Root"),
         ))
         .with_children(|parent| {
@@ -45,7 +45,7 @@ fn root_ui_setup(mut commands: Commands) {
                     background_color: Color::rgb(0.45, 0.45, 0.45).into(),
                     ..default()
                 },
-                UiLeft {},
+                UiLeft,
                 Name::new("UI Left"),
             ));
 
@@ -59,7 +59,7 @@ fn root_ui_setup(mut commands: Commands) {
                     background_color: Color::rgb(0.65, 0.65, 0.65).into(),
                     ..default()
                 },
-                UiRight {},
+                UiRight,
                 Name::new("UI Right"),
             ));
         });
