@@ -1,13 +1,13 @@
 use bevy::prelude::*;
-use crate::{GameState, despawn_screen};
+use crate::{GlobalState, despawn_screen};
 
 pub struct SplashPlugin;
 
 impl Plugin for SplashPlugin {
     fn build(&self, app: &mut App) {
         app.add_startup_system(setup_splash)
-            .add_system(countdown.in_set(OnUpdate(GameState::Splash)))
-            .add_system(despawn_screen::<OnSplashScreen>.in_schedule(OnExit(GameState::Splash)));
+            .add_system(countdown.in_set(OnUpdate(GlobalState::Splash)))
+            .add_system(despawn_screen::<OnSplashScreen>.in_schedule(OnExit(GlobalState::Splash)));
     }
 }
 
@@ -48,11 +48,11 @@ fn setup_splash(mut commands: Commands, asset_server: Res<AssetServer>) {
 }
 
 fn countdown(
-    mut game_state: ResMut<NextState<GameState>>,
+    mut game_state: ResMut<NextState<GlobalState>>,
     time: Res<Time>,
     mut timer: ResMut<SplashTimer>,
 ) {
     if timer.tick(time.delta()).finished() {
-        game_state.set(GameState::Menu);
+        game_state.set(GlobalState::Menu);
     }
 }

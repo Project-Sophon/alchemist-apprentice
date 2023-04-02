@@ -7,7 +7,7 @@ pub use menu::MenuPlugin;
 use bevy::prelude::*;
 
 #[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash, States)]
-pub enum GameState {
+pub enum GlobalState {
     #[default]
     Splash,
     Menu,
@@ -17,7 +17,7 @@ pub enum GameState {
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
-        .add_state::<GameState>()
+        .add_state::<GlobalState>()
         .add_startup_system(setup_camera)
         .add_plugin(SplashPlugin)
         .add_plugin(MenuPlugin)

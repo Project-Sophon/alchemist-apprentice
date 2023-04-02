@@ -1,5 +1,5 @@
 use bevy::{app::AppExit, prelude::*};
-use crate::{GameState};
+use crate::{GlobalState};
 
 // ------ ENUMS, CONSTANTS ------
 
@@ -26,9 +26,9 @@ impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_state::<MenuState>()
-            .add_system(menu_setup.in_schedule(OnEnter(GameState::Menu)))
+            .add_system(menu_setup.in_schedule(OnEnter(GlobalState::Menu)))
             .add_system(main_menu_setup.in_schedule(OnEnter(MenuState::Main)))
-            .add_systems((menu_action, button_system).in_set(OnUpdate(GameState::Menu)));
+            .add_systems((menu_action, button_system).in_set(OnUpdate(GlobalState::Menu)));
     }
 }
 
@@ -213,14 +213,14 @@ fn menu_action(
     >,
     mut app_exit_events: EventWriter<AppExit>,
     mut menu_state: ResMut<NextState<MenuState>>,
-    mut game_state: ResMut<NextState<GameState>>,
+    mut game_state: ResMut<NextState<GlobalState>>,
 ) {
     for (interaction, menu_button_action) in &interaction_query {
         if *interaction == Interaction::Clicked {
             match menu_button_action {
                 MenuButtonAction::Quit => app_exit_events.send(AppExit),
                 MenuButtonAction::Play => {
-                    game_state.set(GameState::Game);
+                    game_state.set(GlobalState::Game);
                     menu_state.set(MenuState::Disabled);
                 }
                 MenuButtonAction::Settings => menu_state.set(MenuState::Settings),
