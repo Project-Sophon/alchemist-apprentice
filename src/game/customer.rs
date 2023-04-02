@@ -6,7 +6,7 @@ pub struct CustomerPlugin;
 impl Plugin for CustomerPlugin {
     fn build(&self, app: &mut App) {
         app.add_system(customer_enter.in_schedule(OnEnter(GamePhase::CustomerEnter)))
-            .add_system(customer_intro_countdown.in_schedule(OnEnter(GamePhase::CustomerEnter)))
+            .add_system(customer_intro_countdown.in_set(OnUpdate(GamePhase::CustomerEnter)))
             .add_system(despawn_entity::<Customer>.in_schedule(OnExit(GamePhase::CustomerExit)));
     }
 }

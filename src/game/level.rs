@@ -6,7 +6,7 @@ pub struct LevelPlugin;
 impl Plugin for LevelPlugin {
     fn build(&self, app: &mut App) {
         app.add_system(level_bkg_setup.in_schedule(OnEnter(GlobalState::Game)))
-            .add_system(customer_intro.in_schedule(OnEnter(GamePhase::CustomerEnter)));
+            .add_system(customer_intro.in_schedule(OnEnter(GlobalState::Game)));
     }
 }
 
