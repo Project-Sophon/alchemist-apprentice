@@ -84,7 +84,9 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         color: TEXT_COLOR,
     };
 
-    let main_menu_image = asset_server.load("branding/splash.png");
+    let main_menu_image_asset = asset_server.load("branding/splash.png");
+    let main_menu_image =UiImage::new(main_menu_image_asset);
+
 
     commands
         .spawn((
@@ -116,10 +118,14 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                     parent.spawn(
                         ImageBundle {
                             style: Style {
-                                margin: UiRect::all(Val::Px(75.0)),
+                                padding: UiRect::all(Val::Px(15.0)),
+                                margin: UiRect {
+                                    bottom: Val::Px(50.0),
+                                    ..default()
+                                },
                                 ..default()
                             },
-                            image: UiImage::new(main_menu_image),
+                            image: main_menu_image,
                             ..default()
                         }
                     );
