@@ -12,13 +12,13 @@ pub enum GlobalState {
 
 #[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash, States)]
 pub enum GamePhase {
-    #[default]
     CustomerEnter,
     AilmentStatement,
     IngredientAssembly,
     Treatment,
     TreatmentEffect,
     CustomerExit,
+    #[default]
     Rest,
 }
 
