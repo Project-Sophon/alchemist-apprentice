@@ -25,9 +25,9 @@ To build and run the WASM/WebGL version of the game:
 ### Build
 
 ```bash
-rustup target install wasm32-unknown-unknown
-cargo build --release --target wasm32-unknown-unknown
-wasm-bindgen --out-dir ./out/ --target web .\target\wasm32-unknown-unknown\release\alchemist_apprentice.wasm
+$ rustup target install wasm32-unknown-unknown
+$ cargo build --release --target wasm32-unknown-unknown
+$ wasm-bindgen --out-dir ./out/ --target web .\target\wasm32-unknown-unknown\release\alchemist_apprentice.wasm
 ```
 
 ### Server
