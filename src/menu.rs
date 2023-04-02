@@ -1,4 +1,4 @@
-use crate::{despawn_screen, GlobalState, GAME_BACKGROUND_COLOR};
+use crate::{GlobalState, GAME_BACKGROUND_COLOR, game::despawn::despawn_entity};
 use bevy::{app::AppExit, prelude::*};
 
 // ------ ENUMS, CONSTANTS ------
@@ -25,7 +25,7 @@ impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
         app.add_state::<MenuState>()
             .add_system(menu_setup.in_schedule(OnEnter(GlobalState::Menu)))
-            .add_system(despawn_screen::<OnMainMenuScreen>.in_schedule(OnExit(GlobalState::Menu)))
+            .add_system(despawn_entity::<OnMainMenuScreen>.in_schedule(OnExit(GlobalState::Menu)))
             .add_system(main_menu_setup.in_schedule(OnEnter(MenuState::Main)))
             .add_systems((menu_action, button_system).in_set(OnUpdate(GlobalState::Menu)));
     }

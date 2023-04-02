@@ -1,4 +1,4 @@
-use crate::{despawn_screen, GlobalState, GAME_BACKGROUND_COLOR};
+use crate::{GlobalState, GAME_BACKGROUND_COLOR, game::despawn::despawn_entity};
 use bevy::prelude::*;
 
 pub struct SplashPlugin;
@@ -7,7 +7,7 @@ impl Plugin for SplashPlugin {
     fn build(&self, app: &mut App) {
         app.add_startup_system(setup_splash)
             .add_system(countdown.in_set(OnUpdate(GlobalState::Splash)))
-            .add_system(despawn_screen::<OnSplashScreen>.in_schedule(OnExit(GlobalState::Splash)));
+            .add_system(despawn_entity::<OnSplashScreen>.in_schedule(OnExit(GlobalState::Splash)));
     }
 }
 

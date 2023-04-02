@@ -1,10 +1,12 @@
 mod game;
 mod menu;
 mod splash;
+mod world;
 
 pub use game::DefaultGamePlugins;
 pub use menu::MenuPlugin;
 pub use splash::SplashPlugin;
+pub use world::DefaultWorldPlugins;
 
 use bevy::prelude::*;
 
@@ -31,19 +33,9 @@ fn main() {
             ..default()
         }))
         .add_state::<GlobalState>()
-        .add_startup_system(setup_camera)
         .add_plugin(SplashPlugin)
         .add_plugin(MenuPlugin)
+        .add_plugins(DefaultWorldPlugins)
         .add_plugins(DefaultGamePlugins)
         .run();
-}
-
-fn setup_camera(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
-}
-
-pub fn despawn_screen<T: Component>(to_despawn: Query<Entity, With<T>>, mut commands: Commands) {
-    for entity in &to_despawn {
-        commands.entity(entity).despawn_recursive();
-    }
 }
