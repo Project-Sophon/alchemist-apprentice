@@ -3,8 +3,9 @@ use bevy::{app::PluginGroupBuilder, prelude::*};
 pub mod despawn;
 pub mod level;
 pub mod state;
+pub mod customer;
 
-use self::{despawn::DespawnPlugin, level::LevelPlugin, state::StatePlugin};
+use self::{despawn::DespawnPlugin, level::LevelPlugin, state::StatePlugin, customer::CustomerPlugin};
 
 pub struct DefaultGamePlugins;
 impl PluginGroup for DefaultGamePlugins {
@@ -13,5 +14,6 @@ impl PluginGroup for DefaultGamePlugins {
             .add(LevelPlugin)
             .add(DespawnPlugin)
             .add(StatePlugin)
+            .add(CustomerPlugin)
     }
 }

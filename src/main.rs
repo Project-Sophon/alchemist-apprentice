@@ -3,20 +3,14 @@ mod menu;
 mod splash;
 mod world;
 
+use game::state::GlobalState;
+
 pub use game::DefaultGamePlugins;
 pub use menu::MenuPlugin;
 pub use splash::SplashPlugin;
 pub use world::DefaultWorldPlugins;
 
 use bevy::prelude::*;
-
-#[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash, States)]
-pub enum GlobalState {
-    #[default]
-    Splash,
-    Menu,
-    Game,
-}
 
 const GAME_BACKGROUND_COLOR: &str = "#F5EDE9";
 

@@ -1,11 +1,14 @@
 use crate::{GlobalState, GAME_BACKGROUND_COLOR};
 use bevy::prelude::*;
 
+use super::state::GamePhase;
+
 pub struct LevelPlugin;
 
 impl Plugin for LevelPlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(level_ui_setup.in_schedule(OnEnter(GlobalState::Game)));
+        app.add_system(level_ui_setup.in_schedule(OnEnter(GlobalState::Game)))
+            .add_system(enter_phase.after(level_ui_setup));
     }
 }
 
@@ -29,4 +32,8 @@ fn level_ui_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                 ..default()
             });
         });
+}
+
+fn enter_phase(mut game_phase: ResMut<NextState<GamePhase>>) {
+    game_phase.set(GamePhase::CustomerEnter);
 }
