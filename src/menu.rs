@@ -1,5 +1,5 @@
+use crate::GlobalState;
 use bevy::{app::AppExit, prelude::*};
-use crate::{GlobalState};
 
 // ------ ENUMS, CONSTANTS ------
 
@@ -17,15 +17,13 @@ enum MenuState {
     Disabled,
 }
 
-
 // ------ PLUGINS ------
 
 pub struct MenuPlugin;
 
 impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_state::<MenuState>()
+        app.add_state::<MenuState>()
             .add_system(menu_setup.in_schedule(OnEnter(GlobalState::Menu)))
             .add_system(main_menu_setup.in_schedule(OnEnter(MenuState::Main)))
             .add_systems((menu_action, button_system).in_set(OnUpdate(GlobalState::Menu)));
@@ -46,7 +44,6 @@ enum MenuButtonAction {
 
 #[derive(Component)]
 struct SelectedOption;
-
 
 // ------ SYSTEMS ------
 
@@ -84,10 +81,6 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         color: TEXT_COLOR,
     };
 
-    let main_menu_image_asset = asset_server.load("branding/splash.png");
-    let main_menu_image =UiImage::new(main_menu_image_asset);
-
-
     commands
         .spawn((
             NodeBundle {
@@ -114,21 +107,19 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                     ..default()
                 })
                 .with_children(|parent| {
-                    // Display the game name
-                    parent.spawn(
-                        ImageBundle {
-                            style: Style {
-                                padding: UiRect::all(Val::Px(15.0)),
-                                margin: UiRect {
-                                    bottom: Val::Px(50.0),
-                                    ..default()
-                                },
+                    let main_menu_image = asset_server.load("branding/main_menu.png");
+                    parent.spawn(ImageBundle {
+                        style: Style {
+                            padding: UiRect::all(Val::Px(15.0)),
+                            margin: UiRect {
+                                bottom: Val::Px(50.0),
                                 ..default()
                             },
-                            image: main_menu_image,
                             ..default()
-                        }
-                    );
+                        },
+                        image: main_menu_image.into(),
+                        ..default()
+                    });
 
                     parent
                         .spawn((
@@ -193,8 +184,6 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                 });
         });
 }
-
-
 
 fn button_system(
     mut interaction_query: Query<
