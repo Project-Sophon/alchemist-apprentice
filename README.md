@@ -18,3 +18,23 @@ cargo run
 ```bash
 cargo build
 ```
+
+## WASM Build
+To build and run the WASM/WebGL version of the game:
+
+### Build
+
+```bash
+rustup target install wasm32-unknown-unknown
+cargo build --release --target wasm32-unknown-unknown
+wasm-bindgen --out-dir ./out/ --target web .\target\wasm32-unknown-unknown\release\alchemist_apprentice.wasm
+```
+
+### Server
+There is an included html file to help you serve the game.
+
+Any web server can accomplish this, but for ease we can use the `serve` npm package.
+
+```bash
+npx serve .
+```
