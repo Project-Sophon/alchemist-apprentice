@@ -5,7 +5,7 @@
 
 #
 ![GitHub](https://img.shields.io/github/license/Project-Sophon/alchemist-apprentice?style=for-the-badge)
-
+![Bevy](https://img.shields.io/badge/bevy-0.10.1-green?style=for-the-badge)
 
 ## Development
 
