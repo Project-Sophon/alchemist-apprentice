@@ -14,6 +14,8 @@ pub enum GlobalState {
     Game,
 }
 
+const GAME_BACKGROUND_COLOR: &str = "#F5EDE9";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {

@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use crate::{GlobalState, despawn_screen};
+use crate::{GlobalState, despawn_screen, GAME_BACKGROUND_COLOR};
 
 pub struct SplashPlugin;
 
@@ -29,7 +29,7 @@ fn setup_splash(mut commands: Commands, asset_server: Res<AssetServer>) {
                     size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
                     ..default()
                 },
-                background_color: Color::hex("F5EDE9").unwrap().into(),
+                background_color: Color::hex(GAME_BACKGROUND_COLOR).unwrap().into(),
                 ..default()
             },
             OnSplashScreen,

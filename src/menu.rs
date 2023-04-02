@@ -1,4 +1,4 @@
-use crate::GlobalState;
+use crate::{GlobalState, GAME_BACKGROUND_COLOR};
 use bevy::{app::AppExit, prelude::*};
 
 // ------ ENUMS, CONSTANTS ------
@@ -90,7 +90,7 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                     justify_content: JustifyContent::Center,
                     ..default()
                 },
-                background_color: Color::hex("F5EDE9").unwrap().into(),
+                background_color: Color::hex(GAME_BACKGROUND_COLOR).unwrap().into(),
                 ..default()
             },
             OnMainMenuScreen,
@@ -103,7 +103,7 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                         align_items: AlignItems::Center,
                         ..default()
                     },
-                    background_color: Color::hex("F5EDE9").unwrap().into(),
+                    background_color: Color::hex(GAME_BACKGROUND_COLOR).unwrap().into(),
                     ..default()
                 })
                 .with_children(|parent| {
