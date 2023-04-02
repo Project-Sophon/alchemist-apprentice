@@ -3,12 +3,15 @@ use bevy::prelude::*;
 use super::state::GamePhase;
 
 pub struct CustomerPlugin;
-
 impl Plugin for CustomerPlugin {
     fn build(&self, app: &mut App) {
         app.add_system(customer_enter.in_schedule(OnEnter(GamePhase::CustomerEnter)));
     }
 }
+
+#[derive(Reflect, Component, Default)]
+#[reflect(Component)]
+pub struct Customer {}
 
 fn customer_enter(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
@@ -21,6 +24,7 @@ fn customer_enter(mut commands: Commands, asset_server: Res<AssetServer>) {
             },
             ..default()
         },
+        Customer {},
         Name::new("Customer"),
     ));
 }

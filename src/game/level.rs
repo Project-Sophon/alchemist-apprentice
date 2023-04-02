@@ -6,16 +6,16 @@ pub struct LevelPlugin;
 
 impl Plugin for LevelPlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(level_ui_setup.in_schedule(OnEnter(GlobalState::Game)))
+        app.add_system(level_bkg_setup.in_schedule(OnEnter(GlobalState::Game)))
             .add_system(
                 enter_phase
-                    .after(level_ui_setup)
+                    .after(level_bkg_setup)
                     .in_schedule(OnEnter(GlobalState::Game)),
             );
     }
 }
 
-fn level_ui_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
+fn level_bkg_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(SpriteBundle {
         texture: asset_server
             .load("textures/ui/alchemy_background.png")

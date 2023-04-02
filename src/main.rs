@@ -1,15 +1,17 @@
 mod game;
 mod menu;
 mod splash;
+mod ui;
 mod world;
 
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use game::state::GlobalState;
 
-pub use game::DefaultGamePlugins;
-pub use menu::MenuPlugin;
-pub use splash::SplashPlugin;
-pub use world::DefaultWorldPlugins;
+use game::DefaultGamePlugins;
+use menu::MenuPlugin;
+use splash::SplashPlugin;
+use ui::DefaultUIPlugins;
+use world::DefaultWorldPlugins;
 
 use bevy::prelude::*;
 
@@ -34,5 +36,6 @@ fn main() {
         .add_plugin(MenuPlugin)
         .add_plugins(DefaultWorldPlugins)
         .add_plugins(DefaultGamePlugins)
+        .add_plugins(DefaultUIPlugins)
         .run();
 }
