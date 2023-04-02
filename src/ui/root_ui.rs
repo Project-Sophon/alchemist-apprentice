@@ -56,7 +56,7 @@ fn root_ui_setup(mut commands: Commands) {
                         ..default()
                     },
                     // temp placeholder style
-                    background_color: Color::rgb(0.65, 0.65, 0.5).into(),
+                    background_color: Color::rgb(0.65, 0.65, 0.65).into(),
                     ..default()
                 },
                 UiRight {},
