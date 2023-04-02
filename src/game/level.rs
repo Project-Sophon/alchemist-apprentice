@@ -1,7 +1,6 @@
-use crate::{GlobalState, GAME_BACKGROUND_COLOR};
 use bevy::prelude::*;
 
-use super::state::GamePhase;
+use super::{state::{GamePhase, GlobalState}, GAME_BACKGROUND_COLOR};
 
 pub struct LevelPlugin;
 

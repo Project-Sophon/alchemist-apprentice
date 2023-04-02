@@ -12,8 +12,6 @@ pub use world::DefaultWorldPlugins;
 
 use bevy::prelude::*;
 
-const GAME_BACKGROUND_COLOR: &str = "#F5EDE9";
-
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
@@ -22,6 +20,7 @@ fn main() {
                 resolution: (1024., 768.).into(),
                 fit_canvas_to_parent: true,
                 prevent_default_event_handling: false,
+                resizable: false,
                 ..default()
             }),
             ..default()

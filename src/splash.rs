@@ -1,4 +1,7 @@
-use crate::{GlobalState, GAME_BACKGROUND_COLOR, game::despawn::despawn_entity};
+use crate::{
+    game::{despawn::despawn_entity, GAME_BACKGROUND_COLOR},
+    GlobalState,
+};
 use bevy::prelude::*;
 
 pub struct SplashPlugin;
