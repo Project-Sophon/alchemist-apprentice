@@ -7,7 +7,7 @@ pub struct LevelPlugin;
 impl Plugin for LevelPlugin {
     fn build(&self, app: &mut App) {
         app.add_system(level_ui_setup.in_schedule(OnEnter(GlobalState::Game)))
-            .add_system(enter_phase.after(level_ui_setup));
+            .add_system(enter_phase.after(level_ui_setup).in_schedule(OnEnter(GlobalState::Game)));
     }
 }
 
