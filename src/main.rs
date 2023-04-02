@@ -1,8 +1,10 @@
-mod splash;
+mod game;
 mod menu;
+mod splash;
 
-pub use splash::SplashPlugin;
+pub use game::DefaultGamePlugins;
 pub use menu::MenuPlugin;
+pub use splash::SplashPlugin;
 
 use bevy::prelude::*;
 
@@ -32,6 +34,7 @@ fn main() {
         .add_startup_system(setup_camera)
         .add_plugin(SplashPlugin)
         .add_plugin(MenuPlugin)
+        .add_plugins(DefaultGamePlugins)
         .run();
 }
 
@@ -39,7 +42,7 @@ fn setup_camera(mut commands: Commands) {
     commands.spawn(Camera2dBundle::default());
 }
 
-fn despawn_screen<T: Component>(to_despawn: Query<Entity, With<T>>, mut commands: Commands) {
+pub fn despawn_screen<T: Component>(to_despawn: Query<Entity, With<T>>, mut commands: Commands) {
     for entity in &to_despawn {
         commands.entity(entity).despawn_recursive();
     }

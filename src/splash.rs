@@ -1,5 +1,5 @@
+use crate::{despawn_screen, GlobalState, GAME_BACKGROUND_COLOR};
 use bevy::prelude::*;
-use crate::{GlobalState, despawn_screen, GAME_BACKGROUND_COLOR};
 
 pub struct SplashPlugin;
 
@@ -19,7 +19,7 @@ struct SplashTimer(Timer);
 
 fn setup_splash(mut commands: Commands, asset_server: Res<AssetServer>) {
     let splash_image = asset_server.load("branding/splash.png");
-    
+
     commands
         .spawn((
             NodeBundle {
@@ -36,9 +36,7 @@ fn setup_splash(mut commands: Commands, asset_server: Res<AssetServer>) {
         ))
         .with_children(|parent| {
             parent.spawn(ImageBundle {
-                style: Style {
-                    ..default()
-                },
+                style: Style { ..default() },
                 image: UiImage::new(splash_image),
                 ..default()
             });
