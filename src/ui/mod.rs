@@ -1,8 +1,8 @@
 use bevy::{app::PluginGroupBuilder, prelude::*};
 
-use self::root::RootUiPlugin;
+use self::root_ui::RootUiPlugin;
 
-pub mod root;
+pub mod root_ui;
 
 pub struct DefaultUIPlugins;
 impl PluginGroup for DefaultUIPlugins {
