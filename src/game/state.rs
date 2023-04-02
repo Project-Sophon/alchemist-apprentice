@@ -19,7 +19,7 @@ pub enum GamePhase {
     Treatment,
     TreatmentEffect,
     CustomerExit,
-    Rest
+    Rest,
 }
 
 // ------ PLUGINS ------

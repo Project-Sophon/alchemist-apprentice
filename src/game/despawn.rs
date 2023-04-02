@@ -21,7 +21,10 @@ fn despawn(mut commands: Commands, entities: Query<Entity, With<Despawn>>) {
 
 // ------ PUBLIC GENERIC SYSTEMS ------
 
-pub fn despawn_entity<T: Component>(to_despawn: Query<Entity, (With<T>, Without<Despawn>)>, mut commands: Commands) {
+pub fn despawn_entity<T: Component>(
+    to_despawn: Query<Entity, (With<T>, Without<Despawn>)>,
+    mut commands: Commands,
+) {
     for entity in &to_despawn {
         commands.entity(entity).insert(Despawn);
     }
