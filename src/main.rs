@@ -3,6 +3,7 @@ mod menu;
 mod splash;
 mod world;
 
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use game::state::GlobalState;
 
 pub use game::DefaultGamePlugins;
@@ -11,7 +12,6 @@ pub use splash::SplashPlugin;
 pub use world::DefaultWorldPlugins;
 
 use bevy::prelude::*;
-use bevy_inspector_egui::WorldInspectorPlugin;
 
 fn main() {
     App::new()
