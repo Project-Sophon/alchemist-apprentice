@@ -1,26 +1,54 @@
 use bevy::{app::AppExit, prelude::*};
 use crate::{GameState};
 
+// ------ ENUMS, CONSTANTS ------
+
 const TEXT_COLOR: Color = Color::rgb(0.9, 0.9, 0.9);
 const NORMAL_BUTTON: Color = Color::rgb(0.15, 0.15, 0.15);
-
-pub struct MenuPlugin;
+const HOVERED_BUTTON: Color = Color::rgb(0.25, 0.25, 0.25);
+const HOVERED_PRESSED_BUTTON: Color = Color::rgb(0.25, 0.65, 0.25);
+const PRESSED_BUTTON: Color = Color::rgb(0.35, 0.75, 0.35);
 
 #[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash, States)]
 enum MenuState {
     Main,
+    Settings,
     #[default]
     Disabled,
 }
+
+
+// ------ PLUGINS ------
+
+pub struct MenuPlugin;
 
 impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_state::<MenuState>()
             .add_system(menu_setup.in_schedule(OnEnter(GameState::Menu)))
-            .add_system(main_menu_setup.in_schedule(OnEnter(MenuState::Main)));
+            .add_system(main_menu_setup.in_schedule(OnEnter(MenuState::Main)))
+            .add_systems((menu_action, button_system).in_set(OnUpdate(GameState::Menu)));
     }
 }
+
+// ------ COMPONENTS ------
+
+#[derive(Component)]
+struct OnMainMenuScreen;
+
+#[derive(Component)]
+enum MenuButtonAction {
+    Play,
+    Settings,
+    Quit,
+}
+
+#[derive(Component)]
+struct SelectedOption;
+
+
+// ------ SYSTEMS ------
 
 fn menu_setup(mut menu_state: ResMut<NextState<MenuState>>) {
     menu_state.set(MenuState::Main);
@@ -40,6 +68,11 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         size: Size::new(Val::Px(30.0), Val::Auto),
         // This takes the icons out of the flexbox flow, to be positioned exactly
         position_type: PositionType::Absolute,
+        position: UiRect {
+            left: Val::Px(10.0),
+            right: Val::Auto,
+            ..default()
+        },
         // The icon will be close to the left border of the button
         // left: Val::Px(10.0),
         // right: Val::Auto,
@@ -83,7 +116,7 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                     parent.spawn(
                         ImageBundle {
                             style: Style {
-                                margin: UiRect::all(Val::Px(50.0)),
+                                margin: UiRect::all(Val::Px(75.0)),
                                 ..default()
                             },
                             image: UiImage::new(main_menu_image),
@@ -91,10 +124,6 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                         }
                     );
 
-                    // Display three buttons for each action available from the main menu:
-                    // - new game
-                    // - settings
-                    // - quit
                     parent
                         .spawn((
                             ButtonBundle {
@@ -105,7 +134,7 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                             MenuButtonAction::Play,
                         ))
                         .with_children(|parent| {
-                            let icon = asset_server.load("textures/Game Icons/right.png");
+                            let icon = asset_server.load("textures/ui/right.png");
                             parent.spawn(ImageBundle {
                                 style: button_icon_style.clone(),
                                 image: UiImage::new(icon),
@@ -126,7 +155,7 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                             MenuButtonAction::Settings,
                         ))
                         .with_children(|parent| {
-                            let icon = asset_server.load("textures/Game Icons/wrench.png");
+                            let icon = asset_server.load("textures/ui/wrench.png");
                             parent.spawn(ImageBundle {
                                 style: button_icon_style.clone(),
                                 image: UiImage::new(icon),
@@ -147,7 +176,7 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                             MenuButtonAction::Quit,
                         ))
                         .with_children(|parent| {
-                            let icon = asset_server.load("textures/Game Icons/exitRight.png");
+                            let icon = asset_server.load("textures/ui/exitRight.png");
                             parent.spawn(ImageBundle {
                                 style: button_icon_style,
                                 image: UiImage::new(icon),
@@ -159,16 +188,43 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         });
 }
 
-#[derive(Component)]
-struct OnMainMenuScreen;
 
-#[derive(Component)]
-enum MenuButtonAction {
-    Play,
-    Settings,
-    SettingsDisplay,
-    SettingsSound,
-    BackToMainMenu,
-    BackToSettings,
-    Quit,
+
+fn button_system(
+    mut interaction_query: Query<
+        (&Interaction, &mut BackgroundColor, Option<&SelectedOption>),
+        (Changed<Interaction>, With<Button>),
+    >,
+) {
+    for (interaction, mut color, selected) in &mut interaction_query {
+        *color = match (*interaction, selected) {
+            (Interaction::Clicked, _) | (Interaction::None, Some(_)) => PRESSED_BUTTON.into(),
+            (Interaction::Hovered, Some(_)) => HOVERED_PRESSED_BUTTON.into(),
+            (Interaction::Hovered, None) => HOVERED_BUTTON.into(),
+            (Interaction::None, None) => NORMAL_BUTTON.into(),
+        }
+    }
+}
+
+fn menu_action(
+    interaction_query: Query<
+        (&Interaction, &MenuButtonAction),
+        (Changed<Interaction>, With<Button>),
+    >,
+    mut app_exit_events: EventWriter<AppExit>,
+    mut menu_state: ResMut<NextState<MenuState>>,
+    mut game_state: ResMut<NextState<GameState>>,
+) {
+    for (interaction, menu_button_action) in &interaction_query {
+        if *interaction == Interaction::Clicked {
+            match menu_button_action {
+                MenuButtonAction::Quit => app_exit_events.send(AppExit),
+                MenuButtonAction::Play => {
+                    game_state.set(GameState::Game);
+                    menu_state.set(MenuState::Disabled);
+                }
+                MenuButtonAction::Settings => menu_state.set(MenuState::Settings),
+            }
+        }
+    }
 }
