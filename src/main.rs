@@ -11,6 +11,7 @@ pub use splash::SplashPlugin;
 pub use world::DefaultWorldPlugins;
 
 use bevy::prelude::*;
+use bevy_inspector_egui::WorldInspectorPlugin;
 
 fn main() {
     App::new()
@@ -26,6 +27,9 @@ fn main() {
             ..default()
         }))
         .add_state::<GlobalState>()
+        // Inspector Plugin
+        .add_plugin(WorldInspectorPlugin::new())
+        // Our Plugins
         .add_plugin(SplashPlugin)
         .add_plugin(MenuPlugin)
         .add_plugins(DefaultWorldPlugins)
