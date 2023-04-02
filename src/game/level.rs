@@ -12,9 +12,8 @@ impl Plugin for LevelPlugin {
 }
 
 fn level_ui_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn(ImageBundle {
-        style: Style { ..default() },
-        image: asset_server
+    commands.spawn(SpriteBundle {
+        texture: asset_server
             .load("textures/ui/alchemy_background.png")
             .into(),
         transform: Transform::from_translation(Vec3::new(0., 0., 0.)),

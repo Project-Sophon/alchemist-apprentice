@@ -19,7 +19,7 @@ fn customer_enter(
         MaterialMesh2dBundle {
             mesh: meshes.add(shape::Circle::new(50.).into()).into(),
             material: materials.add(ColorMaterial::from(Color::PURPLE)),
-            transform: Transform::from_translation(Vec3::new(150., 150., -1.)),
+            transform: Transform::from_translation(Vec3::new(150., 150., 1.)),
             ..default()
         },
         Name::new("Customer"),
