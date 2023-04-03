@@ -95,7 +95,9 @@ pub fn create_panel_button(parent: &mut ChildBuilder, font: &Handle<Font>, text:
                 background_color: DISABLE_NORMAL_BUTTON.into(),
                 ..default()
             },
+            PanelButton,
             DisabledUiElement,
+            Name::new("Panel Button")
         ))
         .with_children(|parent| {
             parent.spawn(TextBundle::from_section(

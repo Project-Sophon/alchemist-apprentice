@@ -5,10 +5,12 @@ use super::{despawn::despawn_entity, dialogue::create_dialogue_box, state::GameP
 pub struct CustomerPlugin;
 impl Plugin for CustomerPlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(customer_enter.in_schedule(OnEnter(GamePhase::CustomerEnter)))
+        app.register_type::<Customer>()
+            .add_system(customer_enter.in_schedule(OnEnter(GamePhase::CustomerEnter)))
             .add_system(customer_intro_countdown.in_set(OnUpdate(GamePhase::CustomerEnter)))
             .add_system(despawn_entity::<Customer>.in_schedule(OnExit(GamePhase::CustomerExit)))
-            .add_system(customer_display_ailment.in_schedule(OnEnter(GamePhase::AilmentStatement)));
+            .add_system(customer_display_ailment.in_schedule(OnEnter(GamePhase::AilmentStatement)))
+            .add_system(customer_ailment_countdown.in_set(OnUpdate(GamePhase::AilmentStatement)));
     }
 }
 
@@ -18,6 +20,9 @@ pub struct Customer;
 
 #[derive(Resource, Deref, DerefMut)]
 struct CustomerIntroTimer(Timer);
+
+#[derive(Resource, Deref, DerefMut)]
+struct CustomerAilmentTimer(Timer);
 
 fn customer_enter(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
@@ -56,4 +61,19 @@ fn customer_display_ailment(mut commands: Commands, asset_server: Res<AssetServe
         "Hello, my name is Bjorn Bjornson ...\n(OnEnter(GamePhase::AilmentStatement))";
 
     create_dialogue_box(&mut commands, font, dialogue_text);
+
+    commands.insert_resource(CustomerAilmentTimer(Timer::from_seconds(
+        2.0,
+        TimerMode::Once,
+    )));
+}
+
+fn customer_ailment_countdown(
+    mut game_state: ResMut<NextState<GamePhase>>,
+    time: Res<Time>,
+    mut timer: ResMut<CustomerAilmentTimer>,
+) {
+    if timer.tick(time.delta()).finished() {
+        game_state.set(GamePhase::IngredientAssembly);
+    }
 }
