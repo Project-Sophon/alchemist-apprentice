@@ -14,7 +14,7 @@ impl Plugin for CustomerPlugin {
 
 #[derive(Reflect, Component, Default)]
 #[reflect(Component)]
-pub struct Customer {}
+pub struct Customer;
 
 #[derive(Resource, Deref, DerefMut)]
 struct CustomerIntroTimer(Timer);
@@ -30,7 +30,7 @@ fn customer_enter(mut commands: Commands, asset_server: Res<AssetServer>) {
             },
             ..default()
         },
-        Customer {},
+        Customer,
         Name::new("Customer"),
     ));
 
