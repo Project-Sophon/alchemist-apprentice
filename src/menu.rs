@@ -1,6 +1,7 @@
 use crate::{
+    assets::GlobalAssets,
     game::{despawn::despawn_entity, GAME_BACKGROUND_COLOR},
-    GlobalState, assets::GlobalAssets,
+    GlobalState,
 };
 use bevy::{app::AppExit, prelude::*};
 

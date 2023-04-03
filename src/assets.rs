@@ -20,10 +20,16 @@ pub struct GlobalAssets {
 }
 
 #[derive(AssetCollection, Resource)]
-pub struct UiAssets {}
+pub struct UiAssets {
+    #[asset(path = "textures/ui/alchemy_background.png")]
+    pub level_background: Handle<Image>,
+}
 
 #[derive(AssetCollection, Resource)]
-pub struct CharacterAssets {}
+pub struct CharacterAssets {
+    #[asset(path = "textures/characters/bjorn.png")]
+    pub bjorn: Handle<Image>,
+}
 
 pub struct AssetPlugin;
 
@@ -32,6 +38,8 @@ impl Plugin for AssetPlugin {
         app.add_loading_state(
             LoadingState::new(GlobalState::AssetLoading).continue_to_state(GlobalState::Splash),
         )
-        .add_collection_to_loading_state::<_, GlobalAssets>(GlobalState::AssetLoading);
+        .add_collection_to_loading_state::<_, GlobalAssets>(GlobalState::AssetLoading)
+        .add_collection_to_loading_state::<_, CharacterAssets>(GlobalState::AssetLoading)
+        .add_collection_to_loading_state::<_, UiAssets>(GlobalState::AssetLoading);
     }
 }

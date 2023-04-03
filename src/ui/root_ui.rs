@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::game::state::GlobalState;
+use crate::{assets::GlobalAssets, game::state::GlobalState};
 
 use super::buttons::create_panel_button;
 pub struct RootUiPlugin;
@@ -22,8 +22,8 @@ pub struct UiLeft; // todo: rename
 #[reflect(Component)]
 pub struct UiRight; // todo: rename
 
-fn root_ui_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let font = asset_server.load("fonts/FiraCode-Bold.ttf");
+fn root_ui_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
+    let font = global_assets.font.clone();
 
     commands
         .spawn((

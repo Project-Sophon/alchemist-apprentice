@@ -1,5 +1,7 @@
 use bevy::prelude::*;
 
+use crate::assets::{CharacterAssets, GlobalAssets};
+
 use super::{despawn::despawn_entity, dialogue::create_dialogue_box, state::GamePhase};
 
 pub struct CustomerPlugin;
@@ -24,10 +26,10 @@ struct CustomerIntroTimer(Timer);
 #[derive(Resource, Deref, DerefMut)]
 struct CustomerAilmentTimer(Timer);
 
-fn customer_enter(mut commands: Commands, asset_server: Res<AssetServer>) {
+fn customer_enter(mut commands: Commands, character_assets: Res<CharacterAssets>) {
     commands.spawn((
         SpriteBundle {
-            texture: asset_server.load("textures/characters/bjorn.png").into(),
+            texture: character_assets.bjorn.clone(),
             transform: Transform {
                 translation: Vec3::new(150., 150., 1.),
                 scale: Vec3::new(5., 5., 0.),
@@ -55,8 +57,8 @@ fn customer_intro_countdown(
     }
 }
 
-fn customer_display_ailment(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let font = asset_server.load("fonts/FiraCode-Bold.ttf");
+fn customer_display_ailment(mut commands: Commands, global_assets: Res<GlobalAssets>) {
+    let font = global_assets.font.clone();
     let dialogue_text =
         "Hello, my name is Bjorn Bjornson ...\n(OnEnter(GamePhase::AilmentStatement))";
 

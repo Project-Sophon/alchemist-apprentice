@@ -1,5 +1,7 @@
 use bevy::prelude::*;
 
+use crate::assets::UiAssets;
+
 use super::state::{GamePhase, GlobalState};
 
 pub struct LevelPlugin;
@@ -10,11 +12,9 @@ impl Plugin for LevelPlugin {
     }
 }
 
-fn level_bkg_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
+fn level_bkg_setup(mut commands: Commands, ui_assets: Res<UiAssets>) {
     commands.spawn(SpriteBundle {
-        texture: asset_server
-            .load("textures/ui/alchemy_background.png")
-            .into(),
+        texture: ui_assets.level_background.clone(),
         transform: Transform::from_translation(Vec3::new(0., 0., 0.)),
         ..default()
     });
