@@ -1,6 +1,6 @@
 use crate::{
     game::{despawn::despawn_entity, GAME_BACKGROUND_COLOR},
-    GlobalState,
+    GlobalState, assets::GlobalAssets,
 };
 use bevy::{app::AppExit, prelude::*};
 
@@ -55,8 +55,8 @@ fn menu_setup(mut menu_state: ResMut<NextState<MenuState>>) {
     menu_state.set(MenuState::Main);
 }
 
-fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let font = asset_server.load("fonts/FiraCode-Bold.ttf");
+fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
+    let font = global_assets.font.clone();
     // Common style for all buttons on the screen
     let button_style = Style {
         size: Size::new(Val::Px(250.0), Val::Px(65.0)),
@@ -80,7 +80,7 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         ..default()
     };
     let button_text_style = TextStyle {
-        font: font.clone(),
+        font: font,
         font_size: 40.0,
         color: TEXT_COLOR,
     };
@@ -111,7 +111,7 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                     ..default()
                 })
                 .with_children(|parent| {
-                    let main_menu_image = asset_server.load("branding/main_menu.png");
+                    let main_menu_image = global_assets.main_menu_banner.clone();
                     parent.spawn(ImageBundle {
                         style: Style {
                             padding: UiRect::all(Val::Px(15.0)),
@@ -135,7 +135,7 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                             MenuButtonAction::Play,
                         ))
                         .with_children(|parent| {
-                            let icon = asset_server.load("textures/ui/right.png");
+                            let icon = global_assets.right.clone();
                             parent.spawn(ImageBundle {
                                 style: button_icon_style.clone(),
                                 image: UiImage::new(icon),
@@ -156,7 +156,7 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                             MenuButtonAction::Settings,
                         ))
                         .with_children(|parent| {
-                            let icon = asset_server.load("textures/ui/wrench.png");
+                            let icon = global_assets.wrench.clone();
                             parent.spawn(ImageBundle {
                                 style: button_icon_style.clone(),
                                 image: UiImage::new(icon),
@@ -177,7 +177,7 @@ fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                             MenuButtonAction::Quit,
                         ))
                         .with_children(|parent| {
-                            let icon = asset_server.load("textures/ui/exitRight.png");
+                            let icon = global_assets.exit.clone();
                             parent.spawn(ImageBundle {
                                 style: button_icon_style,
                                 image: UiImage::new(icon),

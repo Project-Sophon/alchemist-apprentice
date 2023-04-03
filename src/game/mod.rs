@@ -2,9 +2,9 @@ use bevy::{app::PluginGroupBuilder, prelude::*};
 
 pub mod customer;
 pub mod despawn;
+pub mod dialogue;
 pub mod level;
 pub mod state;
-pub mod dialogue;
 
 use self::{
     customer::CustomerPlugin, despawn::DespawnPlugin, level::LevelPlugin, state::StatePlugin,

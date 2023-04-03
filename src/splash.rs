@@ -1,4 +1,5 @@
 use crate::{
+    assets,
     game::{despawn::despawn_entity, GAME_BACKGROUND_COLOR},
     GlobalState,
 };
@@ -8,7 +9,7 @@ pub struct SplashPlugin;
 
 impl Plugin for SplashPlugin {
     fn build(&self, app: &mut App) {
-        app.add_startup_system(setup_splash)
+        app.add_system(setup_splash.in_schedule(OnEnter(GlobalState::Splash)))
             .add_system(countdown.in_set(OnUpdate(GlobalState::Splash)))
             .add_system(despawn_entity::<OnSplashScreen>.in_schedule(OnExit(GlobalState::Splash)));
     }
@@ -20,8 +21,8 @@ struct OnSplashScreen;
 #[derive(Resource, Deref, DerefMut)]
 struct SplashTimer(Timer);
 
-fn setup_splash(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let splash_image = asset_server.load("branding/splash.png");
+fn setup_splash(mut commands: Commands, global_assets: Res<assets::GlobalAssets>) {
+    let splash_image = global_assets.splash.clone();
 
     commands
         .spawn((
