@@ -1,3 +1,4 @@
+mod assets;
 mod game;
 mod menu;
 mod splash;
@@ -7,6 +8,7 @@ mod world;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use game::state::GlobalState;
 
+use assets::AssetPlugin;
 use game::DefaultGamePlugins;
 use menu::MenuPlugin;
 use splash::SplashPlugin;
@@ -29,6 +31,8 @@ fn main() {
             ..default()
         }))
         .add_state::<GlobalState>()
+        // Asset Loader
+        .add_plugin(AssetPlugin)
         // Inspector Plugin
         .add_plugin(WorldInspectorPlugin::new())
         // Our Plugins
