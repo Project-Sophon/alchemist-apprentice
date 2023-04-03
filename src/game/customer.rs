@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use super::{despawn::despawn_entity, state::GamePhase};
+use super::{despawn::despawn_entity, dialogue::create_dialogue_box, state::GamePhase};
 
 pub struct CustomerPlugin;
 impl Plugin for CustomerPlugin {
@@ -18,10 +18,6 @@ pub struct Customer {}
 
 #[derive(Resource, Deref, DerefMut)]
 struct CustomerIntroTimer(Timer);
-
-#[derive(Reflect, Component, Default)]
-#[reflect(Component)]
-pub struct AilmentDialogueBox;
 
 fn customer_enter(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
@@ -55,27 +51,9 @@ fn customer_intro_countdown(
 }
 
 fn customer_display_ailment(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn((
-        TextBundle::from_section(
-            // Accepts a `String` or any type that converts into a `String`, such as `&str`
-            "Hello, my name is Bjorn Bjornson ...\n(OnEnter(GamePhase::AilmentStatement))",
-            TextStyle {
-                font: asset_server.load("fonts/FiraCode-Bold.ttf"),
-                font_size: 24.0,
-                color: Color::WHITE,
-            },
-        ) // Set the alignment of the Text
-        .with_text_alignment(TextAlignment::Left)
-        .with_style(Style {
-            position_type: PositionType::Absolute,
-            position: UiRect {
-                top: Val::Px(120.0),
-                left: Val::Px(80.0),
-                ..default()
-            },
-            ..default()
-        }),
-        AilmentDialogueBox,
-        Name::new("Ailment Dialogue Box"),
-    ));
+    let font = asset_server.load("fonts/FiraCode-Bold.ttf");
+    let dialogue_text =
+        "Hello, my name is Bjorn Bjornson ...\n(OnEnter(GamePhase::AilmentStatement))";
+
+    create_dialogue_box(&mut commands, font, dialogue_text);
 }

@@ -11,12 +11,12 @@ impl Plugin for CameraPlugin {
 
 #[derive(Reflect, Component, Default)]
 #[reflect(Component)]
-pub struct GameCamera {}
+pub struct GameCamera;
 
 fn setup_camera(mut commands: Commands) {
     commands.spawn((
         Camera2dBundle::default(),
-        GameCamera {},
+        GameCamera,
         Name::new("Main Camera"),
     ));
 }

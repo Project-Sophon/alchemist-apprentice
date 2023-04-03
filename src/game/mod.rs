@@ -4,6 +4,7 @@ pub mod customer;
 pub mod despawn;
 pub mod level;
 pub mod state;
+pub mod dialogue;
 
 use self::{
     customer::CustomerPlugin, despawn::DespawnPlugin, level::LevelPlugin, state::StatePlugin,
