@@ -1,33 +1,33 @@
 ({
   "symptoms": [
-    Symptom {
+    Symptom (
       name: "Headache",
-      description: "Pain in the head can be caused by a variety of reasons"
-      class: [Pain],
-    },
-    Symptom {
+      description: "Pain in the head can be caused by a variety of reasons",
+      class: [Pain]
+    ),
+    Symptom (
       name: "Genital Sores",
-      description: "A result of poor choices"
-      class: [STI],
-    }
-    Symptom {
+      description: "A result of poor choices",
+      class: [STI]
+    ),
+    Symptom (
       name: "Flatuence",
-      description: "Loud and stinky"
-      class: [Gastro],
-    }
+      description: "Loud and stinky",
+      class: [Gastro]
+    )
   ],
   "ingredients": [
-    Ingredient {
+    Ingredient (
       name: "Newt Eyes",
       texture: "textures/ingredients/shadow_beetle.png",
-      cures: [Skin]
-      class: [Pain],
-    },
-    Ingredient {
+      cures: [Skin],
+      causes: [Pain]
+    ),
+    Ingredient (
       name: "Lead",
       texture: "textures/ingredients/zizima_root.png",
-      cures: [Pain]
-      class: [Gastro, Mental],
-    }
+      cures: [Pain],
+      causes: [Gastro, Mental]
+    )
   ]
 })
