@@ -1,5 +1,5 @@
 use crate::{
-    assets,
+    assets::standard_assets::GlobalAssets,
     game::{despawn::despawn_entity, GAME_BACKGROUND_COLOR},
     GlobalState,
 };
@@ -21,7 +21,7 @@ struct OnSplashScreen;
 #[derive(Resource, Deref, DerefMut)]
 struct SplashTimer(Timer);
 
-fn setup_splash(mut commands: Commands, global_assets: Res<assets::GlobalAssets>) {
+fn setup_splash(mut commands: Commands, global_assets: Res<GlobalAssets>) {
     let splash_image = global_assets.splash.clone();
 
     commands

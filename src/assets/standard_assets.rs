@@ -1,7 +1,5 @@
 use bevy::prelude::*;
-use bevy_asset_loader::prelude::{AssetCollection, LoadingState, LoadingStateAppExt};
-
-use crate::game::state::GlobalState;
+use bevy_asset_loader::prelude::{AssetCollection};
 
 #[derive(AssetCollection, Resource)]
 pub struct GlobalAssets {
@@ -31,17 +29,4 @@ pub struct UiAssets {
 pub struct CharacterAssets {
     #[asset(path = "textures/characters/bjorn.png")]
     pub bjorn: Handle<Image>,
-}
-
-pub struct AssetPlugin;
-
-impl Plugin for AssetPlugin {
-    fn build(&self, app: &mut App) {
-        app.add_loading_state(
-            LoadingState::new(GlobalState::AssetLoading).continue_to_state(GlobalState::Splash),
-        )
-        .add_collection_to_loading_state::<_, GlobalAssets>(GlobalState::AssetLoading)
-        .add_collection_to_loading_state::<_, CharacterAssets>(GlobalState::AssetLoading)
-        .add_collection_to_loading_state::<_, UiAssets>(GlobalState::AssetLoading);
-    }
 }

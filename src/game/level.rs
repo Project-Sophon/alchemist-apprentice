@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::{assets::{UiAssets}, game_data::{GameDataHandle, GameData}};
+use crate::{assets::standard_assets::{UiAssets}};
 
 use super::state::{GamePhase, GlobalState};
 
@@ -8,8 +8,7 @@ pub struct LevelPlugin;
 impl Plugin for LevelPlugin {
     fn build(&self, app: &mut App) {
         app.add_system(level_bkg_setup.in_schedule(OnEnter(GlobalState::Game)))
-            .add_system(customer_intro.in_schedule(OnEnter(GlobalState::Game)))
-            .add_system(debug_game_assets.in_schedule(OnEnter(GlobalState::Game)));
+            .add_system(customer_intro.in_schedule(OnEnter(GlobalState::Game)));
     }
 }
 
@@ -23,30 +22,4 @@ fn level_bkg_setup(mut commands: Commands, ui_assets: Res<UiAssets>) {
 
 fn customer_intro(mut game_phase: ResMut<NextState<GamePhase>>) {
     game_phase.set(GamePhase::CustomerEnter);
-}
-
-fn debug_game_assets(game_data_handle: Res<GameDataHandle>, game_data: Res<Assets<GameData>>) {
-    if let Some(data) = game_data.get(&game_data_handle.0) {
-        for class in data.symptom_classes.iter() {
-            info!(class);
-        }
-
-        for symptom in data.symptoms.iter() {
-            info!(symptom.name);
-            info!(symptom.description);
-
-            for s_class in symptom.class.iter() {
-                info!(s_class);
-            }
-        }
-
-        for ingredient in data.ingredients.iter() {
-            info!(ingredient.name);
-            info!(ingredient.cures);
-
-            for causes in ingredient.causes.iter() {
-                info!(causes);
-            }
-        }
-    }
 }

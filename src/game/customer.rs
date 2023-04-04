@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::assets::{CharacterAssets, GlobalAssets};
+use crate::assets::standard_assets::{CharacterAssets, GlobalAssets};
 
 use super::{despawn::despawn_entity, dialogue::create_dialogue_box, state::GamePhase};
 
