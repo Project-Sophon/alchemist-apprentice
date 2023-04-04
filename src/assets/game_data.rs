@@ -4,19 +4,30 @@ use bevy::{
     utils::HashMap,
 };
 use bevy_asset_loader::prelude::{
-    DynamicAsset, DynamicAssetCollection, DynamicAssetType, DynamicAssets,
+    DynamicAsset, DynamicAssetCollection, DynamicAssetType, DynamicAssets, AssetCollection,
 };
 
 #[derive(serde::Deserialize, bevy::reflect::TypeUuid)]
 #[uuid = "2df00c92-cf7b-42c1-a989-dccbad659c13"]
-pub struct GameDataAssetCollection(HashMap<String, GameDataAsset>);
+pub struct GameDataAssetDynamicCollection(HashMap<String, Vec<GameDataAsset>>);
 
-impl DynamicAssetCollection for GameDataAssetCollection {
+impl DynamicAssetCollection for GameDataAssetDynamicCollection {
     fn register(&self, dynamic_assets: &mut DynamicAssets) {
-        for (key, asset) in self.0.iter() {
-            dynamic_assets.register_asset(key, Box::new(asset.clone()));
+        for (key, assets) in self.0.iter() {
+            for asset in assets {
+                dynamic_assets.register_asset(key, Box::new(asset.clone()));
+            }
         }
     }
+}
+
+
+#[derive(AssetCollection, Resource)]
+pub struct GameData {
+    #[asset(key = "symptoms")]
+    symptoms: Handle<Vec<Symptom>>,
+    #[asset(key = "ingredients")]
+    ingredients: Handle<Vec<Ingredient>>,
 }
 
 #[derive(TypeUuid)]
