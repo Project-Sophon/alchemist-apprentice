@@ -25,13 +25,26 @@ pub struct UiAssets {
     pub level_background: Handle<Image>,
     #[asset(path = "textures/ui/workbench_placeholder.png")]
     pub workbench: Handle<Image>,
-
 }
 
 #[derive(AssetCollection, Resource)]
 pub struct CharacterAssets {
     #[asset(path = "textures/characters/bjorn.png")]
     pub bjorn: Handle<Image>,
+}
+
+#[derive(AssetCollection, Resource)]
+pub struct IngredientAssets {
+    #[asset(path = "textures/ingredients/auria_leaf.png")]
+    pub auria_leaf: Handle<Image>,
+    #[asset(path = "textures/ingredients/crow_foot.png")]
+    pub crow_foot: Handle<Image>,
+    #[asset(path = "textures/ingredients/dluger_heart.png")]
+    pub dluger_heart: Handle<Image>,
+    #[asset(path = "textures/ingredients/shadow_beetle.png")]
+    pub shadow_beetle: Handle<Image>,
+    #[asset(path = "textures/ingredients/zizima_root.png")]
+    pub zizima_root: Handle<Image>,
 }
 
 pub struct AssetPlugin;
@@ -43,6 +56,7 @@ impl Plugin for AssetPlugin {
         )
         .add_collection_to_loading_state::<_, GlobalAssets>(GlobalState::AssetLoading)
         .add_collection_to_loading_state::<_, CharacterAssets>(GlobalState::AssetLoading)
-        .add_collection_to_loading_state::<_, UiAssets>(GlobalState::AssetLoading);
+        .add_collection_to_loading_state::<_, UiAssets>(GlobalState::AssetLoading)
+        .add_collection_to_loading_state::<_, IngredientAssets>(GlobalState::AssetLoading);
     }
 }

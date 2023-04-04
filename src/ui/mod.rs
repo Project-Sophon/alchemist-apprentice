@@ -4,7 +4,9 @@ use self::{buttons::ButtonPlugin, common::CommonUiPlugin, root_ui::RootUiPlugin}
 
 pub mod buttons;
 pub mod common;
+pub mod ingredients;
 pub mod root_ui;
+pub mod selection_display;
 
 pub struct DefaultUIPlugins;
 impl PluginGroup for DefaultUIPlugins {
