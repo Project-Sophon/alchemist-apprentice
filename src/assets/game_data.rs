@@ -22,32 +22,32 @@ impl DynamicAssetCollection for GameDataAssetDynamicCollection {
 #[derive(AssetCollection, Resource)]
 pub struct GameData {
     #[asset(key = "headache")]
-    headache: Handle<Symptom>,
+    pub headache: Handle<Symptom>,
     #[asset(key = "genital_sores")]
-    genital_sores: Handle<Symptom>,
+    pub genital_sores: Handle<Symptom>,
     #[asset(key = "flatulence")]
-    flatulence: Handle<Symptom>,
+    pub flatulence: Handle<Symptom>,
     #[asset(key = "newt_eyes")]
-    newt_eyes: Handle<Ingredient>,
+    pub newt_eyes: Handle<Ingredient>,
     #[asset(key = "lead")]
-    lead: Handle<Ingredient>,
+    pub lead: Handle<Ingredient>,
 }
 
 #[derive(TypeUuid)]
 #[uuid = "766152e8-d85f-4e58-b4f8-4e375a99ac53"]
 pub struct Symptom {
-    name: String,
-    class: Vec<SymptomClass>,
-    description: String,
+    pub name: String,
+    pub class: Vec<SymptomClass>,
+    pub description: String,
 }
 
 #[derive(TypeUuid)]
 #[uuid = "9f249ef7-0fbe-441e-bf87-6cacdc9340e4"]
 pub struct Ingredient {
-    name: String,
-    texture: Handle<StandardMaterial>,
-    cures: Vec<SymptomClass>,
-    causes: Vec<SymptomClass>,
+    pub name: String,
+    pub texture: Handle<StandardMaterial>,
+    pub cures: Vec<SymptomClass>,
+    pub causes: Vec<SymptomClass>,
 }
 
 #[derive(serde::Deserialize, Debug, Clone)]
