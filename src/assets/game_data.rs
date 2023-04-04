@@ -1,8 +1,14 @@
-use bevy::{utils::HashMap, prelude::{AssetServer, HandleUntyped, World, Assets}};
-use bevy_asset_loader::prelude::{DynamicAssetCollection, DynamicAssets, DynamicAsset, DynamicAssetType};
+use bevy::{
+    prelude::{AssetServer, Assets, Handle, HandleUntyped, Resource, StandardMaterial, World},
+    reflect::TypeUuid,
+    utils::HashMap,
+};
+use bevy_asset_loader::prelude::{
+    DynamicAsset, DynamicAssetCollection, DynamicAssetType, DynamicAssets,
+};
 
 #[derive(serde::Deserialize, bevy::reflect::TypeUuid)]
-#[uuid = "413be529-bfeb-41b3-9db0-4b8b380a2c46"]
+#[uuid = "2df00c92-cf7b-42c1-a989-dccbad659c13"]
 pub struct GameDataAssetCollection(HashMap<String, GameDataAsset>);
 
 impl DynamicAssetCollection for GameDataAssetCollection {
@@ -13,37 +19,21 @@ impl DynamicAssetCollection for GameDataAssetCollection {
     }
 }
 
-#[derive(serde::Deserialize, Debug, Clone)]
-enum GameDataAsset {
-    StringList(Vec<String>),
-    SymptomList(Vec<Symptom>),
-    IngredientList(Vec<Ingredient>)
+#[derive(TypeUuid)]
+#[uuid = "766152e8-d85f-4e58-b4f8-4e375a99ac53"]
+pub struct Symptom {
+    name: String,
+    class: Vec<SymptomClass>,
+    description: String,
 }
 
-impl DynamicAsset for GameDataAsset {
-    fn load(&self, asset_server: &AssetServer) -> Vec<HandleUntyped> {
-        match self {
-            GameDataAsset::StringList { .. } => vec![],
-            GameDataAsset::SymptomList { .. } => vec![],
-            GameDataAsset::IngredientList { .. } => vec![],
-        }
-    }
-
-    fn build(&self, world: &mut World) -> Result<DynamicAssetType, anyhow::Error> {
-        let cell = world.cell();
-        let asset_server = cell
-            .get_resource::<AssetServer>()
-            .expect("Failed to get asset server");
-
-        match self {
-            GameDataAsset::StringList { .. } => {
-                let mut stringLists = cell.get_resource_mut::<Assets<Vec<String>>>().expect("Failed to get string list asset");
-                let handle = stringLists.add(..).clone_untyped();
-
-                Ok(DynamicAssetType::Single((handle)))
-            }
-        }
-    }
+#[derive(TypeUuid)]
+#[uuid = "766152e8-d85f-4e58-b4f8-4e375a99ac53"]
+pub struct Ingredient {
+    name: String,
+    texture: Handle<StandardMaterial>,
+    cures: Vec<SymptomClass>,
+    causes: Vec<SymptomClass>,
 }
 
 #[derive(serde::Deserialize, Debug, Clone)]
@@ -56,19 +46,79 @@ pub enum SymptomClass {
     Parasite,
     Occult,
     Mental,
-    EndGame
+    EndGame,
 }
 
 #[derive(serde::Deserialize, Debug, Clone)]
-pub struct Symptom {
-    pub name: String,
-    pub class: Vec<String>,
-    pub description: String,
+enum GameDataAsset {
+    Symptom {
+        name: String,
+        class: Vec<SymptomClass>,
+        description: String,
+    },
+    Ingredient {
+        name: String,
+        texture: String,
+        cures: Vec<SymptomClass>,
+        causes: Vec<SymptomClass>,
+    },
 }
 
-#[derive(serde::Deserialize, Debug, Clone)]
-pub struct Ingredient {
-    pub name: String,
-    pub cures: Vec<String>,
-    pub causes: Vec<String>,
+impl DynamicAsset for GameDataAsset {
+    fn load(&self, asset_server: &AssetServer) -> Vec<HandleUntyped> {
+        match self {
+            GameDataAsset::Symptom { .. } => vec![],
+            GameDataAsset::Ingredient { texture, .. } => vec![asset_server.load_untyped(texture)],
+        }
+    }
+
+    fn build(&self, world: &mut World) -> Result<DynamicAssetType, anyhow::Error> {
+        let cell = world.cell();
+        let asset_server = cell
+            .get_resource::<AssetServer>()
+            .expect("Failed to get asset server");
+
+        match self {
+            GameDataAsset::Symptom {
+                name,
+                class,
+                description,
+            } => {
+                let mut symptoms = cell
+                    .get_resource_mut::<Assets<Symptom>>()
+                    .expect("Failed to get symptom assets");
+
+                let handle = symptoms
+                    .add(Symptom {
+                        name: name.clone(),
+                        class: class.clone(),
+                        description: description.clone(),
+                    })
+                    .clone_untyped();
+
+                Ok(DynamicAssetType::Single(handle))
+            }
+            GameDataAsset::Ingredient {
+                name,
+                texture,
+                cures,
+                causes,
+            } => {
+                let mut ingredients = cell
+                    .get_resource_mut::<Assets<Ingredient>>()
+                    .expect("Failed to get ingredient assets");
+
+                let handle = ingredients
+                    .add(Ingredient {
+                        name: name.clone(),
+                        texture: asset_server.load(texture.clone()),
+                        cures: cures.clone(),
+                        causes: causes.clone(),
+                    })
+                    .clone_untyped();
+
+                Ok(DynamicAssetType::Single(handle))
+            }
+        }
+    }
 }

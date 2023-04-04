@@ -16,19 +16,13 @@
   },
   Ingredient {
     name: "Newt Eyes",
-    texture: StandardMaterial (
-      base_color: (0.0, 0.0, 0.0, 0.0),
-      base_color_texture: "textures/ingredients/shadow_beetle.png"
-    ),
+    texture: "textures/ingredients/shadow_beetle.png",
     cures: [Skin]
     class: [Pain],
   },
   Ingredient {
     name: "Lead",
-    texture: StandardMaterial (
-      base_color: (0.0, 0.0, 0.0, 0.0),
-      base_color_texture: "textures/ingredients/zizima_root.png"
-    ),
+    texture: "textures/ingredients/zizima_root.png",
     cures: [Pain]
     class: [Gastro, Mental],
   }
