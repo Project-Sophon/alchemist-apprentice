@@ -4,30 +4,33 @@ use bevy::{
     utils::HashMap,
 };
 use bevy_asset_loader::prelude::{
-    DynamicAsset, DynamicAssetCollection, DynamicAssetType, DynamicAssets, AssetCollection,
+    AssetCollection, DynamicAsset, DynamicAssetCollection, DynamicAssetType, DynamicAssets,
 };
 
 #[derive(serde::Deserialize, bevy::reflect::TypeUuid)]
 #[uuid = "2df00c92-cf7b-42c1-a989-dccbad659c13"]
-pub struct GameDataAssetDynamicCollection(HashMap<String, Vec<GameDataAsset>>);
+pub struct GameDataAssetDynamicCollection(HashMap<String, GameDataAsset>);
 
 impl DynamicAssetCollection for GameDataAssetDynamicCollection {
     fn register(&self, dynamic_assets: &mut DynamicAssets) {
-        for (key, assets) in self.0.iter() {
-            for asset in assets {
-                dynamic_assets.register_asset(key, Box::new(asset.clone()));
-            }
+        for (key, asset) in self.0.iter() {
+            dynamic_assets.register_asset(key, Box::new(asset.clone()))
         }
     }
 }
 
-
 #[derive(AssetCollection, Resource)]
 pub struct GameData {
-    #[asset(key = "symptoms", collection(typed))]
-    symptoms: Vec<Handle<Symptom>>,
-    #[asset(key = "ingredients", collection(typed))]
-    ingredients: Vec<Handle<Ingredient>>,
+    #[asset(key = "headache")]
+    headache: Handle<Symptom>,
+    #[asset(key = "genital_sores")]
+    genital_sores: Handle<Symptom>,
+    #[asset(key = "flatulence")]
+    flatulence: Handle<Symptom>,
+    #[asset(key = "newt_eyes")]
+    newt_eyes: Handle<Ingredient>,
+    #[asset(key = "lead")]
+    lead: Handle<Ingredient>,
 }
 
 #[derive(TypeUuid)]
