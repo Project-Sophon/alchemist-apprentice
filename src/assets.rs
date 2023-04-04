@@ -23,6 +23,9 @@ pub struct GlobalAssets {
 pub struct UiAssets {
     #[asset(path = "textures/ui/alchemy_background.png")]
     pub level_background: Handle<Image>,
+    #[asset(path = "textures/ui/workbench_placeholder.png")]
+    pub workbench: Handle<Image>,
+
 }
 
 #[derive(AssetCollection, Resource)]
