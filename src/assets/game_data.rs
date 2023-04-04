@@ -24,10 +24,10 @@ impl DynamicAssetCollection for GameDataAssetDynamicCollection {
 
 #[derive(AssetCollection, Resource)]
 pub struct GameData {
-    #[asset(key = "symptoms")]
-    symptoms: Handle<Vec<Symptom>>,
-    #[asset(key = "ingredients")]
-    ingredients: Handle<Vec<Ingredient>>,
+    #[asset(key = "symptoms", collection(typed))]
+    symptoms: Vec<Handle<Symptom>>,
+    #[asset(key = "ingredients", collection(typed))]
+    ingredients: Vec<Handle<Ingredient>>,
 }
 
 #[derive(TypeUuid)]
