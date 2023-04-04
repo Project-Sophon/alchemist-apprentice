@@ -25,7 +25,6 @@ pub struct UiAssets {
     pub level_background: Handle<Image>,
     #[asset(path = "textures/ui/workbench_placeholder.png")]
     pub workbench: Handle<Image>,
-
 }
 
 #[derive(AssetCollection, Resource)]

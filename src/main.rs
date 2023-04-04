@@ -1,5 +1,6 @@
 mod assets;
 mod game;
+mod game_data;
 mod menu;
 mod splash;
 mod ui;
@@ -10,6 +11,7 @@ use game::state::GlobalState;
 
 use assets::AssetPlugin;
 use game::DefaultGamePlugins;
+use game_data::GameDataPlugin;
 use menu::MenuPlugin;
 use splash::SplashPlugin;
 use ui::DefaultUIPlugins;
@@ -31,6 +33,8 @@ fn main() {
             ..default()
         }))
         .add_state::<GlobalState>()
+        // Game Data
+        .add_plugin(GameDataPlugin)
         // Asset Loader
         .add_plugin(AssetPlugin)
         // Inspector Plugin
