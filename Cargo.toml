@@ -15,9 +15,8 @@ opt-level = 3
 bevy = "0.10.1"
 bevy-inspector-egui = "0.18.3"
 bevy_asset_loader = "0.16.0"
-bevy_common_assets = { version = "0.6.0", features = ["yaml"] }
+bevy_common_assets = { version = "0.6.0", features = ["ron"] }
 serde = { version = "1" }
-serde_yaml = { version = "0.9" }
 anyhow = "1"
 
 [target.wasm32-unknown-unknown]
