@@ -46,12 +46,17 @@ impl DynamicAsset for GameDataAsset {
     }
 }
 
-#[derive(serde::Deserialize, Debug, Clone, bevy::reflect::TypeUuid)]
-#[uuid = "413be529-bfeb-41b3-9db0-4b8b380a2c46"]
-pub struct GameData {
-    pub symptom_classes: Vec<String>,
-    pub symptoms: Vec<Symptom>,
-    pub ingredients: Vec<Ingredient>,
+#[derive(serde::Deserialize, Debug, Clone)]
+pub enum SymptomClass {
+    Pain,
+    STI,
+    Congestion,
+    Gastro,
+    Skin,
+    Parasite,
+    Occult,
+    Mental,
+    EndGame
 }
 
 #[derive(serde::Deserialize, Debug, Clone)]
@@ -64,6 +69,6 @@ pub struct Symptom {
 #[derive(serde::Deserialize, Debug, Clone)]
 pub struct Ingredient {
     pub name: String,
-    pub cures: String,
+    pub cures: Vec<String>,
     pub causes: Vec<String>,
 }
