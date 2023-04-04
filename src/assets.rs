@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::{prelude::*, utils::HashMap};
 use bevy_asset_loader::prelude::{AssetCollection, LoadingState, LoadingStateAppExt};
 
 use crate::game::state::GlobalState;
@@ -35,16 +35,18 @@ pub struct CharacterAssets {
 
 #[derive(AssetCollection, Resource)]
 pub struct IngredientAssets {
-    #[asset(path = "textures/ingredients/auria_leaf.png")]
-    pub auria_leaf: Handle<Image>,
-    #[asset(path = "textures/ingredients/crow_foot.png")]
-    pub crow_foot: Handle<Image>,
-    #[asset(path = "textures/ingredients/dluger_heart.png")]
-    pub dluger_heart: Handle<Image>,
-    #[asset(path = "textures/ingredients/shadow_beetle.png")]
-    pub shadow_beetle: Handle<Image>,
-    #[asset(path = "textures/ingredients/zizima_root.png")]
-    pub zizima_root: Handle<Image>,
+    #[asset(
+        paths(
+            "textures/ingredients/auria_leaf.png",
+            "textures/ingredients/crow_foot.png",
+            "textures/ingredients/dluger_heart.png",
+            "textures/ingredients/ghost_twig.png",
+            "textures/ingredients/zizima_root.png",
+            "textures/ingredients/shadow_beetle.png",
+        ),
+        collection(typed, mapped)
+    )]
+    pub ingredients: HashMap<String, Handle<Image>>,
 }
 
 pub struct AssetPlugin;

@@ -46,7 +46,7 @@ pub fn spawn_ingredients(
                     size: Size { width: Val::Px(64.), height: Val::Px(64.) },
                     ..default()
                 },
-                image: assets.auria_leaf.clone().into(),
+                image: assets.ingredients.get("textures/ingredients/auria_leaf.png").unwrap().clone().into(),
                 ..default()
             },
             Ingredient,
@@ -60,7 +60,7 @@ pub fn spawn_ingredients(
                     size: Size { width: Val::Px(64.), height: Val::Px(64.) },
                     ..default()
                 },
-                image: assets.crow_foot.clone().into(),
+                image: assets.ingredients.get("textures/ingredients/crow_foot.png").unwrap().clone().into(),
                 ..default()
             },
             Ingredient,
@@ -74,7 +74,7 @@ pub fn spawn_ingredients(
                     size: Size { width: Val::Px(64.), height: Val::Px(64.) },
                     ..default()
                 },
-                image: assets.dluger_heart.clone().into(),
+                image: assets.ingredients.get("textures/ingredients/dluger_heart.png").unwrap().clone().into(),
                 ..default()
             },
             Ingredient,
@@ -88,7 +88,7 @@ pub fn spawn_ingredients(
                     size: Size { width: Val::Px(64.), height: Val::Px(64.) },
                     ..default()
                 },
-                image: assets.shadow_beetle.clone().into(),
+                image: assets.ingredients.get("textures/ingredients/shadow_beetle.png").unwrap().clone().into(),
                 ..default()
             },
             Ingredient,
@@ -102,7 +102,7 @@ pub fn spawn_ingredients(
                     size: Size { width: Val::Px(64.), height: Val::Px(64.) },
                     ..default()
                 },
-                image: assets.zizima_root.clone().into(),
+                image: assets.ingredients.get("textures/ingredients/zizima_root.png").unwrap().clone().into(),
                 ..default()
             },
             Ingredient,
