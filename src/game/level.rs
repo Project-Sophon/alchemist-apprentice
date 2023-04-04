@@ -33,14 +33,20 @@ fn debug_game_assets(game_data_handle: Res<GameDataHandle>, game_data: Res<Asset
 
         for symptom in data.symptoms.iter() {
             info!(symptom.name);
-            info!(symptom.class);
             info!(symptom.description);
+
+            for s_class in symptom.class.iter() {
+                info!(s_class);
+            }
         }
 
         for ingredient in data.ingredients.iter() {
             info!(ingredient.name);
             info!(ingredient.cures);
-            info!(ingredient.causes);
+
+            for causes in ingredient.causes.iter() {
+                info!(causes);
+            }
         }
     }
 }

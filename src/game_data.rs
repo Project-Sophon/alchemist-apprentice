@@ -23,7 +23,7 @@ pub struct GameData {
 #[derive(serde::Deserialize, Debug, Clone)]
 pub struct Symptom {
     pub name: String,
-    pub class: String,
+    pub class: Vec<String>,
     pub description: String,
 }
 
@@ -31,7 +31,7 @@ pub struct Symptom {
 pub struct Ingredient {
     pub name: String,
     pub cures: String,
-    pub causes: String,
+    pub causes: Vec<String>,
 }
 
 fn setup_game_data(mut commands: Commands, asset_server: Res<AssetServer>) {

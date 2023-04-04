@@ -11,19 +11,25 @@ symptom_classes:
 
 symptoms:
   - name: Headache
-    class: Pain
+    class:
+      - Pain
     description: Pain in the head can be caused by a variety of reasons
   - name: Genital Sores
-    class: STI
+    class:
+      - STI
     description: A result of poor choices
   - name: Flatuence
-    class: Gastro
+    class:
+      - Gastro
     description: Loud and stinky
 
 ingredients:
   - name: Newt Eyes
     cures: Skin
-    causes: Pain
+    causes:
+      - Pain
   - name: Lead
     cures: Pain
-    causes: Gastro, Mental
+    causes:
+      - Gastro
+      - Mental
