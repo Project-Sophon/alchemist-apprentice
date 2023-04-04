@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::{assets::{GlobalAssets, UiAssets}, game::state::GlobalState};
+use crate::{assets::standard_assets::{GlobalAssets, UiAssets}, game::state::GlobalState};
 
 use super::buttons::create_panel_button;
 pub struct RootUiPlugin;

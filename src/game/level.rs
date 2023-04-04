@@ -1,6 +1,9 @@
 use bevy::prelude::*;
 
-use crate::{assets::{UiAssets}, game_data::{GameDataHandle, GameData}};
+use crate::assets::{
+    game_data::{GameData, Symptom},
+    standard_assets::UiAssets,
+};
 
 use super::state::{GamePhase, GlobalState};
 
@@ -25,28 +28,11 @@ fn customer_intro(mut game_phase: ResMut<NextState<GamePhase>>) {
     game_phase.set(GamePhase::CustomerEnter);
 }
 
-fn debug_game_assets(game_data_handle: Res<GameDataHandle>, game_data: Res<Assets<GameData>>) {
-    if let Some(data) = game_data.get(&game_data_handle.0) {
-        for class in data.symptom_classes.iter() {
-            info!(class);
-        }
-
-        for symptom in data.symptoms.iter() {
-            info!(symptom.name);
-            info!(symptom.description);
-
-            for s_class in symptom.class.iter() {
-                info!(s_class);
-            }
-        }
-
-        for ingredient in data.ingredients.iter() {
-            info!(ingredient.name);
-            info!(ingredient.cures);
-
-            for causes in ingredient.causes.iter() {
-                info!(causes);
-            }
-        }
+fn debug_game_assets(game_data: Res<GameData>, symptoms: Res<Assets<Symptom>>) {
+    if let Some(symptom) = symptoms.get(&game_data.headache) {
+        info!(
+            "Symptom {{ name: {:?}, class: {:?}, description: {:?}}}",
+            symptom.name, symptom.class, symptom.description
+        );
     }
 }
