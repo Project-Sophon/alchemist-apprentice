@@ -5,7 +5,7 @@ use crate::{
     world::global_state::GlobalState,
 };
 
-use super::buttons::create_panel_button;
+use super::buttons::create_basic_button;
 pub struct RootUiPlugin;
 impl Plugin for RootUiPlugin {
     fn build(&self, app: &mut App) {
@@ -43,8 +43,8 @@ fn root_ui_setup(
             Name::new("UI Root"),
         ))
         .with_children(|parent| {
-            create_panel_button(parent, &font, "Base Ingredients");
-            create_panel_button(parent, &font, "Processes");
-            create_panel_button(parent, &font, "Concoct");
+            create_basic_button(parent, &font, "Base Ingredients");
+            create_basic_button(parent, &font, "Processes");
+            create_basic_button(parent, &font, "Concoct");
         });
 }

@@ -1,33 +1,28 @@
 use bevy::prelude::*;
 
+use crate::style::color::{DISABLE_NORMAL_BUTTON, HOVERED_BUTTON, NORMAL_BUTTON, PRESSED_BUTTON};
+
 use super::common::{DisableUiElement, DisabledUiElement, EnableUiElement};
 
 pub struct ButtonPlugin;
 impl Plugin for ButtonPlugin {
     fn build(&self, app: &mut App) {
-        app.register_type::<PanelButton>()
-            .add_system(panel_button_interactions)
-            .add_system(enable_panel_buttons)
-            .add_system(disable_panel_button);
+        app.register_type::<BasicButton>()
+            .add_system(button_interactions)
+            .add_system(enable_buttons)
+            .add_system(disable_buttons);
     }
 }
-
-// ------ ENUMS, CONSTANTS ------
-
-const DISABLE_NORMAL_BUTTON: Color = Color::rgb(0.8, 0.8, 0.8);
-const PANEL_NORMAL_BUTTON: Color = Color::rgb(0.15, 0.15, 0.15);
-const PANEL_HOVERED_BUTTON: Color = Color::rgb(0.25, 0.25, 0.25);
-const PANEL_PRESSED_BUTTON: Color = Color::rgb(0.35, 0.75, 0.35);
 
 // ------ COMPONENTS ------
 
 #[derive(Reflect, Component, Default)]
 #[reflect(Component)]
-pub struct PanelButton;
+pub struct BasicButton;
 
 // ------ SYSTEMS ------
 
-fn panel_button_interactions(
+fn button_interactions(
     mut interaction_query: Query<
         (&Interaction, &mut BackgroundColor),
         (
@@ -40,30 +35,30 @@ fn panel_button_interactions(
     for (interaction, mut color) in &mut interaction_query {
         match *interaction {
             Interaction::Clicked => {
-                *color = PANEL_PRESSED_BUTTON.into();
+                *color = PRESSED_BUTTON.into();
             }
             Interaction::Hovered => {
-                *color = PANEL_HOVERED_BUTTON.into();
+                *color = HOVERED_BUTTON.into();
             }
             Interaction::None => {
-                *color = PANEL_NORMAL_BUTTON.into();
+                *color = NORMAL_BUTTON.into();
             }
         }
     }
 }
 
-fn enable_panel_buttons(
+fn enable_buttons(
     mut panel_buttons_query: Query<
         &mut BackgroundColor,
         (With<Button>, With<EnableUiElement>, With<DisabledUiElement>),
     >,
 ) {
     for mut color in &mut panel_buttons_query {
-        *color = PANEL_NORMAL_BUTTON.into();
+        *color = NORMAL_BUTTON.into();
     }
 }
 
-fn disable_panel_button(
+fn disable_buttons(
     mut panel_buttons_query: Query<
         &mut BackgroundColor,
         (
@@ -80,7 +75,7 @@ fn disable_panel_button(
 
 // ------ PUB FUNCTIONS ------
 
-pub fn create_panel_button(parent: &mut ChildBuilder, font: &Handle<Font>, text: &str) {
+pub fn create_basic_button(parent: &mut ChildBuilder, font: &Handle<Font>, text: &str) {
     parent
         .spawn((
             ButtonBundle {
@@ -95,7 +90,7 @@ pub fn create_panel_button(parent: &mut ChildBuilder, font: &Handle<Font>, text:
                 background_color: DISABLE_NORMAL_BUTTON.into(),
                 ..default()
             },
-            PanelButton,
+            BasicButton,
             DisabledUiElement,
             Name::new("Panel Button"),
         ))
