@@ -19,7 +19,7 @@ pub struct LevelBackground;
 fn level_bkg_setup(mut commands: Commands, ui_assets: Res<UiAssets>) {
     commands.spawn((
         SpriteBundle {
-            texture: ui_assets.level_background.clone(),
+            texture: ui_assets.game_level_bkg.clone(),
             transform: Transform::from_translation(Vec3::new(0., 0., 0.)),
             ..default()
         },

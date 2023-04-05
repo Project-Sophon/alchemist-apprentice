@@ -19,10 +19,10 @@ pub struct GlobalAssets {
 
 #[derive(AssetCollection, Resource)]
 pub struct UiAssets {
-    #[asset(path = "textures/ui/alchemy_background.png")]
-    pub level_background: Handle<Image>,
-    #[asset(path = "textures/ui/workbench_placeholder.png")]
-    pub workbench: Handle<Image>,
+    #[asset(path = "textures/ui/game_level_bkg.png")]
+    pub game_level_bkg: Handle<Image>,
+    #[asset(path = "textures/ui/game_ui_bkg.png")]
+    pub game_ui_bkg: Handle<Image>,
 }
 
 #[derive(AssetCollection, Resource)]
