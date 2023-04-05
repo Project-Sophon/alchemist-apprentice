@@ -1,5 +1,5 @@
 use crate::{
-    assets::standard_assets::GlobalAssets, style::color::GAME_BACKGROUND_COLOR,
+    assets::resources_standard::GlobalAssets, style::color::GAME_BACKGROUND_COLOR,
     world::despawn::despawn_entity, GlobalState,
 };
 use bevy::prelude::*;

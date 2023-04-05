@@ -5,14 +5,14 @@ use bevy_common_assets::ron::RonAssetPlugin;
 use crate::world::global_state::GlobalState;
 
 use self::{
-    game_data_assets::{
-        GameDataAssetDynamicCollection, Ingredient, IngredientAssets, Symptom, SymptomAssets,
-    },
-    standard_assets::{CharacterAssets, GlobalAssets, UiAssets},
+    assets_data::{Ingredient, Symptom},
+    resources_data::{GameDataAssetDynamicCollection, IngredientAssets, SymptomAssets},
+    resources_standard::{CharacterAssets, GlobalAssets, UiAssets},
 };
 
-pub mod game_data_assets;
-pub mod standard_assets;
+pub mod assets_data;
+pub mod resources_data;
+pub mod resources_standard;
 
 pub struct AssetPlugin;
 

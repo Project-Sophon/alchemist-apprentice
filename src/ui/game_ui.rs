@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use crate::{
-    assets::standard_assets::{GlobalAssets, UiAssets},
+    assets::resources_standard::{GlobalAssets, UiAssets},
     world::global_state::GlobalState,
 };
 

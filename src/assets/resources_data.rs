@@ -1,40 +1,12 @@
 use bevy::{
-    prelude::{AssetServer, Assets, Handle, HandleUntyped, Resource, StandardMaterial, World},
-    reflect::TypeUuid,
+    prelude::{AssetServer, Assets, Handle, HandleUntyped, Resource, World},
     utils::HashMap,
 };
 use bevy_asset_loader::prelude::{
     AssetCollection, DynamicAsset, DynamicAssetCollection, DynamicAssetType, DynamicAssets,
 };
 
-#[derive(serde::Deserialize, bevy::reflect::TypeUuid)]
-#[uuid = "2df00c92-cf7b-42c1-a989-dccbad659c13"]
-pub struct GameDataAssetDynamicCollection(HashMap<String, GameDataAsset>);
-
-impl DynamicAssetCollection for GameDataAssetDynamicCollection {
-    fn register(&self, dynamic_assets: &mut DynamicAssets) {
-        for (key, asset) in self.0.iter() {
-            dynamic_assets.register_asset(key, Box::new(asset.clone()))
-        }
-    }
-}
-
-#[derive(TypeUuid)]
-#[uuid = "766152e8-d85f-4e58-b4f8-4e375a99ac53"]
-pub struct Symptom {
-    pub name: String,
-    pub class: Vec<SymptomClass>,
-    pub description: String,
-}
-
-#[derive(TypeUuid)]
-#[uuid = "9f249ef7-0fbe-441e-bf87-6cacdc9340e4"]
-pub struct Ingredient {
-    pub name: String,
-    pub texture: Handle<StandardMaterial>,
-    pub cures: Vec<SymptomClass>,
-    pub causes: Vec<SymptomClass>,
-}
+use super::assets_data::{Ingredient, Symptom, SymptomClass};
 
 #[derive(AssetCollection, Resource)]
 pub struct IngredientAssets {
@@ -54,17 +26,16 @@ pub struct SymptomAssets {
     pub flatulence: Handle<Symptom>,
 }
 
-#[derive(serde::Deserialize, Debug, Clone)]
-pub enum SymptomClass {
-    Pain,
-    STI,
-    Congestion,
-    Gastro,
-    Skin,
-    Parasite,
-    Occult,
-    Mental,
-    EndGame,
+#[derive(serde::Deserialize, bevy::reflect::TypeUuid)]
+#[uuid = "2df00c92-cf7b-42c1-a989-dccbad659c13"]
+pub struct GameDataAssetDynamicCollection(HashMap<String, GameDataAsset>);
+
+impl DynamicAssetCollection for GameDataAssetDynamicCollection {
+    fn register(&self, dynamic_assets: &mut DynamicAssets) {
+        for (key, asset) in self.0.iter() {
+            dynamic_assets.register_asset(key, Box::new(asset.clone()))
+        }
+    }
 }
 
 #[derive(serde::Deserialize, Debug, Clone)]

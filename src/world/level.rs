@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::assets::standard_assets::UiAssets;
+use crate::assets::resources_standard::UiAssets;
 
 use super::global_state::GlobalState;
 
