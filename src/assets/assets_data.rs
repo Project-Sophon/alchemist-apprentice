@@ -18,6 +18,7 @@ pub struct Ingredient {
     pub texture: Handle<StandardMaterial>,
     pub cures: Vec<SymptomClass>,
     pub causes: Vec<SymptomClass>,
+    pub toxicity: i32
 }
 
 #[derive(serde::Deserialize, Debug, Clone)]

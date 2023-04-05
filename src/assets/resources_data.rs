@@ -50,6 +50,7 @@ enum GameDataAsset {
         texture: String,
         cures: Vec<SymptomClass>,
         causes: Vec<SymptomClass>,
+        toxicity: i32,
     },
 }
 
@@ -92,6 +93,7 @@ impl DynamicAsset for GameDataAsset {
                 texture,
                 cures,
                 causes,
+                toxicity,
             } => {
                 let mut ingredients = cell
                     .get_resource_mut::<Assets<Ingredient>>()
@@ -103,6 +105,7 @@ impl DynamicAsset for GameDataAsset {
                         texture: asset_server.load(texture.clone()),
                         cures: cures.clone(),
                         causes: causes.clone(),
+                        toxicity: toxicity.clone(),
                     })
                     .clone_untyped();
 

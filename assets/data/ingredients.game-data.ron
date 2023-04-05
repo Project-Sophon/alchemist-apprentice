@@ -3,12 +3,14 @@
       name: "Newt Eyes",
       texture: "textures/ingredients/shadow_beetle.png",
       cures: [Skin],
-      causes: [Pain]
+      causes: [Pain],
+      toxicity: 1
     ),
   "lead": Ingredient (
       name: "Lead",
       texture: "textures/ingredients/zizima_root.png",
       cures: [Pain],
-      causes: [Gastro, Mental]
+      causes: [Gastro, Mental],
+      toxicity: 1
     )
 })
