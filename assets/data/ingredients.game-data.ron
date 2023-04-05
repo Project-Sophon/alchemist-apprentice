@@ -1,0 +1,14 @@
+({
+  "newt_eyes": Ingredient (
+      name: "Newt Eyes",
+      texture: "textures/ingredients/shadow_beetle.png",
+      cures: [Skin],
+      causes: [Pain]
+    ),
+  "lead": Ingredient (
+      name: "Lead",
+      texture: "textures/ingredients/zizima_root.png",
+      cures: [Pain],
+      causes: [Gastro, Mental]
+    )
+})

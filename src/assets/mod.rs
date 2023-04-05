@@ -5,7 +5,7 @@ use bevy_common_assets::ron::RonAssetPlugin;
 use crate::game::state::GlobalState;
 
 use self::{
-    game_data::{GameData, GameDataAssetDynamicCollection, Ingredient, Symptom},
+    game_data::{GameDataAssetDynamicCollection, Ingredient, IngredientAssets, Symptom, SymptomAssets},
     standard_assets::{CharacterAssets, GlobalAssets, UiAssets},
 };
 
@@ -29,8 +29,13 @@ impl Plugin for AssetPlugin {
         .add_collection_to_loading_state::<_, UiAssets>(GlobalState::AssetLoading)
         .add_dynamic_collection_to_loading_state::<_, GameDataAssetDynamicCollection>(
             GlobalState::AssetLoading,
-            "data/test.game-data.ron",
+            "data/ingredients.game-data.ron",
         )
-        .add_collection_to_loading_state::<_, GameData>(GlobalState::AssetLoading);
+        .add_dynamic_collection_to_loading_state::<_, GameDataAssetDynamicCollection>(
+            GlobalState::AssetLoading,
+            "data/symptoms.game-data.ron",
+        )
+        .add_collection_to_loading_state::<_, IngredientAssets>(GlobalState::AssetLoading)
+        .add_collection_to_loading_state::<_, SymptomAssets>(GlobalState::AssetLoading);
     }
 }

@@ -19,20 +19,6 @@ impl DynamicAssetCollection for GameDataAssetDynamicCollection {
     }
 }
 
-#[derive(AssetCollection, Resource)]
-pub struct GameData {
-    #[asset(key = "headache")]
-    pub headache: Handle<Symptom>,
-    #[asset(key = "genital_sores")]
-    pub genital_sores: Handle<Symptom>,
-    #[asset(key = "flatulence")]
-    pub flatulence: Handle<Symptom>,
-    #[asset(key = "newt_eyes")]
-    pub newt_eyes: Handle<Ingredient>,
-    #[asset(key = "lead")]
-    pub lead: Handle<Ingredient>,
-}
-
 #[derive(TypeUuid)]
 #[uuid = "766152e8-d85f-4e58-b4f8-4e375a99ac53"]
 pub struct Symptom {
@@ -48,6 +34,24 @@ pub struct Ingredient {
     pub texture: Handle<StandardMaterial>,
     pub cures: Vec<SymptomClass>,
     pub causes: Vec<SymptomClass>,
+}
+
+#[derive(AssetCollection, Resource)]
+pub struct IngredientAssets {
+    #[asset(key = "newt_eyes")]
+    pub newt_eyes: Handle<Ingredient>,
+    #[asset(key = "lead")]
+    pub lead: Handle<Ingredient>,
+}
+
+#[derive(AssetCollection, Resource)]
+pub struct SymptomAssets {
+    #[asset(key = "headache")]
+    pub headache: Handle<Symptom>,
+    #[asset(key = "genital_sores")]
+    pub genital_sores: Handle<Symptom>,
+    #[asset(key = "flatulence")]
+    pub flatulence: Handle<Symptom>,
 }
 
 #[derive(serde::Deserialize, Debug, Clone)]
@@ -100,7 +104,7 @@ impl DynamicAsset for GameDataAsset {
             } => {
                 let mut symptoms = cell
                     .get_resource_mut::<Assets<Symptom>>()
-                    .expect("Failed to get symptom assets");
+                    .expect("Failed to get symptom asset");
 
                 let handle = symptoms
                     .add(Symptom {
@@ -120,7 +124,7 @@ impl DynamicAsset for GameDataAsset {
             } => {
                 let mut ingredients = cell
                     .get_resource_mut::<Assets<Ingredient>>()
-                    .expect("Failed to get ingredient assets");
+                    .expect("Failed to get ingredient asset");
 
                 let handle = ingredients
                     .add(Ingredient {

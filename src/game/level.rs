@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use crate::assets::{
-    game_data::{GameData, Symptom},
+    game_data::{Symptom, SymptomAssets},
     standard_assets::UiAssets,
 };
 
@@ -28,7 +28,7 @@ fn customer_intro(mut game_phase: ResMut<NextState<GamePhase>>) {
     game_phase.set(GamePhase::CustomerEnter);
 }
 
-fn debug_game_assets(game_data: Res<GameData>, symptoms: Res<Assets<Symptom>>) {
+fn debug_game_assets(game_data: Res<SymptomAssets>, symptoms: Res<Assets<Symptom>>) {
     if let Some(symptom) = symptoms.get(&game_data.headache) {
         info!(
             "Symptom {{ name: {:?}, class: {:?}, description: {:?}}}",
