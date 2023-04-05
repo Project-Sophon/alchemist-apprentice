@@ -1,29 +1,22 @@
 use bevy::{app::PluginGroupBuilder, prelude::*};
 
-pub mod assembly;
-pub mod customer;
-pub mod despawn;
-pub mod dialogue;
-pub mod level;
-pub mod state;
+pub mod ailment_statement;
+pub mod concoct;
+pub mod potion_assembly;
+pub mod rest;
+pub mod game_phase;
+pub mod treatment;
+pub mod treatment_effect;
 
-use self::{
-    assembly::AssemblyPlugin, customer::CustomerPlugin, despawn::DespawnPlugin, level::LevelPlugin,
-    state::StatePlugin,
-};
+pub mod dialogue;
+
+use self::{potion_assembly::PotionAssemblyPlugin, game_phase::GamePhasePlugin};
 
 pub struct DefaultGamePlugins;
 impl PluginGroup for DefaultGamePlugins {
     fn build(self) -> PluginGroupBuilder {
         PluginGroupBuilder::start::<Self>()
-            .add(LevelPlugin)
-            .add(DespawnPlugin)
-            .add(StatePlugin)
-            .add(CustomerPlugin)
-            .add(AssemblyPlugin)
+            .add(GamePhasePlugin)
+            .add(PotionAssemblyPlugin)
     }
 }
-
-// ------ ENUMS, CONSTANTS ------
-
-pub const GAME_BACKGROUND_COLOR: &str = "#F5EDE9";

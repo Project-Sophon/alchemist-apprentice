@@ -1,10 +1,10 @@
 use bevy::{app::PluginGroupBuilder, prelude::*};
 
-use self::{buttons::ButtonPlugin, common::CommonUiPlugin, root_ui::RootUiPlugin};
+use self::{buttons::ButtonPlugin, common::CommonUiPlugin, game_ui::RootUiPlugin};
 
 pub mod buttons;
 pub mod common;
-pub mod root_ui;
+pub mod game_ui;
 
 pub struct DefaultUIPlugins;
 impl PluginGroup for DefaultUIPlugins {

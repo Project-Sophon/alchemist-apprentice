@@ -2,14 +2,16 @@ use bevy::prelude::*;
 use bevy_asset_loader::prelude::{LoadingState, LoadingStateAppExt};
 use bevy_common_assets::ron::RonAssetPlugin;
 
-use crate::game::state::GlobalState;
+use crate::world::global_state::GlobalState;
 
 use self::{
-    game_data::{GameDataAssetDynamicCollection, Ingredient, IngredientAssets, Symptom, SymptomAssets},
+    game_data_assets::{
+        GameDataAssetDynamicCollection, Ingredient, IngredientAssets, Symptom, SymptomAssets,
+    },
     standard_assets::{CharacterAssets, GlobalAssets, UiAssets},
 };
 
-pub mod game_data;
+pub mod game_data_assets;
 pub mod standard_assets;
 
 pub struct AssetPlugin;

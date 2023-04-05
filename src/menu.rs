@@ -1,6 +1,6 @@
 use crate::{
-    game::{despawn::despawn_entity, GAME_BACKGROUND_COLOR},
-    GlobalState, assets::standard_assets::GlobalAssets,
+    assets::standard_assets::GlobalAssets, style::color::GAME_BACKGROUND_COLOR,
+    world::despawn::despawn_entity, GlobalState,
 };
 use bevy::{app::AppExit, prelude::*};
 
@@ -28,7 +28,7 @@ impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
         app.add_state::<MenuState>()
             .add_system(menu_setup.in_schedule(OnEnter(GlobalState::Menu)))
-            .add_system(despawn_entity::<OnMainMenuScreen>.in_schedule(OnExit(GlobalState::Menu)))
+            .add_system(despawn_entity::<MainMenu>.in_schedule(OnExit(GlobalState::Menu)))
             .add_system(main_menu_setup.in_schedule(OnEnter(MenuState::Main)))
             .add_systems((menu_action, button_system).in_set(OnUpdate(GlobalState::Menu)));
     }
@@ -37,7 +37,7 @@ impl Plugin for MenuPlugin {
 // ------ COMPONENTS ------
 
 #[derive(Component)]
-struct OnMainMenuScreen;
+struct MainMenu;
 
 #[derive(Component)]
 enum MenuButtonAction {
@@ -97,7 +97,7 @@ fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
                 background_color: Color::hex(GAME_BACKGROUND_COLOR).unwrap().into(),
                 ..default()
             },
-            OnMainMenuScreen,
+            MainMenu,
         ))
         .with_children(|parent| {
             parent

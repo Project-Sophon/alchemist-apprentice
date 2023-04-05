@@ -1,7 +1,6 @@
 use crate::{
-    assets::standard_assets::GlobalAssets,
-    game::{despawn::despawn_entity, GAME_BACKGROUND_COLOR},
-    GlobalState,
+    assets::standard_assets::GlobalAssets, style::color::GAME_BACKGROUND_COLOR,
+    world::despawn::despawn_entity, GlobalState,
 };
 use bevy::prelude::*;
 
@@ -11,12 +10,12 @@ impl Plugin for SplashPlugin {
     fn build(&self, app: &mut App) {
         app.add_system(setup_splash.in_schedule(OnEnter(GlobalState::Splash)))
             .add_system(countdown.in_set(OnUpdate(GlobalState::Splash)))
-            .add_system(despawn_entity::<OnSplashScreen>.in_schedule(OnExit(GlobalState::Splash)));
+            .add_system(despawn_entity::<SplashScreen>.in_schedule(OnExit(GlobalState::Splash)));
     }
 }
 
 #[derive(Component)]
-struct OnSplashScreen;
+struct SplashScreen;
 
 #[derive(Resource, Deref, DerefMut)]
 struct SplashTimer(Timer);
@@ -36,7 +35,7 @@ fn setup_splash(mut commands: Commands, global_assets: Res<GlobalAssets>) {
                 background_color: Color::hex(GAME_BACKGROUND_COLOR).unwrap().into(),
                 ..default()
             },
-            OnSplashScreen,
+            SplashScreen,
         ))
         .with_children(|parent| {
             parent.spawn(ImageBundle {

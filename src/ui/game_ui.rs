@@ -1,6 +1,9 @@
 use bevy::prelude::*;
 
-use crate::{assets::standard_assets::{GlobalAssets, UiAssets}, game::state::GlobalState};
+use crate::{
+    assets::standard_assets::{GlobalAssets, UiAssets},
+    world::global_state::GlobalState,
+};
 
 use super::buttons::create_panel_button;
 pub struct RootUiPlugin;
@@ -14,7 +17,11 @@ impl Plugin for RootUiPlugin {
 #[reflect(Component)]
 pub struct Workbench;
 
-fn root_ui_setup(mut commands: Commands, global_assets: Res<GlobalAssets>, ui_assets: Res<UiAssets>) {
+fn root_ui_setup(
+    mut commands: Commands,
+    global_assets: Res<GlobalAssets>,
+    ui_assets: Res<UiAssets>,
+) {
     let font = global_assets.font.clone();
 
     commands
@@ -34,7 +41,8 @@ fn root_ui_setup(mut commands: Commands, global_assets: Res<GlobalAssets>, ui_as
             },
             Workbench,
             Name::new("UI Root"),
-        )).with_children(|parent| {
+        ))
+        .with_children(|parent| {
             create_panel_button(parent, &font, "Base Ingredients");
             create_panel_button(parent, &font, "Processes");
             create_panel_button(parent, &font, "Concoct");
