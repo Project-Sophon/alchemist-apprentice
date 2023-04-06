@@ -1,5 +1,5 @@
 use bevy::{
-    prelude::{Handle, StandardMaterial},
+    prelude::{Handle, Image},
     reflect::TypeUuid,
 };
 
@@ -15,11 +15,11 @@ pub struct Symptom {
 #[uuid = "9f249ef7-0fbe-441e-bf87-6cacdc9340e4"]
 pub struct Ingredient {
     pub name: String,
-    pub texture: Handle<StandardMaterial>,
+    pub texture: Handle<Image>,
     pub cures: Vec<SymptomClass>,
     pub causes: Vec<SymptomClass>,
     pub toxicity: i32,
-    pub starter: bool
+    pub starter: bool,
 }
 
 #[derive(serde::Deserialize, Debug, Clone)]

@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::{
     ui::{
-        buttons::BasicButton,
+        buttons::IngredientButton,
         common::{DisabledUiElement, EnableUiElement},
     },
 };
@@ -19,7 +19,7 @@ impl Plugin for PotionAssemblyPlugin {
 
 fn enable_potion_assembly_ui(
     mut commands: Commands,
-    disabled_panel_buttons_query: Query<Entity, (With<BasicButton>, With<DisabledUiElement>)>,
+    disabled_panel_buttons_query: Query<Entity, (With<IngredientButton>, With<DisabledUiElement>)>,
 ) {
     for entity in &disabled_panel_buttons_query {
         commands.entity(entity).insert(EnableUiElement);
@@ -28,7 +28,7 @@ fn enable_potion_assembly_ui(
 
 fn disable_potion_assembly_ui(
     mut commands: Commands,
-    disabled_panel_buttons_query: Query<Entity, (With<BasicButton>, With<DisabledUiElement>)>,
+    disabled_panel_buttons_query: Query<Entity, (With<IngredientButton>, With<DisabledUiElement>)>,
 ) {
     for entity in &disabled_panel_buttons_query {
         commands.entity(entity).insert(EnableUiElement);

@@ -1,14 +1,14 @@
 use bevy::prelude::*;
 
-use crate::style::color::{DISABLE_NORMAL_BUTTON, HOVERED_BUTTON, NORMAL_BUTTON, PRESSED_BUTTON};
+use crate::style::color::{PALETTE_CREAM, PALETTE_DARK_GOLD, PALETTE_DARK_PURPLE, PALETTE_GOLD};
 
 use super::common::{DisableUiElement, DisabledUiElement, EnableUiElement};
 
 pub struct ButtonPlugin;
 impl Plugin for ButtonPlugin {
     fn build(&self, app: &mut App) {
-        app.register_type::<BasicButton>()
-            .add_system(button_interactions)
+        app.register_type::<IngredientButton>()
+            .add_system(ingredient_button_interactions)
             .add_system(enable_buttons)
             .add_system(disable_buttons);
     }
@@ -18,16 +18,16 @@ impl Plugin for ButtonPlugin {
 
 #[derive(Reflect, Component, Default)]
 #[reflect(Component)]
-pub struct BasicButton;
+pub struct IngredientButton;
 
 // ------ SYSTEMS ------
 
-fn button_interactions(
+fn ingredient_button_interactions(
     mut interaction_query: Query<
         (&Interaction, &mut BackgroundColor),
         (
             Changed<Interaction>,
-            With<Button>,
+            With<IngredientButton>,
             Without<DisabledUiElement>,
         ),
     >,
@@ -35,13 +35,13 @@ fn button_interactions(
     for (interaction, mut color) in &mut interaction_query {
         match *interaction {
             Interaction::Clicked => {
-                *color = PRESSED_BUTTON.into();
+                *color = Color::hex(PALETTE_CREAM).unwrap().into();
             }
             Interaction::Hovered => {
-                *color = HOVERED_BUTTON.into();
+                *color = Color::hex(PALETTE_GOLD).unwrap().into();
             }
             Interaction::None => {
-                *color = NORMAL_BUTTON.into();
+                *color = Color::hex(PALETTE_DARK_GOLD).unwrap().into();
             }
         }
     }
@@ -54,7 +54,7 @@ fn enable_buttons(
     >,
 ) {
     for mut color in &mut panel_buttons_query {
-        *color = NORMAL_BUTTON.into();
+        *color = Color::hex(PALETTE_DARK_GOLD).unwrap().into();
     }
 }
 
@@ -69,39 +69,6 @@ fn disable_buttons(
     >,
 ) {
     for mut color in &mut panel_buttons_query {
-        *color = DISABLE_NORMAL_BUTTON.into();
+        *color = Color::hex(PALETTE_DARK_PURPLE).unwrap().into();
     }
-}
-
-// ------ PUB FUNCTIONS ------
-
-pub fn create_basic_button(parent: &mut ChildBuilder, font: &Handle<Font>, text: &str) {
-    parent
-        .spawn((
-            ButtonBundle {
-                style: Style {
-                    size: Size::new(Val::Px(200.0), Val::Px(65.0)),
-                    // horizontally center child text
-                    justify_content: JustifyContent::Center,
-                    // vertically center child text
-                    align_items: AlignItems::Center,
-                    ..default()
-                },
-                background_color: DISABLE_NORMAL_BUTTON.into(),
-                ..default()
-            },
-            BasicButton,
-            DisabledUiElement,
-            Name::new("Panel Button"),
-        ))
-        .with_children(|parent| {
-            parent.spawn(TextBundle::from_section(
-                text,
-                TextStyle {
-                    font: font.clone(),
-                    font_size: 20.0,
-                    color: Color::rgb(0.9, 0.9, 0.9),
-                },
-            ));
-        });
 }

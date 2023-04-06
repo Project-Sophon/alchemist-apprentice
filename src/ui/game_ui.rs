@@ -1,16 +1,12 @@
-use bevy::{asset::Asset, prelude::*};
+use bevy::prelude::*;
 
 use crate::{
-    assets::{
-        assets_data::Ingredient,
-        resources_data::IngredientAssets,
-        resources_standard::{GlobalAssets, UiAssets},
-    },
-    style::color::PALETTE_GOLD,
+    assets::{assets_data::Ingredient, resources_standard::UiAssets},
+    style::color::{PALETTE_GOLD, PALETTE_PURPLE},
+    ui::buttons::IngredientButton,
     world::{despawn::despawn_entity, global_state::GlobalState},
 };
 
-use super::buttons::create_basic_button;
 pub struct GameUiPlugin;
 impl Plugin for GameUiPlugin {
     fn build(&self, app: &mut App) {
@@ -35,28 +31,20 @@ pub struct InformationPanel;
 #[reflect(Component)]
 pub struct PotionPanel;
 
-#[derive(Reflect, Component, Default)]
-#[reflect(Component)]
-pub struct IngredientButton;
-
 fn game_ui_setup(
     mut commands: Commands,
-    global_assets: Res<GlobalAssets>,
     ui_assets: Res<UiAssets>,
     ingredients: Res<Assets<Ingredient>>,
 ) {
-    let font = global_assets.font.clone();
-
     commands
         .spawn((
             ImageBundle {
                 style: Style {
                     size: Size::new(Val::Percent(100.0), Val::Px(456.0)),
-                    align_content: AlignContent::End,
                     align_self: AlignSelf::FlexEnd,
-                    align_items: AlignItems::Center,
-                    flex_direction: FlexDirection::Column,
-                    justify_content: JustifyContent::SpaceAround,
+                    flex_direction: FlexDirection::Row,
+                    padding: UiRect::all(Val::Px(20.)),
+                    gap: Size::all(Val::Px(20.)),
                     ..default()
                 },
                 image: ui_assets.game_ui_bkg.clone().into(),
@@ -81,7 +69,7 @@ fn build_ingredients_panel(
             NodeBundle {
                 style: Style {
                     size: Size::new(Val::Percent(33.33), Val::Percent(100.)),
-                    gap: Size::all(Val::Px(20.)),
+                    flex_wrap: FlexWrap::Wrap,
                     ..default()
                 },
                 ..default()
@@ -90,20 +78,46 @@ fn build_ingredients_panel(
             Name::new("Ingredients Panel"),
         ))
         .with_children(|parent| {
-            for (id, ingredient) in ingredients.iter() {
+            for (_id, ingredient) in ingredients.iter() {
                 info!(ingredient.name);
-                parent.spawn((
-                    NodeBundle {
-                        style: Style {
-                            size: Size::new(Val::Px(20.), Val::Px(20.)),
+                parent
+                    .spawn((
+                        NodeBundle {
+                            style: Style {
+                                flex_basis: Val::Percent(33.33),
+                                align_items: AlignItems::Center,
+                                justify_content: JustifyContent::Center,
+                                ..default()
+                            },
                             ..default()
                         },
-                        background_color: Color::hex(PALETTE_GOLD).unwrap().into(),
-                        ..default()
-                    },
-                    IngredientButton,
-                    Name::new("Ingredient Button"),
-                ));
+                        Name::new("Ingredient Container"),
+                    ))
+                    .with_children(|parent| {
+                        parent
+                            .spawn((
+                                ButtonBundle {
+                                    style: Style {
+                                        size: Size::new(Val::Px(64.), Val::Percent(64.)),
+                                        align_items: AlignItems::Center,
+                                        justify_content: JustifyContent::Center,
+                                        ..default()
+                                    },
+                                    ..default()
+                                },
+                                IngredientButton,
+                                Name::new("Ingredient Button"),
+                            ))
+                            .with_children(|parent| {
+                                parent.spawn((
+                                    ImageBundle {
+                                        image: UiImage::new(ingredient.texture.clone()),
+                                        ..default()
+                                    },
+                                    Name::new("Ingredient Button Img"),
+                                ));
+                            });
+                    });
             }
         })
         .id()
@@ -122,6 +136,18 @@ fn build_information_panel(commands: &mut ChildBuilder) -> Entity {
             InformationPanel,
             Name::new("Information Panel"),
         ))
+        .with_children(|parent| {
+            parent.spawn(NodeBundle {
+                style: Style {
+                    size: Size::new(Val::Px(432.), Val::Px(408.)),
+                    align_items: AlignItems::Center,
+                    justify_content: JustifyContent::Center,
+                    ..default()
+                },
+                background_color: Color::hex(PALETTE_PURPLE).unwrap().into(),
+                ..default()
+            });
+        })
         .id()
 }
 
@@ -131,6 +157,8 @@ fn build_potion_panel(commands: &mut ChildBuilder) -> Entity {
             NodeBundle {
                 style: Style {
                     size: Size::new(Val::Percent(33.33), Val::Percent(100.)),
+                    align_items: AlignItems::Center,
+                    justify_content: JustifyContent::Center,
                     ..default()
                 },
                 ..default()
@@ -138,5 +166,15 @@ fn build_potion_panel(commands: &mut ChildBuilder) -> Entity {
             PotionPanel,
             Name::new("Potion Panel"),
         ))
+        .with_children(|parent| {
+            parent.spawn(NodeBundle {
+                style: Style {
+                    size: Size::new(Val::Px(208.), Val::Px(200.)),
+                    ..default()
+                },
+                background_color: Color::hex(PALETTE_PURPLE).unwrap().into(),
+                ..default()
+            });
+        })
         .id()
 }
