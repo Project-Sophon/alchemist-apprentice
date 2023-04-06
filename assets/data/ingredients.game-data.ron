@@ -4,83 +4,95 @@
       texture: "textures/ingredients/shadow_beetle.png",
       cures: [Skin],
       causes: [Pain],
-      toxicity: 1
+      toxicity: 1,
+      starter: true
     ),
   "toad_legs": Ingredient (
       name: "Toad legs",
       texture: "textures/ingredients/crow_foot.png",
       cures: [Pain],
       causes: [Gastro, Mental],
-      toxicity: 1
+      toxicity: 1,
+      starter: true
     ),
   "lizard_tail": Ingredient (
       name: "Lizard tails",
       texture: "textures/ingredients/zizima_root.png",
       cures: [Pain],
       causes: [Gastro, Mental],
-      toxicity: 1
+      toxicity: 1,
+      starter: true
     ),
   "silver": Ingredient (
       name: "Silver",
       texture: "textures/ingredients/dluger_heart.png",
       cures: [Pain],
       causes: [Gastro, Mental],
-      toxicity: 1
+      toxicity: 1,
+      starter: false
     ),
   "lead": Ingredient (
       name: "Lead",
       texture: "textures/ingredients/zizima_root.png",
       cures: [Pain],
       causes: [Gastro, Mental],
-      toxicity: 1
+      toxicity: 1,
+      starter: false
     ),
   "dragon_breath": Ingredient (
       name: "Dragons Breath",
       texture: "textures/ingredients/auria_leaf.png",
       cures: [Pain],
       causes: [Gastro, Mental],
-      toxicity: 1
+      toxicity: 1,
+      starter: false
     ),
   "mandrake": Ingredient (
       name: "Mandrake",
       texture: "textures/ingredients/dluger_heart.png",
       cures: [Pain],
       causes: [Gastro, Mental],
-      toxicity: 1
+      toxicity: 1,
+      starter: false
     ),
-  "womrs_jar": Ingredient (
+  "worms_jar": Ingredient (
       name: "Jar of Worms",
       texture: "textures/ingredients/zizima_root.png",
       cures: [Pain],
       causes: [Gastro, Mental],
-      toxicity: 1
+      toxicity: 1,
+      starter: false
     ),
   "jezebel_root": Ingredient (
       name: "Jezebel Root",
       texture: "textures/ingredients/ghost_twig.png",
       cures: [Pain],
       causes: [Gastro, Mental],
-      toxicity: 1
+      toxicity: 1,
+      starter: false
     ),
   "deer_antlers": Ingredient (
       name: "Deer Antlers",
       texture: "textures/ingredients/zizima_root.png",
       cures: [Pain],
       causes: [Gastro, Mental],
-      toxicity: 1
+      toxicity: 1,
+      starter: false
     ),
   "deaths_bush": Ingredient (
       name: "Death's Bush",
       texture: "textures/ingredients/auria_leaf.png",
       cures: [Pain],
       causes: [Gastro, Mental],
-      toxicity: 1
+      toxicity: 1,
+      starter: false
     ),
-  "pheonix_feather": Ingredient (
+  "phoenix_feather": Ingredient (
       name: "Phoenix Feather",
       texture: "textures/ingredients/zizima_root.png",
       cures: [Pain],
       causes: [Gastro, Mental],
-      toxicity: 1
+      toxicity: 1,
+      starter: false
     )
 })

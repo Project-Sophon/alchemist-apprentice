@@ -1,10 +1,12 @@
-use bevy::prelude::*;
+use bevy::{asset::Asset, prelude::*};
 
 use crate::{
     assets::{
+        assets_data::Ingredient,
         resources_data::IngredientAssets,
         resources_standard::{GlobalAssets, UiAssets},
     },
+    style::color::PALETTE_GOLD,
     world::{despawn::despawn_entity, global_state::GlobalState},
 };
 
@@ -33,11 +35,15 @@ pub struct InformationPanel;
 #[reflect(Component)]
 pub struct PotionPanel;
 
+#[derive(Reflect, Component, Default)]
+#[reflect(Component)]
+pub struct IngredientButton;
+
 fn game_ui_setup(
     mut commands: Commands,
     global_assets: Res<GlobalAssets>,
     ui_assets: Res<UiAssets>,
-    ingredients: Res<IngredientAssets>,
+    ingredients: Res<Assets<Ingredient>>,
 ) {
     let font = global_assets.font.clone();
 
@@ -68,13 +74,14 @@ fn game_ui_setup(
 
 fn build_ingredients_panel(
     commands: &mut ChildBuilder,
-    ingredients: Res<IngredientAssets>,
+    ingredients: Res<Assets<Ingredient>>,
 ) -> Entity {
     commands
         .spawn((
             NodeBundle {
                 style: Style {
                     size: Size::new(Val::Percent(33.33), Val::Percent(100.)),
+                    gap: Size::all(Val::Px(20.)),
                     ..default()
                 },
                 ..default()
@@ -82,6 +89,23 @@ fn build_ingredients_panel(
             IngredientsPanel,
             Name::new("Ingredients Panel"),
         ))
+        .with_children(|parent| {
+            for (id, ingredient) in ingredients.iter() {
+                info!(ingredient.name);
+                parent.spawn((
+                    NodeBundle {
+                        style: Style {
+                            size: Size::new(Val::Px(20.), Val::Px(20.)),
+                            ..default()
+                        },
+                        background_color: Color::hex(PALETTE_GOLD).unwrap().into(),
+                        ..default()
+                    },
+                    IngredientButton,
+                    Name::new("Ingredient Button"),
+                ));
+            }
+        })
         .id()
 }
 

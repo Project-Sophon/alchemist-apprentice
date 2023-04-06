@@ -12,8 +12,28 @@ use super::assets_data::{Ingredient, Symptom, SymptomClass};
 pub struct IngredientAssets {
     #[asset(key = "newt_eyes")]
     pub newt_eyes: Handle<Ingredient>,
+    #[asset(key = "toad_legs")]
+    pub toad_legs: Handle<Ingredient>,
+    #[asset(key = "lizard_tail")]
+    pub lizard_tail: Handle<Ingredient>,
+    #[asset(key = "silver")]
+    pub silver: Handle<Ingredient>,
     #[asset(key = "lead")]
     pub lead: Handle<Ingredient>,
+    #[asset(key = "dragon_breath")]
+    pub dragon_breath: Handle<Ingredient>,
+    #[asset(key = "mandrake")]
+    pub mandrake: Handle<Ingredient>,
+    #[asset(key = "worms_jar")]
+    pub worms_jar: Handle<Ingredient>,
+    #[asset(key = "jezebel_root")]
+    pub jezebel_root: Handle<Ingredient>,
+    #[asset(key = "deer_antlers")]
+    pub deer_antlers: Handle<Ingredient>,
+    #[asset(key = "deaths_bush")]
+    pub deaths_bush: Handle<Ingredient>,
+    #[asset(key = "phoenix_feather")]
+    pub phoenix_feather: Handle<Ingredient>,
 }
 
 #[derive(AssetCollection, Resource)]
@@ -51,6 +71,7 @@ enum GameDataAsset {
         cures: Vec<SymptomClass>,
         causes: Vec<SymptomClass>,
         toxicity: i32,
+        starter: bool,
     },
 }
 
@@ -94,6 +115,7 @@ impl DynamicAsset for GameDataAsset {
                 cures,
                 causes,
                 toxicity,
+                starter,
             } => {
                 let mut ingredients = cell
                     .get_resource_mut::<Assets<Ingredient>>()
@@ -106,6 +128,7 @@ impl DynamicAsset for GameDataAsset {
                         cures: cures.clone(),
                         causes: causes.clone(),
                         toxicity: toxicity.clone(),
+                        starter: starter.clone(),
                     })
                     .clone_untyped();
 
