@@ -1,13 +1,12 @@
 use bevy::prelude::*;
 
 use crate::{
+    game::game_phase::GamePhase,
     ui::{
         buttons::IngredientButton,
         common::{DisabledUiElement, EnableUiElement},
     },
 };
-
-use super::game_phase::GamePhase;
 
 pub struct PotionAssemblyPlugin;
 impl Plugin for PotionAssemblyPlugin {

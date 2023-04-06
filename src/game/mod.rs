@@ -1,16 +1,11 @@
 use bevy::{app::PluginGroupBuilder, prelude::*};
 
-pub mod ailment_statement;
-pub mod concoct;
-pub mod potion_assembly;
-pub mod rest;
-pub mod game_phase;
-pub mod treatment;
-pub mod treatment_effect;
-
 pub mod dialogue;
+pub mod game_phase;
+pub mod states;
+pub mod ingredients;
 
-use self::{potion_assembly::PotionAssemblyPlugin, game_phase::GamePhasePlugin};
+use self::{game_phase::GamePhasePlugin, states::potion_assembly::PotionAssemblyPlugin};
 
 pub struct DefaultGamePlugins;
 impl PluginGroup for DefaultGamePlugins {
