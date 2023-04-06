@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use crate::{
-    assets::assets_game_data::Ingredient,
+    assets::{assets_game_data::Ingredient, resources_game_data::IngredientAssets},
     style::color::{PALETTE_CREAM, PALETTE_DARK_GOLD, PALETTE_GOLD},
     ui::disable_ui::DisabledUiElement,
 };
@@ -19,7 +19,7 @@ impl Plugin for IngredientsPlugin {
 
 #[derive(Resource)]
 pub struct SelectedIngredient {
-    pub ingredient: Option<Ingredient>,
+    pub ingredient: Option<Handle<Ingredient>>,
 }
 
 impl Default for SelectedIngredient {
@@ -36,23 +36,25 @@ pub struct IngredientsPanel;
 
 #[derive(Reflect, Component, Default)]
 #[reflect(Component)]
-pub struct IngredientButton;
+pub struct IngredientButton {
+    ingredient: Handle<Ingredient>,
+}
 
 // ------ SYSTEMS ------
 
 fn ingredient_button_interactions(
     mut interaction_query: Query<
-        (&Interaction, &mut BackgroundColor),
-        (
-            Changed<Interaction>,
-            With<IngredientButton>,
-            Without<DisabledUiElement>,
-        ),
+        (&Interaction, &mut IngredientButton, &mut BackgroundColor),
+        (Changed<Interaction>, Without<DisabledUiElement>),
     >,
+    mut selected_ingredient: ResMut<SelectedIngredient>,
 ) {
-    for (interaction, mut color) in &mut interaction_query {
+    for (interaction, ingredient_button, mut color) in &mut interaction_query {
         match *interaction {
             Interaction::Clicked => {
+                // Update the selected ingredient (handle)
+                selected_ingredient.ingredient = Some(ingredient_button.ingredient.clone());
+
                 *color = Color::hex(PALETTE_CREAM).unwrap().into();
             }
             Interaction::Hovered => {
@@ -67,7 +69,7 @@ fn ingredient_button_interactions(
 
 pub fn build_ingredients_panel(
     commands: &mut ChildBuilder,
-    ingredients: Res<Assets<Ingredient>>,
+    ingredients: &Res<Assets<Ingredient>>,
 ) -> Entity {
     commands
         .spawn((
@@ -83,7 +85,7 @@ pub fn build_ingredients_panel(
             Name::new("Ingredients Panel"),
         ))
         .with_children(|parent| {
-            for (_id, ingredient) in ingredients.iter() {
+            for (id, ingredient) in ingredients.iter() {
                 parent
                     .spawn((
                         NodeBundle {
@@ -109,7 +111,9 @@ pub fn build_ingredients_panel(
                                     },
                                     ..default()
                                 },
-                                IngredientButton,
+                                IngredientButton {
+                                    ingredient: Handle::weak(id),
+                                },
                                 Name::new("Ingredient Button"),
                             ))
                             .with_children(|parent| {

@@ -106,11 +106,12 @@ fn build_level(
                             Name::new("Game UI Control Area"),
                         ))
                         .with_children(|parent| {
-                            build_ingredients_panel(parent, ingredients);
+                            build_ingredients_panel(parent, &ingredients);
                             build_information_panel(
                                 parent,
+                                &ingredients,
                                 &selected_ingredient,
-                                global_assets.font.clone(),
+                                &global_assets.font,
                             );
                             build_potion_panel(parent);
                         });

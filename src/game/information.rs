@@ -1,8 +1,9 @@
 use bevy::prelude::*;
 
 use crate::{
-    assets::assets_game_data::Ingredient,
+    assets::{assets_game_data::Ingredient, resources_standard::GlobalAssets},
     style::color::{PALETTE_CREAM, PALETTE_DARK_BLUE},
+    world::global_state::GlobalState,
 };
 
 use super::ingredients::SelectedIngredient;
@@ -10,7 +11,8 @@ pub struct InformationPlugin;
 impl Plugin for InformationPlugin {
     fn build(&self, app: &mut App) {
         app.register_type::<InformationPanel>()
-            .register_type::<InformationPanelContent>();
+            .register_type::<InformationPanelContent>()
+            .add_system(update_information_panel.in_set(OnUpdate(GlobalState::Game)));
     }
 }
 
@@ -26,10 +28,39 @@ pub struct InformationPanelContent;
 
 // ------ SYSTEMS ------
 
+fn update_information_panel(
+    mut commands: Commands,
+    panel_content: Query<Entity, With<InformationPanelContent>>,
+    ingredients: Res<Assets<Ingredient>>,
+    selected_ingredient: Res<SelectedIngredient>,
+    global_assets: Res<GlobalAssets>,
+) {
+    // only run when the selected ingredient has changed!
+    if !selected_ingredient.is_changed() {
+        return;
+    }
+
+    if let Ok(target) = panel_content.get_single() {
+        commands.entity(target).clear_children();
+
+        commands.entity(target).with_children(|parent| {
+            match &selected_ingredient.ingredient {
+                Some(handle) => build_ingredient_information(
+                    parent,
+                    &global_assets.font,
+                    ingredients.get(handle).unwrap(),
+                ),
+                None => build_default_information_text(parent, &global_assets.font),
+            };
+        });
+    }
+}
+
 pub fn build_information_panel(
     commands: &mut ChildBuilder,
+    ingredients: &Res<Assets<Ingredient>>,
     selected_ingredient: &Res<SelectedIngredient>,
-    font: Handle<Font>,
+    font: &Handle<Font>,
 ) -> Entity {
     commands
         .spawn((
@@ -60,12 +91,11 @@ pub fn build_information_panel(
                     InformationPanelContent,
                     Name::new("Information Panel Content"),
                 ))
-                .with_children(|parent| {
-                    if let Some(selected_ingredient) = &selected_ingredient.ingredient {
-                        build_ingredient_information(parent, font, selected_ingredient);
-                    } else {
-                        build_default_information_text(parent, font);
+                .with_children(|parent| match &selected_ingredient.ingredient {
+                    Some(handle) => {
+                        build_ingredient_information(parent, font, ingredients.get(handle).unwrap())
                     }
+                    None => build_default_information_text(parent, font),
                 });
         })
         .id()
@@ -73,7 +103,7 @@ pub fn build_information_panel(
 
 pub fn build_ingredient_information(
     commands: &mut ChildBuilder,
-    font: Handle<Font>,
+    font: &Handle<Font>,
     ingredient: &Ingredient,
 ) {
     commands.spawn((
@@ -88,7 +118,7 @@ pub fn build_ingredient_information(
             text: Text::from_section(
                 ingredient.name.clone(),
                 TextStyle {
-                    font,
+                    font: font.clone(),
                     font_size: 16.,
                     color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
                 },
@@ -100,13 +130,13 @@ pub fn build_ingredient_information(
     ));
 }
 
-pub fn build_default_information_text(commands: &mut ChildBuilder, font: Handle<Font>) {
+pub fn build_default_information_text(commands: &mut ChildBuilder, font: &Handle<Font>) {
     commands.spawn((
         TextBundle {
             text: Text::from_section(
                 "This text shows when no ingredients are selected ...",
                 TextStyle {
-                    font,
+                    font: font.clone(),
                     font_size: 16.,
                     color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
                 },
@@ -117,6 +147,8 @@ pub fn build_default_information_text(commands: &mut ChildBuilder, font: Handle<
         Name::new("Default Info Text"),
     ));
 }
+
+// ------ STYLES ------
 
 const INFO_TEXT_STYLE: Style = Style {
     max_size: Size {
