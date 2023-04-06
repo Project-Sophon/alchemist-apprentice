@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
-pub struct CommonUiPlugin;
-impl Plugin for CommonUiPlugin {
+pub struct DisableUiPlugin;
+impl Plugin for DisableUiPlugin {
     fn build(&self, app: &mut App) {
         app.register_type::<DisableUiElement>()
             .register_type::<DisabledUiElement>()

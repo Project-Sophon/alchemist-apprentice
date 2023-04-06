@@ -6,7 +6,7 @@ use bevy_asset_loader::prelude::{
     AssetCollection, DynamicAsset, DynamicAssetCollection, DynamicAssetType, DynamicAssets,
 };
 
-use super::assets_data::{Ingredient, Symptom, SymptomClass};
+use super::assets_game_data::{Ingredient, Symptom, SymptomClass};
 
 #[derive(AssetCollection, Resource)]
 pub struct IngredientAssets {
@@ -129,6 +129,7 @@ impl DynamicAsset for GameDataAsset {
                         causes: causes.clone(),
                         toxicity: toxicity.clone(),
                         starter: starter.clone(),
+                        used: false,
                     })
                     .clone_untyped();
 

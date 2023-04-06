@@ -20,6 +20,7 @@ pub struct Ingredient {
     pub causes: Vec<SymptomClass>,
     pub toxicity: i32,
     pub starter: bool,
+    pub used: bool,
 }
 
 #[derive(serde::Deserialize, Debug, Clone)]
