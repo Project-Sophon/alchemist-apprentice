@@ -147,12 +147,6 @@ fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
                             MenuButtonAction::Play,
                         ))
                         .with_children(|parent| {
-                            let icon = global_assets.right.clone();
-                            parent.spawn(ImageBundle {
-                                style: button_icon_style.clone(),
-                                image: UiImage::new(icon),
-                                ..default()
-                            });
                             parent.spawn(TextBundle::from_section(
                                 "New Game",
                                 button_text_style.clone(),
@@ -168,12 +162,6 @@ fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
                             MenuButtonAction::Settings,
                         ))
                         .with_children(|parent| {
-                            let icon = global_assets.wrench.clone();
-                            parent.spawn(ImageBundle {
-                                style: button_icon_style.clone(),
-                                image: UiImage::new(icon),
-                                ..default()
-                            });
                             parent.spawn(TextBundle::from_section(
                                 "Settings",
                                 button_text_style.clone(),
@@ -189,12 +177,6 @@ fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
                             MenuButtonAction::Quit,
                         ))
                         .with_children(|parent| {
-                            let icon = global_assets.exit.clone();
-                            parent.spawn(ImageBundle {
-                                style: button_icon_style,
-                                image: UiImage::new(icon),
-                                ..default()
-                            });
                             parent.spawn(TextBundle::from_section("Quit", button_text_style));
                         });
                 });

@@ -9,7 +9,7 @@ pub mod states;
 
 use self::{
     game_phase::GamePhasePlugin, information::InformationPlugin, ingredients::IngredientsPlugin,
-    level::LevelPlugin, states::potion_assembly::PotionAssemblyPlugin, potion::PotionPlugin,
+    level::LevelPlugin, potion::PotionPlugin, states::potion_assembly::PotionAssemblyPlugin,
 };
 
 pub struct DefaultGamePlugins;

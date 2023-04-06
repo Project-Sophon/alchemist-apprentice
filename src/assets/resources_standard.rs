@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_asset_loader::prelude::{AssetCollection};
+use bevy_asset_loader::prelude::AssetCollection;
 
 #[derive(AssetCollection, Resource)]
 pub struct GlobalAssets {
@@ -9,12 +9,6 @@ pub struct GlobalAssets {
     pub main_menu_banner: Handle<Image>,
     #[asset(path = "fonts/DePixelKlein.ttf")]
     pub font: Handle<Font>,
-    #[asset(path = "textures/ui/right.png")]
-    pub right: Handle<Image>,
-    #[asset(path = "textures/ui/wrench.png")]
-    pub wrench: Handle<Image>,
-    #[asset(path = "textures/ui/exitRight.png")]
-    pub exit: Handle<Image>,
 }
 
 #[derive(AssetCollection, Resource)]
