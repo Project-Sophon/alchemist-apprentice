@@ -1,7 +1,10 @@
 use bevy::prelude::*;
 
 use crate::{
-    assets::{assets_game_data::Ingredient, resources_standard::UiAssets},
+    assets::{
+        assets_game_data::Ingredient,
+        resources_standard::{GlobalAssets, UiAssets},
+    },
     world::{
         common::{WINDOW_HEIGHT, WINDOW_WIDTH},
         despawn::despawn_entity,
@@ -10,7 +13,8 @@ use crate::{
 };
 
 use super::{
-    information::build_information_panel, ingredients::build_ingredients_panel,
+    information::build_information_panel,
+    ingredients::{build_ingredients_panel, SelectedIngredient},
     potion::build_potion_panel,
 };
 
@@ -36,8 +40,10 @@ pub struct GameUiContainer;
 
 fn build_level(
     mut commands: Commands,
+    global_assets: Res<GlobalAssets>,
     ui_assets: Res<UiAssets>,
     ingredients: Res<Assets<Ingredient>>,
+    selected_ingredient: Res<SelectedIngredient>,
 ) {
     commands
         .spawn((
@@ -101,7 +107,11 @@ fn build_level(
                         ))
                         .with_children(|parent| {
                             build_ingredients_panel(parent, ingredients);
-                            build_information_panel(parent);
+                            build_information_panel(
+                                parent,
+                                &selected_ingredient,
+                                global_assets.font.clone(),
+                            );
                             build_potion_panel(parent);
                         });
                 });

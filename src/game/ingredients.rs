@@ -73,7 +73,7 @@ pub fn build_ingredients_panel(
         .spawn((
             NodeBundle {
                 style: Style {
-                    size: Size::new(Val::Percent(33.33), Val::Percent(100.)),
+                    size: Size::new(Val::Px(300.), Val::Percent(100.)),
                     flex_wrap: FlexWrap::Wrap,
                     ..default()
                 },
