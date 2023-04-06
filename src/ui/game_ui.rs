@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::{
     assets::{assets_data::Ingredient, resources_standard::UiAssets},
-    style::color::{PALETTE_GOLD, PALETTE_PURPLE},
+    style::color::PALETTE_PURPLE,
     ui::buttons::IngredientButton,
     world::{despawn::despawn_entity, global_state::GlobalState},
 };

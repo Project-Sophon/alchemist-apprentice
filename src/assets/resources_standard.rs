@@ -7,7 +7,7 @@ pub struct GlobalAssets {
     pub splash: Handle<Image>,
     #[asset(path = "branding/main_menu.png")]
     pub main_menu_banner: Handle<Image>,
-    #[asset(path = "fonts/FiraCode-Bold.ttf")]
+    #[asset(path = "fonts/DePixelKlein.ttf")]
     pub font: Handle<Font>,
     #[asset(path = "textures/ui/right.png")]
     pub right: Handle<Image>,
