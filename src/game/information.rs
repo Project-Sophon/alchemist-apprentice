@@ -41,8 +41,10 @@ fn update_information_panel(
     }
 
     if let Ok(target) = panel_content.get_single() {
-        commands.entity(target).clear_children();
+        // remove existing child elements
+        commands.entity(target).despawn_descendants();
 
+        // spawn new elements
         commands.entity(target).with_children(|parent| {
             match &selected_ingredient.ingredient {
                 Some(handle) => build_ingredient_information(
