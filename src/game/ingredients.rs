@@ -47,12 +47,20 @@ pub struct IngredientButton {
     ingredient: Handle<Ingredient>,
 }
 
+#[derive(Reflect, Component, Default)]
+#[reflect(Component)]
+pub struct SelectedIngredientButton;
+
 // ------ SYSTEMS ------
 
 fn ingredient_button_interactions(
     mut interaction_query: Query<
         (&Interaction, &mut IngredientButton, &mut BackgroundColor),
-        (Changed<Interaction>, Without<DisabledUiElement>),
+        (
+            Changed<Interaction>,
+            Without<DisabledUiElement>,
+            Without<SelectedIngredientButton>,
+        ),
     >,
     mut selected_ingredient: ResMut<SelectedIngredient>,
 ) {
@@ -61,20 +69,22 @@ fn ingredient_button_interactions(
             Interaction::Clicked => {
                 // Update the selected ingredient (handle)
                 selected_ingredient.ingredient = Some(ingredient_button.ingredient.clone());
-                // *color = Color::hex(PALETTE_CREAM).unwrap().into();
+
+                *color = Color::hex(PALETTE_CREAM).unwrap().into();
             }
             Interaction::Hovered => {
-                // *color = Color::hex(PALETTE_GOLD).unwrap().into();
+                *color = Color::hex(PALETTE_GOLD).unwrap().into();
             }
             Interaction::None => {
-                // *color = Color::hex(PALETTE_DARK_GOLD).unwrap().into();
+                *color = Color::hex(PALETTE_DARK_GOLD).unwrap().into();
             }
         }
     }
 }
 
 fn highlight_selected_ingredient(
-    mut ingredient_buttons: Query<(&IngredientButton, &mut BackgroundColor)>,
+    mut commands: Commands,
+    mut ingredient_buttons: Query<(Entity, &IngredientButton, &mut BackgroundColor)>,
     selected_ingredient: Res<SelectedIngredient>,
 ) {
     // only run when the selected ingredient has changed!
@@ -82,31 +92,24 @@ fn highlight_selected_ingredient(
         return;
     }
 
-    // update background color for all buttons
-    for (button, mut color) in &mut ingredient_buttons {
-        let new_color = selected_ingredient
-            .ingredient
-            .clone()
-            .map(|selected| {
-                if let HandleId::Id(id1, _) = selected.id() {
-                    info!("Selected: {}", id1);
-                }
-
-                if let HandleId::Id(id2, _) = button.ingredient.id() {
-                    info!("Button: {}", id2);
-                }
-
+    match &selected_ingredient.ingredient {
+        Some(selected) => {
+            for (entity, button, mut color) in &mut ingredient_buttons {
                 if selected.id() == button.ingredient.id() {
-                    // todo: this is working but not sticking around for some reasons
-                    return Color::hex(PALETTE_DARK_BLUE).unwrap();
-                    // return Color::hex(PALETTE_CREAM).unwrap();
+                    commands.entity(entity).insert(SelectedIngredientButton);
+                    *color = Color::hex(PALETTE_CREAM).unwrap().into();
                 } else {
-                    return Color::hex(PALETTE_DARK_GOLD).unwrap();
+                    commands.entity(entity).remove::<SelectedIngredientButton>();
+                    *color = Color::hex(PALETTE_DARK_GOLD).unwrap().into();
                 }
-            })
-            .unwrap_or(Color::hex(PALETTE_DARK_GOLD).unwrap());
-
-        *color = new_color.into();
+            }
+        }
+        None => {
+            for (entity, _, mut color) in &mut ingredient_buttons {
+                commands.entity(entity).remove::<SelectedIngredientButton>();
+                *color = Color::hex(PALETTE_DARK_GOLD).unwrap().into();
+            }
+        }
     }
 }
 
