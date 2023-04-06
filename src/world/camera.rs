@@ -1,8 +1,7 @@
 use bevy::prelude::*;
 use bevy_pixel_camera::{PixelBorderPlugin, PixelCameraBundle, PixelCameraPlugin};
 
-pub const WINDOW_WIDTH: i16 = 1024;
-pub const WINDOW_HEIGHT: i16 = 768;
+use super::common::{WINDOW_WIDTH, WINDOW_HEIGHT};
 
 pub struct CameraPlugin;
 

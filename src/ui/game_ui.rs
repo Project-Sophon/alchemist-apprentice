@@ -4,20 +4,24 @@ use crate::{
     assets::{assets_data::Ingredient, resources_standard::UiAssets},
     style::color::PALETTE_PURPLE,
     ui::buttons::IngredientButton,
-    world::{despawn::despawn_entity, global_state::GlobalState},
+    world::{
+        common::{WINDOW_HEIGHT, WINDOW_WIDTH},
+        despawn::despawn_entity,
+        global_state::GlobalState,
+    },
 };
 
 pub struct GameUiPlugin;
 impl Plugin for GameUiPlugin {
     fn build(&self, app: &mut App) {
         app.add_system(game_ui_setup.in_schedule(OnEnter(GlobalState::Game)))
-            .add_system(despawn_entity::<GameUI>.in_schedule(OnExit(GlobalState::Game)));
+            .add_system(despawn_entity::<GameUiContainer>.in_schedule(OnExit(GlobalState::Game)));
     }
 }
 
 #[derive(Reflect, Component, Default)]
 #[reflect(Component)]
-pub struct GameUI;
+pub struct GameUiContainer;
 
 #[derive(Reflect, Component, Default)]
 #[reflect(Component)]
@@ -38,25 +42,45 @@ fn game_ui_setup(
 ) {
     commands
         .spawn((
-            ImageBundle {
+            NodeBundle {
                 style: Style {
-                    size: Size::new(Val::Percent(100.0), Val::Px(456.0)),
-                    align_self: AlignSelf::FlexEnd,
-                    flex_direction: FlexDirection::Row,
-                    padding: UiRect::all(Val::Px(20.)),
-                    gap: Size::all(Val::Px(20.)),
+                    align_self: AlignSelf::Center,
+                    margin: UiRect {
+                        left: Val::Auto,
+                        right: Val::Auto,
+                        top: Val::Undefined,
+                        bottom: Val::Undefined,
+                    },
+                    size: Size::new(Val::Px(WINDOW_WIDTH.into()), Val::Px(WINDOW_HEIGHT.into())),
                     ..default()
                 },
-                image: ui_assets.game_ui_bkg.clone().into(),
                 ..default()
             },
-            GameUI,
-            Name::new("Game UI"),
+            GameUiContainer,
+            Name::new("Game UI Container"),
         ))
         .with_children(|parent| {
-            build_ingredients_panel(parent, ingredients);
-            build_information_panel(parent);
-            build_potion_panel(parent);
+            parent
+                .spawn((
+                    ImageBundle {
+                        style: Style {
+                            size: Size::new(Val::Px(WINDOW_WIDTH.into()), Val::Px(456.0)),
+                            align_self: AlignSelf::FlexEnd,
+                            flex_direction: FlexDirection::Row,
+                            padding: UiRect::all(Val::Px(20.)),
+                            gap: Size::all(Val::Px(20.)),
+                            ..default()
+                        },
+                        image: ui_assets.game_ui_bkg.clone().into(),
+                        ..default()
+                    },
+                    Name::new("Game UI Control Area"),
+                ))
+                .with_children(|parent| {
+                    build_ingredients_panel(parent, ingredients);
+                    build_information_panel(parent);
+                    build_potion_panel(parent);
+                });
         });
 }
 
@@ -79,7 +103,6 @@ fn build_ingredients_panel(
         ))
         .with_children(|parent| {
             for (_id, ingredient) in ingredients.iter() {
-                info!(ingredient.name);
                 parent
                     .spawn((
                         NodeBundle {

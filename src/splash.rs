@@ -1,6 +1,11 @@
 use crate::{
-    assets::resources_standard::GlobalAssets, style::color::GAME_BACKGROUND_COLOR,
-    world::despawn::despawn_entity, GlobalState,
+    assets::resources_standard::GlobalAssets,
+    style::color::GAME_BACKGROUND_COLOR,
+    world::{
+        common::{WINDOW_HEIGHT, WINDOW_WIDTH},
+        despawn::despawn_entity,
+    },
+    GlobalState,
 };
 use bevy::prelude::*;
 
@@ -27,9 +32,16 @@ fn setup_splash(mut commands: Commands, global_assets: Res<GlobalAssets>) {
         .spawn((
             NodeBundle {
                 style: Style {
+                    align_self: AlignSelf::Center,
+                    margin: UiRect {
+                        left: Val::Auto,
+                        right: Val::Auto,
+                        top: Val::Undefined,
+                        bottom: Val::Undefined,
+                    },
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
-                    size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
+                    size: Size::new(Val::Px(WINDOW_WIDTH.into()), Val::Px(WINDOW_HEIGHT.into())),
                     ..default()
                 },
                 background_color: Color::hex(GAME_BACKGROUND_COLOR).unwrap().into(),

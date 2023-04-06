@@ -8,7 +8,7 @@ mod world;
 
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use world::{
-    camera::{WINDOW_HEIGHT, WINDOW_WIDTH},
+    common::{WINDOW_HEIGHT, WINDOW_WIDTH},
     global_state::GlobalState,
 };
 

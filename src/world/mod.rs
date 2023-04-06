@@ -1,5 +1,6 @@
 use bevy::{app::PluginGroupBuilder, prelude::*};
 
+pub mod common;
 pub mod camera;
 pub mod despawn;
 pub mod level;
