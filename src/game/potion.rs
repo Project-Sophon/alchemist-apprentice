@@ -115,11 +115,20 @@ pub fn build_potion_panel(commands: &mut ChildBuilder, ui_assets: &Res<UiAssets>
 }
 
 pub fn spawn_potion_mix_slot(commands: &mut ChildBuilder, icon: &Handle<Image>, index: usize) {
+    let (pox_x, pos_y): (f32, f32) = match index {
+        0 => (82., -7.),
+        1 => (41., 66.),
+        2 => (123., 66.),
+        _ => (0., 0.),
+    };
+
     commands
         .spawn((
             ButtonBundle {
                 style: Style {
                     size: Size::new(Val::Px(64.), Val::Percent(64.)),
+                    position: UiRect::new(Val::Px(pox_x), Val::Undefined, Val::Px(pos_y), Val::Undefined),
+                    position_type: PositionType::Absolute,
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
                     ..default()
