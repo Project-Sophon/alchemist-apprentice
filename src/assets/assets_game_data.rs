@@ -23,7 +23,7 @@ pub struct Ingredient {
     pub used: bool,
 }
 
-#[derive(serde::Deserialize, Debug, Clone)]
+#[derive(serde::Deserialize, Debug, Clone, PartialEq, Eq, Hash)]
 pub enum SymptomClass {
     Pain,
     STI,

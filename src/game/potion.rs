@@ -1,5 +1,5 @@
-use core::fmt;
 use bevy::prelude::*;
+use core::fmt;
 
 use crate::{
     assets::{assets_game_data::Ingredient, resources_standard::UiAssets},
@@ -145,8 +145,7 @@ fn slot_interactions(
                 // Get Handles and update PotionMix resource
                 let handle = selected_ingredient.ingredient.clone().unwrap();
                 let ingredient = ingredients.get(&handle).unwrap();
-                potion_mix
-                    .update_ingredients(potion_mix_slot.index, Option::Some(handle.clone()));
+                potion_mix.update_ingredients(potion_mix_slot.index, Option::Some(handle.clone()));
 
                 // Despawn the default slot icon
                 commands.entity(entity).despawn_descendants();
