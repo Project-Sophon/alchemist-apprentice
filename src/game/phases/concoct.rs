@@ -1,6 +1,7 @@
 use crate::{
     assets::assets_game_data::{Ingredient, SymptomClass},
     game::potion::PotionMix,
+    style::color::PALETTE_DARK_BLUE,
     ui::disable_ui::EnableUiElement,
     world::global_state::GlobalState,
 };
@@ -59,20 +60,41 @@ pub fn concoct_interaction(
     }
 }
 
-pub fn spawn_concoct_action(commands: &mut ChildBuilder, icon: &Handle<Image>) {
-    commands.spawn((
-        ButtonBundle {
-            style: Style {
-                size: Size::new(Val::Px(64.), Val::Percent(32.)),
+pub fn spawn_concoct_action(
+    commands: &mut ChildBuilder,
+    background_img: &Handle<Image>,
+    font: &Handle<Font>,
+) {
+    commands
+        .spawn((
+            ButtonBundle {
+                style: Style {
+                    size: Size::new(Val::Px(132.), Val::Px(36.)),
+                    ..default()
+                },
+                image: UiImage::new(background_img.clone()),
                 ..default()
             },
-            image: UiImage::new(icon.clone()),
-            ..default()
-        },
-        ConcoctAction,
-        EnableUiElement,
-        Name::new("Concoct Action"),
-    ));
+            ConcoctAction,
+            Name::new("Concoct Action"),
+        ))
+        .with_children(|parent| {
+            parent.spawn(TextBundle {
+                text: Text::from_section(
+                    "CONCOCT",
+                    TextStyle {
+                        font: font.clone(),
+                        font_size: 18.,
+                        color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+                    },
+                ),
+                style: Style {
+                    margin: UiRect::new(Val::Px(34.), Val::Undefined, Val::Px(11.), Val::Undefined),
+                    ..default()
+                },
+                ..default()
+            });
+        });
 }
 
 pub fn _concoct(potion_mix: PotionMix, ingredients: &Res<Assets<Ingredient>>) -> Concoction {

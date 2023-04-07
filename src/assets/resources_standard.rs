@@ -35,10 +35,8 @@ pub struct UiAssets {
     pub potion_circle_slot_hover: Handle<Image>,
     #[asset(path = "textures/ui/potion_circle_slot_occupied.png")]
     pub potion_circle_slot_occupied: Handle<Image>,
-    #[asset(path = "textures/ui/plus_dark_gold_64.png")]
-    pub plus_dark_gold_64: Handle<Image>,
-    #[asset(path = "textures/ui/concoct.png")]
-    pub concoct: Handle<Image>,
+    #[asset(path = "textures/ui/concoct_button_normal.png")]
+    pub concoct_button_normal: Handle<Image>,
 }
 
 #[derive(AssetCollection, Resource)]

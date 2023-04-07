@@ -2,7 +2,10 @@ use bevy::prelude::*;
 use core::fmt;
 
 use crate::{
-    assets::{assets_game_data::Ingredient, resources_standard::UiAssets},
+    assets::{
+        assets_game_data::Ingredient,
+        resources_standard::{GlobalAssets, UiAssets},
+    },
     style::color::PALETTE_PURPLE,
     world::global_state::GlobalState,
 };
@@ -69,14 +72,19 @@ pub struct FilledMixSlot;
 
 // ------ SYSTEMS ------
 
-pub fn build_potion_panel(commands: &mut ChildBuilder, ui_assets: &Res<UiAssets>) -> Entity {
+pub fn build_potion_panel(
+    commands: &mut ChildBuilder,
+    global_assets: &Res<GlobalAssets>,
+    ui_assets: &Res<UiAssets>,
+) -> Entity {
     commands
         .spawn((
             NodeBundle {
                 style: Style {
-                    size: Size::new(Val::Px(228.), Val::Percent(100.)),
+                    size: Size::new(Val::Px(228.), Val::Px(360.)),
+                    flex_direction: FlexDirection::Column,
                     align_items: AlignItems::Center,
-                    justify_content: JustifyContent::Center,
+                    justify_content: JustifyContent::SpaceEvenly,
                     ..default()
                 },
                 ..default()
@@ -109,17 +117,23 @@ pub fn build_potion_panel(commands: &mut ChildBuilder, ui_assets: &Res<UiAssets>
                 });
 
             // Spawn Concoct Button
-            spawn_concoct_action(parent, &ui_assets.concoct);
+            spawn_concoct_action(
+                parent,
+                &ui_assets.concoct_button_normal,
+                &global_assets.font_bold,
+            );
         })
         .id()
 }
 
 pub fn spawn_potion_mix_slot(commands: &mut ChildBuilder, icon: &Handle<Image>, index: usize) {
+    // Compute button position based on index
     let (pox_x, pos_y): (f32, f32) = match index {
         0 => (82., -7.),
         1 => (41., 66.),
         2 => (123., 66.),
-        _ => (0., 0.),
+        // draw unknown values off screen
+        _ => (1000., 1000.),
     };
 
     commands
@@ -127,7 +141,12 @@ pub fn spawn_potion_mix_slot(commands: &mut ChildBuilder, icon: &Handle<Image>, 
             ButtonBundle {
                 style: Style {
                     size: Size::new(Val::Px(64.), Val::Percent(64.)),
-                    position: UiRect::new(Val::Px(pox_x), Val::Undefined, Val::Px(pos_y), Val::Undefined),
+                    position: UiRect::new(
+                        Val::Px(pox_x),
+                        Val::Undefined,
+                        Val::Px(pos_y),
+                        Val::Undefined,
+                    ),
                     position_type: PositionType::Absolute,
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
@@ -164,7 +183,7 @@ fn slot_interactions(
         return;
     }
 
-    for (entity, interaction, mut potion_mix_slot) in &mut interaction_query {
+    for (entity, interaction, potion_mix_slot) in &mut interaction_query {
         match *interaction {
             Interaction::Clicked => {
                 // Get Handles and update PotionMix resource
