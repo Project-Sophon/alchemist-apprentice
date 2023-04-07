@@ -2,7 +2,6 @@ use bevy::prelude::*;
 
 use crate::{
     assets::{assets_game_data::Ingredient, resources_standard::UiAssets},
-    style::color::{PALETTE_CREAM, PALETTE_DARK_GOLD, PALETTE_GOLD},
     ui::disable_ui::DisabledUiElement,
     world::global_state::GlobalState,
 };

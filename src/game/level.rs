@@ -96,6 +96,7 @@ fn build_level(
                                     size: Size::new(Val::Px(WINDOW_WIDTH.into()), Val::Px(456.0)),
                                     align_self: AlignSelf::FlexEnd,
                                     flex_direction: FlexDirection::Row,
+                                    align_items: AlignItems::Center,
                                     padding: UiRect::all(Val::Px(20.)),
                                     gap: Size::all(Val::Px(20.)),
                                     ..default()
@@ -113,6 +114,7 @@ fn build_level(
                                 &selected_ingredient,
                                 &global_assets.font,
                                 &global_assets.font_bold,
+                                &ui_assets,
                             );
                             build_potion_panel(parent, &ui_assets);
                         });

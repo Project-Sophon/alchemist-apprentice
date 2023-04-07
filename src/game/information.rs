@@ -1,7 +1,10 @@
 use bevy::prelude::*;
 
 use crate::{
-    assets::{assets_game_data::Ingredient, resources_standard::GlobalAssets},
+    assets::{
+        assets_game_data::Ingredient,
+        resources_standard::{GlobalAssets, UiAssets},
+    },
     style::color::{PALETTE_CREAM, PALETTE_DARK_BLUE},
     world::global_state::GlobalState,
 };
@@ -30,7 +33,7 @@ pub struct InformationPanelContent;
 
 fn update_information_panel(
     mut commands: Commands,
-    panel_content: Query<Entity, With<InformationPanelContent>>,
+    panel_content: Query<Entity, With<InformationPanel>>,
     ingredients: Res<Assets<Ingredient>>,
     selected_ingredient: Res<SelectedIngredient>,
     global_assets: Res<GlobalAssets>,
@@ -65,45 +68,32 @@ pub fn build_information_panel(
     selected_ingredient: &Res<SelectedIngredient>,
     font: &Handle<Font>,
     font_bold: &Handle<Font>,
+    ui_assets: &Res<UiAssets>,
 ) -> Entity {
     commands
         .spawn((
-            NodeBundle {
+            ImageBundle {
                 style: Style {
-                    size: Size::new(Val::Px(344.), Val::Percent(100.)),
+                    size: Size::new(Val::Px(344.), Val::Px(378.)),
+                    align_items: AlignItems::Center,
+                    justify_content: JustifyContent::Center,
+                    flex_direction: FlexDirection::Column,
                     ..default()
                 },
+                image: ui_assets.info_panel_bkg.clone().into(),
                 ..default()
             },
             InformationPanel,
             Name::new("Information Panel"),
         ))
-        .with_children(|parent| {
-            parent
-                .spawn((
-                    NodeBundle {
-                        style: Style {
-                            size: Size::new(Val::Px(344.), Val::Px(408.)),
-                            align_items: AlignItems::Center,
-                            justify_content: JustifyContent::Center,
-                            flex_direction: FlexDirection::Column,
-                            ..default()
-                        },
-                        background_color: Color::hex(PALETTE_CREAM).unwrap().into(),
-                        ..default()
-                    },
-                    InformationPanelContent,
-                    Name::new("Information Panel Content"),
-                ))
-                .with_children(|parent| match &selected_ingredient.ingredient {
-                    Some(handle) => build_ingredient_information(
-                        parent,
-                        font,
-                        font_bold,
-                        ingredients.get(handle).unwrap(),
-                    ),
-                    None => build_default_information_text(parent, font),
-                });
+        .with_children(|parent| match &selected_ingredient.ingredient {
+            Some(handle) => build_ingredient_information(
+                parent,
+                font,
+                font_bold,
+                ingredients.get(handle).unwrap(),
+            ),
+            None => build_default_information_text(parent, font),
         })
         .id()
 }
