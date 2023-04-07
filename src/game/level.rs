@@ -97,8 +97,8 @@ fn build_level(
                                     align_self: AlignSelf::FlexEnd,
                                     flex_direction: FlexDirection::Row,
                                     align_items: AlignItems::Center,
+                                    justify_content: JustifyContent::SpaceEvenly,
                                     padding: UiRect::all(Val::Px(20.)),
-                                    gap: Size::all(Val::Px(20.)),
                                     ..default()
                                 },
                                 image: ui_assets.game_ui_bkg.clone().into(),

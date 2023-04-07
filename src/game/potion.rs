@@ -55,6 +55,10 @@ pub struct PotionPanel;
 
 #[derive(Reflect, Component, Default)]
 #[reflect(Component)]
+pub struct PotionCircle;
+
+#[derive(Reflect, Component, Default)]
+#[reflect(Component)]
 pub struct PotionMixSlot {
     pub index: usize,
 }
@@ -70,7 +74,7 @@ pub fn build_potion_panel(commands: &mut ChildBuilder, ui_assets: &Res<UiAssets>
         .spawn((
             NodeBundle {
                 style: Style {
-                    size: Size::new(Val::Px(300.), Val::Percent(100.)),
+                    size: Size::new(Val::Px(228.), Val::Percent(100.)),
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
                     ..default()
@@ -81,25 +85,31 @@ pub fn build_potion_panel(commands: &mut ChildBuilder, ui_assets: &Res<UiAssets>
             Name::new("Potion Panel"),
         ))
         .with_children(|parent| {
+            // Spawn Potion Circle
             parent
-                .spawn(NodeBundle {
-                    style: Style {
-                        size: Size::new(Val::Px(208.), Val::Px(200.)),
-                        align_items: AlignItems::Center,
-                        justify_content: JustifyContent::Center,
-                        flex_direction: FlexDirection::Row,
-                        flex_wrap: FlexWrap::Wrap,
+                .spawn((
+                    ImageBundle {
+                        style: Style {
+                            size: Size::new(Val::Px(228.), Val::Px(238.)),
+                            align_items: AlignItems::Center,
+                            justify_content: JustifyContent::Center,
+                            flex_direction: FlexDirection::Row,
+                            ..default()
+                        },
+                        image: UiImage::new(ui_assets.potion_circle_bkg.clone()),
                         ..default()
                     },
-                    background_color: Color::hex(PALETTE_PURPLE).unwrap().into(),
-                    ..default()
-                })
+                    PotionCircle,
+                    Name::new("Potion Circle"),
+                ))
                 .with_children(|parent| {
-                    spawn_potion_mix_slot(parent, &ui_assets.plus_dark_gold_64, 0);
-                    spawn_potion_mix_slot(parent, &ui_assets.plus_dark_gold_64, 1);
-                    spawn_potion_mix_slot(parent, &ui_assets.plus_dark_gold_64, 2);
-                    spawn_concoct_action(parent, &ui_assets.concoct);
+                    spawn_potion_mix_slot(parent, &ui_assets.potion_circle_slot_empty, 0);
+                    spawn_potion_mix_slot(parent, &ui_assets.potion_circle_slot_empty, 1);
+                    spawn_potion_mix_slot(parent, &ui_assets.potion_circle_slot_empty, 2);
                 });
+
+            // Spawn Concoct Button
+            spawn_concoct_action(parent, &ui_assets.concoct);
         })
         .id()
 }
@@ -114,6 +124,7 @@ pub fn spawn_potion_mix_slot(commands: &mut ChildBuilder, icon: &Handle<Image>, 
                     justify_content: JustifyContent::Center,
                     ..default()
                 },
+                background_color: BackgroundColor::from(Color::rgba(0., 0., 0., 0.)),
                 ..default()
             },
             PotionMixSlot { index: index },
