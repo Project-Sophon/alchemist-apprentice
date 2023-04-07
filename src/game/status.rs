@@ -1,7 +1,6 @@
 use bevy::prelude::*;
-use bevy_inspector_egui::egui::Margin;
 
-use crate::style::color::{PALETTE_CREAM, PALETTE_DARK_BLUE};
+use crate::style::color::{PALETTE_CREAM};
 
 pub struct StatusPlugin;
 impl Plugin for StatusPlugin {
