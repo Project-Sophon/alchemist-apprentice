@@ -142,12 +142,17 @@ fn slot_interactions(
     for (entity, interaction, mut potion_mix_slot) in &mut interaction_query {
         match *interaction {
             Interaction::Clicked => {
+                // Get Handles and update PotionMix resource
+                let handle = selected_ingredient.ingredient.clone().unwrap();
+                let ingredient = ingredients.get(&handle).unwrap();
+                potion_mix
+                    .update_ingredients(potion_mix_slot.index, Option::Some(handle.clone()));
+
+                // Despawn the default slot icon
                 commands.entity(entity).despawn_descendants();
+
+                // Add texture of the ingredient
                 commands.entity(entity).with_children(|parent| {
-                    let handle = selected_ingredient.ingredient.clone().unwrap();
-                    let ingredient = ingredients.get(&handle).unwrap();
-                    potion_mix
-                        .update_ingredients(potion_mix_slot.index, Option::Some(handle.clone()));
                     parent.spawn((
                         ImageBundle {
                             image: UiImage::new(ingredient.texture.clone()),
@@ -155,9 +160,10 @@ fn slot_interactions(
                         },
                         Name::new(format!("Selected: {}", ingredient.name)),
                     ));
-
-                    info!("{}", potion_mix.to_string());
                 });
+
+                // Log inner array
+                info!("{}", potion_mix.to_string());
             }
             Interaction::Hovered => {}
             Interaction::None => {}
