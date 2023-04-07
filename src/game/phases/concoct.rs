@@ -1,5 +1,8 @@
 use crate::{
-    assets::assets_game_data::{Ingredient, SymptomClass},
+    assets::{
+        assets_game_data::{Ingredient, SymptomClass},
+        resources_standard::UiAssets,
+    },
     game::potion::PotionMix,
     style::color::PALETTE_DARK_BLUE,
     ui::disable_ui::EnableUiElement,
@@ -43,19 +46,28 @@ impl fmt::Display for Concoction {
 
 pub fn concoct_interaction(
     mut commands: Commands,
-    mut interaction_query: Query<(Entity, &Interaction, &mut ConcoctAction), With<EnableUiElement>>,
+    mut interaction_query: Query<
+        (Entity, &Interaction, &mut UiImage),
+        (With<ConcoctAction>, With<EnableUiElement>),
+    >,
     potion_mix: Res<PotionMix>,
     ingredients: Res<Assets<Ingredient>>,
+    ui_assets: Res<UiAssets>,
 ) {
-    for (entity, interaction, _) in &mut interaction_query {
+    for (entity, interaction, mut ui_image) in &mut interaction_query {
         match *interaction {
             Interaction::Clicked => {
-                let concoction = _concoct(potion_mix.clone(), &ingredients);
+                let concoction = concoct(potion_mix.clone(), &ingredients);
                 info!("{}", concoction.to_string());
                 commands.entity(entity).remove::<EnableUiElement>();
+                ui_image.texture = ui_assets.concoct_button_click.clone();
             }
-            Interaction::Hovered => {}
-            Interaction::None => {}
+            Interaction::Hovered => {
+                ui_image.texture = ui_assets.concoct_button_hover.clone();
+            }
+            Interaction::None => {
+                ui_image.texture = ui_assets.concoct_button_normal.clone();
+            }
         }
     }
 }
@@ -98,7 +110,7 @@ pub fn spawn_concoct_action(
         });
 }
 
-pub fn _concoct(potion_mix: PotionMix, ingredients: &Res<Assets<Ingredient>>) -> Concoction {
+pub fn concoct(potion_mix: PotionMix, ingredients: &Res<Assets<Ingredient>>) -> Concoction {
     let mut cures: HashSet<SymptomClass> = HashSet::new();
     let mut causes: HashSet<SymptomClass> = HashSet::new();
     let mut toxicity: i32 = 0;
@@ -121,6 +133,7 @@ pub fn _concoct(potion_mix: PotionMix, ingredients: &Res<Assets<Ingredient>>) ->
         }
     }
 
+    // return Concoction
     Concoction {
         toxicity: toxicity,
         cures: cures,
