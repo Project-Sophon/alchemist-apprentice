@@ -5,7 +5,7 @@ pub mod information;
 pub mod ingredients;
 pub mod level;
 pub mod potion;
-pub mod states;
+pub mod phases;
 
 use self::{
     game_phase::GamePhasePlugin,
@@ -13,7 +13,7 @@ use self::{
     ingredients::IngredientsPlugin,
     level::LevelPlugin,
     potion::PotionPlugin,
-    states::{concoct::ConcoctPlugin, potion_assembly::PotionAssemblyPlugin},
+    phases::{concoct::ConcoctPlugin, potion_assembly::PotionAssemblyPlugin},
 };
 
 pub struct DefaultGamePlugins;

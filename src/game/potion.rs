@@ -7,7 +7,7 @@ use crate::{
     world::global_state::GlobalState,
 };
 
-use super::{ingredients::SelectedIngredient, states::concoct::spawn_concoct_action};
+use super::{ingredients::SelectedIngredient, phases::concoct::spawn_concoct_action};
 
 pub struct PotionPlugin;
 impl Plugin for PotionPlugin {
