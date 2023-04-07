@@ -10,30 +10,30 @@ use super::assets_game_data::{Ingredient, Symptom, SymptomClass};
 
 #[derive(AssetCollection, Resource)]
 pub struct IngredientAssets {
-    #[asset(key = "newt_eyes")]
-    pub newt_eyes: Handle<Ingredient>,
-    #[asset(key = "toad_legs")]
-    pub toad_legs: Handle<Ingredient>,
-    #[asset(key = "lizard_tail")]
-    pub lizard_tail: Handle<Ingredient>,
-    #[asset(key = "silver")]
-    pub silver: Handle<Ingredient>,
-    #[asset(key = "lead")]
-    pub lead: Handle<Ingredient>,
-    #[asset(key = "dragon_breath")]
-    pub dragon_breath: Handle<Ingredient>,
-    #[asset(key = "mandrake")]
-    pub mandrake: Handle<Ingredient>,
-    #[asset(key = "worms_jar")]
-    pub worms_jar: Handle<Ingredient>,
-    #[asset(key = "jezebel_root")]
-    pub jezebel_root: Handle<Ingredient>,
-    #[asset(key = "deer_antlers")]
-    pub deer_antlers: Handle<Ingredient>,
-    #[asset(key = "deaths_bush")]
-    pub deaths_bush: Handle<Ingredient>,
-    #[asset(key = "phoenix_feather")]
-    pub phoenix_feather: Handle<Ingredient>,
+    #[asset(key = "solisaurum")]
+    pub solisaurum: Handle<Ingredient>,
+    #[asset(key = "lunadewleaf")]
+    pub lunadewleaf: Handle<Ingredient>,
+    #[asset(key = "draconiscale")]
+    pub draconiscale: Handle<Ingredient>,
+    #[asset(key = "celestine_crystal")]
+    pub celestine_crystal: Handle<Ingredient>,
+    #[asset(key = "venombane_flower")]
+    pub venombane_flower: Handle<Ingredient>,
+    #[asset(key = "ignisroot")]
+    pub ignisroot: Handle<Ingredient>,
+    #[asset(key = "aquamaris_pearl")]
+    pub aquamaris_pearl: Handle<Ingredient>,
+    #[asset(key = "ethernium_dust")]
+    pub ethernium_dust: Handle<Ingredient>,
+    #[asset(key = "verdantia_leaf")]
+    pub verdantia_leaf: Handle<Ingredient>,
+    #[asset(key = "phantasma_essence")]
+    pub phantasma_essence: Handle<Ingredient>,
+    #[asset(key = "amethyst_ember")]
+    pub amethyst_ember: Handle<Ingredient>,
+    #[asset(key = "silvermist_moss")]
+    pub silvermist_moss: Handle<Ingredient>,
 }
 
 #[derive(AssetCollection, Resource)]
@@ -63,10 +63,10 @@ enum GameDataAsset {
     Symptom {
         name: String,
         class: Vec<SymptomClass>,
-        description: String,
     },
     Ingredient {
         name: String,
+        description: String,
         texture: String,
         cures: Vec<SymptomClass>,
         causes: Vec<SymptomClass>,
@@ -90,11 +90,7 @@ impl DynamicAsset for GameDataAsset {
             .expect("Failed to get asset server");
 
         match self {
-            GameDataAsset::Symptom {
-                name,
-                class,
-                description,
-            } => {
+            GameDataAsset::Symptom { name, class } => {
                 let mut symptoms = cell
                     .get_resource_mut::<Assets<Symptom>>()
                     .expect("Failed to get symptom asset");
@@ -103,7 +99,6 @@ impl DynamicAsset for GameDataAsset {
                     .add(Symptom {
                         name: name.clone(),
                         class: class.clone(),
-                        description: description.clone(),
                     })
                     .clone_untyped();
 
@@ -111,6 +106,7 @@ impl DynamicAsset for GameDataAsset {
             }
             GameDataAsset::Ingredient {
                 name,
+                description,
                 texture,
                 cures,
                 causes,
@@ -124,6 +120,7 @@ impl DynamicAsset for GameDataAsset {
                 let handle = ingredients
                     .add(Ingredient {
                         name: name.clone(),
+                        description: description.clone(),
                         texture: asset_server.load(texture.clone()),
                         cures: cures.clone(),
                         causes: causes.clone(),

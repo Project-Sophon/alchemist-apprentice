@@ -1,17 +1,14 @@
 ({
   "headache": Symptom (
       name: "Headache",
-      description: "Pain in the head can be caused by a variety of reasons",
       class: [Pain]
     ),
   "genital_sores": Symptom (
       name: "Genital Sores",
-      description: "A result of poor choices",
       class: [STI]
     ),
   "flatulence": Symptom (
       name: "Flatuence",
-      description: "Loud and stinky",
       class: [Gastro]
     )
 })

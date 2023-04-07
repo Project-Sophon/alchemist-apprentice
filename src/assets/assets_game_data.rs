@@ -8,13 +8,13 @@ use bevy::{
 pub struct Symptom {
     pub name: String,
     pub class: Vec<SymptomClass>,
-    pub description: String,
 }
 
 #[derive(TypeUuid)]
 #[uuid = "9f249ef7-0fbe-441e-bf87-6cacdc9340e4"]
 pub struct Ingredient {
     pub name: String,
+    pub description: String,
     pub texture: Handle<Image>,
     pub cures: Vec<SymptomClass>,
     pub causes: Vec<SymptomClass>,
