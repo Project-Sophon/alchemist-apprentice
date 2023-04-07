@@ -7,7 +7,7 @@ use crate::{
 };
 
 pub struct Concoction {
-    toxicity: i32,
+    pub toxicity: i32,
     pub cures: HashSet<SymptomClass>,
     pub causes: HashSet<SymptomClass>,
 }
