@@ -4,16 +4,16 @@ pub mod game_phase;
 pub mod information;
 pub mod ingredients;
 pub mod level;
-pub mod potion;
 pub mod phases;
+pub mod potion;
 
 use self::{
     game_phase::GamePhasePlugin,
     information::InformationPlugin,
     ingredients::IngredientsPlugin,
     level::LevelPlugin,
-    potion::PotionPlugin,
     phases::{concoct::ConcoctPlugin, potion_assembly::PotionAssemblyPlugin},
+    potion::PotionPlugin,
 };
 
 pub struct DefaultGamePlugins;

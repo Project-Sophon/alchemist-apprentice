@@ -1,8 +1,10 @@
 use bevy::prelude::*;
 use core::fmt;
+use std::borrow::Borrow;
 
 use crate::{
     assets::{
+        self,
         assets_game_data::Ingredient,
         resources_standard::{GlobalAssets, UiAssets},
     },
@@ -127,11 +129,14 @@ pub fn build_potion_panel(
 }
 
 pub fn spawn_potion_mix_slot(commands: &mut ChildBuilder, icon: &Handle<Image>, index: usize) {
+    // In the potion slot, the top slot is the reference point for the stable start position
+    let stable_start_pos = (82., 38.);
+
     // Compute button position based on index
     let (pox_x, pos_y): (f32, f32) = match index {
-        0 => (82., -7.),
-        1 => (41., 66.),
-        2 => (123., 66.),
+        0 => (stable_start_pos.0, stable_start_pos.1),
+        1 => (stable_start_pos.0 - 41., stable_start_pos.1 + 66.),
+        2 => (stable_start_pos.0 + 41., stable_start_pos.1 + 66.),
         // draw unknown values off screen
         _ => (1000., 1000.),
     };
@@ -140,7 +145,7 @@ pub fn spawn_potion_mix_slot(commands: &mut ChildBuilder, icon: &Handle<Image>, 
         .spawn((
             ButtonBundle {
                 style: Style {
-                    size: Size::new(Val::Px(64.), Val::Percent(64.)),
+                    size: Size::new(Val::Px(64.), Val::Px(64.)),
                     position: UiRect::new(
                         Val::Px(pox_x),
                         Val::Undefined,
@@ -164,7 +169,7 @@ pub fn spawn_potion_mix_slot(commands: &mut ChildBuilder, icon: &Handle<Image>, 
                     image: UiImage::new(icon.clone()),
                     ..default()
                 },
-                Name::new("Slot Icon"),
+                Name::new(format!("Empty Slot: {}", index)),
             ));
         });
 }
@@ -178,6 +183,7 @@ fn slot_interactions(
     selected_ingredient: Res<SelectedIngredient>,
     mut potion_mix: ResMut<PotionMix>,
     ingredients: Res<Assets<Ingredient>>,
+    ui_assets: Res<UiAssets>,
 ) {
     if selected_ingredient.ingredient.is_none() {
         return;
@@ -194,22 +200,103 @@ fn slot_interactions(
                 // Despawn the default slot icon
                 commands.entity(entity).despawn_descendants();
 
-                // Add texture of the ingredient
+                // Add texture of the ingredient with correct background
                 commands.entity(entity).with_children(|parent| {
-                    parent.spawn((
-                        ImageBundle {
-                            image: UiImage::new(ingredient.texture.clone()),
-                            ..default()
-                        },
-                        Name::new(format!("Selected: {}", ingredient.name)),
-                    ));
+                    render_occupied_slot(
+                        parent,
+                        ui_assets.potion_circle_slot_occupied.clone(),
+                        ingredient,
+                    );
                 });
 
                 // Log inner array
                 info!("{}", potion_mix.to_string());
             }
-            Interaction::Hovered => {}
-            Interaction::None => {}
+            Interaction::Hovered => {
+                // Should be safe to unwrap as ingredients is a fixed array of Optional<Ingredient>
+                let ingredient_handle = potion_mix.ingredients.get(potion_mix_slot.index).unwrap();
+                match ingredient_handle {
+                    Some(i) => {}
+                    None => {
+                        commands.entity(entity).despawn_descendants();
+                        commands.entity(entity).with_children(|parent| {
+                            parent.spawn((
+                                ImageBundle {
+                                    image: UiImage::new(ui_assets.potion_circle_slot_hover.clone()),
+                                    ..default()
+                                },
+                                Name::new(format!("Hover Slot: {}", potion_mix_slot.index)),
+                            ));
+                        });
+                    }
+                }
+            }
+            Interaction::None => {
+                // Should be safe to unwrap as ingredients is a fixed array of Optional<Ingredient>
+                let ingredient_handle = potion_mix.ingredients.get(potion_mix_slot.index).unwrap();
+                commands.entity(entity).despawn_descendants();
+                match ingredient_handle {
+                    Some(i) => {
+                        // Should also be safe as we don't unload ingredients.
+                        let ingredient_asset = ingredients.get(i).unwrap();
+                        commands.entity(entity).with_children(|parent| {
+                            render_occupied_slot(
+                                parent,
+                                ui_assets.potion_circle_slot_occupied.clone(),
+                                ingredient_asset,
+                            );
+                        });
+                    }
+                    None => {
+                        commands.entity(entity).with_children(|parent| {
+                            parent.spawn((
+                                ImageBundle {
+                                    image: UiImage::new(ui_assets.potion_circle_slot_empty.clone()),
+                                    ..default()
+                                },
+                                Name::new(format!("Empty Slot: {}", potion_mix_slot.index)),
+                            ));
+                        });
+                    }
+                }
+            }
         }
     }
+}
+
+fn render_occupied_slot(
+    parent: &mut ChildBuilder,
+    occupied: Handle<Image>,
+    ingredient: &Ingredient,
+) {
+    parent
+        .spawn(ImageBundle {
+            style: Style {
+                align_items: AlignItems::Center,
+                justify_content: JustifyContent::Center,
+                size: Size {
+                    height: Val::Px(64.),
+                    width: Val::Px(64.),
+                },
+                ..default()
+            },
+            image: UiImage::new(occupied),
+            ..default()
+        })
+        .with_children(|parent| {
+            parent.spawn((
+                ImageBundle {
+                    style: Style {
+                        size: Size {
+                            height: Val::Px(32.),
+                            width: Val::Px(32.),
+                        },
+                        ..default()
+                    },
+                    image: UiImage::new(ingredient.texture.clone()),
+                    ..default()
+                },
+                Name::new(format!("Selected Slot: {}", ingredient.name)),
+            ));
+        });
 }
