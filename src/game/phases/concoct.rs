@@ -76,6 +76,7 @@ pub fn spawn_concoct_action(
                 ..default()
             },
             ConcoctAction,
+            EnableUiElement,
             Name::new("Concoct Action"),
         ))
         .with_children(|parent| {
