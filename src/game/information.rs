@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use serde::__private::de;
 
 use crate::{
     assets::{assets_game_data::Ingredient, resources_standard::GlobalAssets},
@@ -50,6 +51,7 @@ fn update_information_panel(
                 Some(handle) => build_ingredient_information(
                     parent,
                     &global_assets.font,
+                    &global_assets.font_bold,
                     ingredients.get(handle).unwrap(),
                 ),
                 None => build_default_information_text(parent, &global_assets.font),
@@ -63,6 +65,7 @@ pub fn build_information_panel(
     ingredients: &Res<Assets<Ingredient>>,
     selected_ingredient: &Res<SelectedIngredient>,
     font: &Handle<Font>,
+    font_bold: &Handle<Font>,
 ) -> Entity {
     commands
         .spawn((
@@ -94,9 +97,12 @@ pub fn build_information_panel(
                     Name::new("Information Panel Content"),
                 ))
                 .with_children(|parent| match &selected_ingredient.ingredient {
-                    Some(handle) => {
-                        build_ingredient_information(parent, font, ingredients.get(handle).unwrap())
-                    }
+                    Some(handle) => build_ingredient_information(
+                        parent,
+                        font,
+                        font_bold,
+                        ingredients.get(handle).unwrap(),
+                    ),
                     None => build_default_information_text(parent, font),
                 });
         })
@@ -106,29 +112,38 @@ pub fn build_information_panel(
 pub fn build_ingredient_information(
     commands: &mut ChildBuilder,
     font: &Handle<Font>,
+    font_bold: &Handle<Font>,
     ingredient: &Ingredient,
 ) {
     commands.spawn((
         ImageBundle {
             image: UiImage::new(ingredient.texture.clone()),
+            style: Style {
+                margin: UiRect::bottom(Val::Px(20.)),
+                ..default()
+            },
             ..default()
         },
         Name::new("Ingredient Image"),
     ));
     commands.spawn((
         TextBundle {
-            text: Text::from_section(
-                ingredient.name.clone(),
-                TextStyle {
-                    font: font.clone(),
-                    font_size: 16.,
-                    color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
-                },
-            ),
-            style: INFO_TEXT_STYLE,
+            text: Text::from_section(ingredient.name.clone(), get_info_text_style(font_bold)),
+            style: Style {
+                margin: UiRect::bottom(Val::Px(10.)),
+                ..INFO_TEXT_BUNDLE_STYLE
+            },
             ..default()
         },
         Name::new("Ingredient Name"),
+    ));
+    commands.spawn((
+        TextBundle {
+            text: Text::from_section(ingredient.description.clone(), get_info_text_style(font)),
+            style: INFO_TEXT_BUNDLE_STYLE,
+            ..default()
+        },
+        Name::new("Ingredient Description"),
     ));
 }
 
@@ -137,13 +152,9 @@ pub fn build_default_information_text(commands: &mut ChildBuilder, font: &Handle
         TextBundle {
             text: Text::from_section(
                 "This text shows when no ingredients are selected ...",
-                TextStyle {
-                    font: font.clone(),
-                    font_size: 16.,
-                    color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
-                },
+                get_info_text_style(font),
             ),
-            style: INFO_TEXT_STYLE,
+            style: INFO_TEXT_BUNDLE_STYLE,
             ..default()
         },
         Name::new("Default Info Text"),
@@ -152,10 +163,18 @@ pub fn build_default_information_text(commands: &mut ChildBuilder, font: &Handle
 
 // ------ STYLES ------
 
-const INFO_TEXT_STYLE: Style = Style {
+const INFO_TEXT_BUNDLE_STYLE: Style = Style {
     max_size: Size {
         width: Val::Px(300.),
         height: Val::Undefined,
     },
     ..Style::DEFAULT
 };
+
+fn get_info_text_style(font: &Handle<Font>) -> TextStyle {
+    return TextStyle {
+        font: font.clone(),
+        font_size: 16.,
+        color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+    };
+}

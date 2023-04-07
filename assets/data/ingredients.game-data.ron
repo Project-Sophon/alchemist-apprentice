@@ -19,7 +19,7 @@
     ),
   "draconiscale": Ingredient (
       name: "Draconiscale",
-      description: "A tough, scale-like substance obtained from the hide of a mythical dragon. It is believed to possess powerful protective properties and is often used in alchemical rituals for creating potent shields and barriers against negative ",
+      description: "A tough, scale-like substance obtained from the hide of a mythical dragon. It is believed to possess powerful protective properties and is often used in alchemical rituals for creating potent shields and barriers against negative.",
       texture: "textures/ingredients/zizima_root.png",
       cures: [Pain],
       causes: [Gastro, Mental],

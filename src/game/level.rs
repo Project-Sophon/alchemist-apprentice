@@ -112,6 +112,7 @@ fn build_level(
                                 &ingredients,
                                 &selected_ingredient,
                                 &global_assets.font,
+                                &global_assets.font_bold,
                             );
                             build_potion_panel(parent);
                         });

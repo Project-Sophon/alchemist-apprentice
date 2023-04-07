@@ -9,6 +9,8 @@ pub struct GlobalAssets {
     pub main_menu_banner: Handle<Image>,
     #[asset(path = "fonts/DePixelKlein.ttf")]
     pub font: Handle<Font>,
+    #[asset(path = "fonts/DePixelHalbfett.ttf")]
+    pub font_bold: Handle<Font>,
 }
 
 #[derive(AssetCollection, Resource)]
