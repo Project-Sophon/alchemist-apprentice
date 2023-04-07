@@ -7,7 +7,7 @@ use crate::{
     world::global_state::GlobalState,
 };
 
-use super::ingredients::SelectedIngredient;
+use super::{ingredients::SelectedIngredient, states::concoct::spawn_concoct_action};
 
 pub struct PotionPlugin;
 impl Plugin for PotionPlugin {
@@ -20,7 +20,7 @@ impl Plugin for PotionPlugin {
 
 // ------ RESOURCES ------
 
-#[derive(Resource)]
+#[derive(Resource, Clone)]
 pub struct PotionMix {
     pub ingredients: [Option<Handle<Ingredient>>; 3],
     pub ready: bool,
@@ -85,6 +85,10 @@ pub fn build_potion_panel(commands: &mut ChildBuilder, ui_assets: &Res<UiAssets>
                 .spawn(NodeBundle {
                     style: Style {
                         size: Size::new(Val::Px(208.), Val::Px(200.)),
+                        align_items: AlignItems::Center,
+                        justify_content: JustifyContent::Center,
+                        flex_direction: FlexDirection::Row,
+                        flex_wrap: FlexWrap::Wrap,
                         ..default()
                     },
                     background_color: Color::hex(PALETTE_PURPLE).unwrap().into(),
@@ -94,6 +98,7 @@ pub fn build_potion_panel(commands: &mut ChildBuilder, ui_assets: &Res<UiAssets>
                     spawn_potion_mix_slot(parent, &ui_assets.plus_dark_gold_64, 0);
                     spawn_potion_mix_slot(parent, &ui_assets.plus_dark_gold_64, 1);
                     spawn_potion_mix_slot(parent, &ui_assets.plus_dark_gold_64, 2);
+                    spawn_concoct_action(parent, &ui_assets.concoct);
                 });
         })
         .id()

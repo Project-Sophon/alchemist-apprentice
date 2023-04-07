@@ -8,8 +8,12 @@ pub mod potion;
 pub mod states;
 
 use self::{
-    game_phase::GamePhasePlugin, information::InformationPlugin, ingredients::IngredientsPlugin,
-    level::LevelPlugin, potion::PotionPlugin, states::potion_assembly::PotionAssemblyPlugin,
+    game_phase::GamePhasePlugin,
+    information::InformationPlugin,
+    ingredients::IngredientsPlugin,
+    level::LevelPlugin,
+    potion::PotionPlugin,
+    states::{concoct::ConcoctPlugin, potion_assembly::PotionAssemblyPlugin},
 };
 
 pub struct DefaultGamePlugins;
@@ -22,5 +26,6 @@ impl PluginGroup for DefaultGamePlugins {
             .add(InformationPlugin)
             .add(PotionPlugin)
             .add(PotionAssemblyPlugin)
+            .add(ConcoctPlugin)
     }
 }
