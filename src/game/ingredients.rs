@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use crate::{
-    assets::assets_game_data::Ingredient,
+    assets::{assets_game_data::Ingredient, resources_standard::UiAssets},
     style::color::{PALETTE_CREAM, PALETTE_DARK_GOLD, PALETTE_GOLD},
     ui::disable_ui::DisabledUiElement,
     world::global_state::GlobalState,
@@ -13,10 +13,7 @@ impl Plugin for IngredientsPlugin {
             .register_type::<IngredientsPanel>()
             .register_type::<IngredientButton>()
             .add_systems(
-                (
-                    ingredient_button_interactions,
-                    highlight_selected_ingredient,
-                )
+                (ingredient_button_interactions, select_ingredient)
                     .in_set(OnUpdate(GlobalState::Game)),
             );
     }
@@ -55,7 +52,7 @@ pub struct SelectedIngredientButton;
 
 fn ingredient_button_interactions(
     mut interaction_query: Query<
-        (&Interaction, &mut IngredientButton, &mut BackgroundColor),
+        (&Interaction, &mut IngredientButton, &mut UiImage),
         (
             Changed<Interaction>,
             Without<DisabledUiElement>,
@@ -63,29 +60,31 @@ fn ingredient_button_interactions(
         ),
     >,
     mut selected_ingredient: ResMut<SelectedIngredient>,
+    ui_assets: Res<UiAssets>,
 ) {
-    for (interaction, ingredient_button, mut color) in &mut interaction_query {
+    for (interaction, ingredient_button, mut bkg_image) in &mut interaction_query {
         match *interaction {
             Interaction::Clicked => {
                 // Update the selected ingredient (handle)
                 selected_ingredient.ingredient = Some(ingredient_button.ingredient.clone());
 
-                *color = Color::hex(PALETTE_CREAM).unwrap().into();
+                *bkg_image = UiImage::new(ui_assets.ingredient_button_selected.clone());
             }
             Interaction::Hovered => {
-                *color = Color::hex(PALETTE_GOLD).unwrap().into();
+                *bkg_image = UiImage::new(ui_assets.ingredient_button_hover.clone());
             }
             Interaction::None => {
-                *color = Color::hex(PALETTE_DARK_GOLD).unwrap().into();
+                *bkg_image = UiImage::new(ui_assets.ingredient_button_normal.clone());
             }
         }
     }
 }
 
-fn highlight_selected_ingredient(
+fn select_ingredient(
     mut commands: Commands,
-    mut ingredient_buttons: Query<(Entity, &IngredientButton, &mut BackgroundColor)>,
+    mut ingredient_buttons: Query<(Entity, &IngredientButton, &mut UiImage)>,
     selected_ingredient: Res<SelectedIngredient>,
+    ui_assets: Res<UiAssets>,
 ) {
     // only run when the selected ingredient has changed!
     if !selected_ingredient.is_changed() {
@@ -94,20 +93,20 @@ fn highlight_selected_ingredient(
 
     match &selected_ingredient.ingredient {
         Some(selected) => {
-            for (entity, button, mut color) in &mut ingredient_buttons {
+            for (entity, button, mut bkg_image) in &mut ingredient_buttons {
                 if selected.id() == button.ingredient.id() {
                     commands.entity(entity).insert(SelectedIngredientButton);
-                    *color = Color::hex(PALETTE_CREAM).unwrap().into();
+                    *bkg_image = UiImage::new(ui_assets.ingredient_button_selected.clone());
                 } else {
                     commands.entity(entity).remove::<SelectedIngredientButton>();
-                    *color = Color::hex(PALETTE_DARK_GOLD).unwrap().into();
+                    *bkg_image = UiImage::new(ui_assets.ingredient_button_normal.clone());
                 }
             }
         }
         None => {
-            for (entity, _, mut color) in &mut ingredient_buttons {
+            for (entity, _, mut bkg_image) in &mut ingredient_buttons {
                 commands.entity(entity).remove::<SelectedIngredientButton>();
-                *color = Color::hex(PALETTE_DARK_GOLD).unwrap().into();
+                *bkg_image = UiImage::new(ui_assets.ingredient_button_normal.clone());
             }
         }
     }
@@ -115,6 +114,7 @@ fn highlight_selected_ingredient(
 
 pub fn build_ingredients_panel(
     commands: &mut ChildBuilder,
+    ui_assets: &Res<UiAssets>,
     ingredients: &Res<Assets<Ingredient>>,
 ) -> Entity {
     commands
@@ -155,6 +155,7 @@ pub fn build_ingredients_panel(
                                         justify_content: JustifyContent::Center,
                                         ..default()
                                     },
+                                    image: UiImage::new(ui_assets.ingredient_button_normal.clone()),
                                     ..default()
                                 },
                                 IngredientButton {

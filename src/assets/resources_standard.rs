@@ -21,6 +21,12 @@ pub struct UiAssets {
     pub game_ui_bkg: Handle<Image>,
     #[asset(path = "textures/ui/plus_dark_gold_64.png")]
     pub plus_dark_gold_64: Handle<Image>,
+    #[asset(path = "textures/ui/ingredient_button_normal.png")]
+    pub ingredient_button_normal: Handle<Image>,
+    #[asset(path = "textures/ui/ingredient_button_hover.png")]
+    pub ingredient_button_hover: Handle<Image>,
+    #[asset(path = "textures/ui/ingredient_button_selected.png")]
+    pub ingredient_button_selected: Handle<Image>,
 }
 
 #[derive(AssetCollection, Resource)]

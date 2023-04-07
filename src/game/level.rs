@@ -106,7 +106,7 @@ fn build_level(
                             Name::new("Game UI Control Area"),
                         ))
                         .with_children(|parent| {
-                            build_ingredients_panel(parent, &ingredients);
+                            build_ingredients_panel(parent, &ui_assets, &ingredients);
                             build_information_panel(
                                 parent,
                                 &ingredients,
