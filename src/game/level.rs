@@ -114,7 +114,7 @@ fn build_level(
                                 &global_assets.font,
                                 &global_assets.font_bold,
                             );
-                            build_potion_panel(parent);
+                            build_potion_panel(parent, &ui_assets);
                         });
                 });
         });

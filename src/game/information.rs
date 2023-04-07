@@ -1,5 +1,4 @@
 use bevy::prelude::*;
-use serde::__private::de;
 
 use crate::{
     assets::{assets_game_data::Ingredient, resources_standard::GlobalAssets},

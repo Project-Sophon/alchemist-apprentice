@@ -19,6 +19,8 @@ pub struct UiAssets {
     pub game_level_bkg: Handle<Image>,
     #[asset(path = "textures/ui/game_ui_bkg.png")]
     pub game_ui_bkg: Handle<Image>,
+    #[asset(path = "textures/ui/plus_dark_gold_64.png")]
+    pub plus_dark_gold_64: Handle<Image>,
 }
 
 #[derive(AssetCollection, Resource)]
