@@ -124,7 +124,9 @@ pub fn concoct(potion_mix: PotionMix, ingredients: &Res<Assets<Ingredient>>) -> 
                     cures.insert(c);
                 }
                 for c in i.causes.clone() {
-                    causes.insert(c);
+                    if !cures.contains(&c) {
+                        causes.insert(c);
+                    }
                 }
             }
             None => {
