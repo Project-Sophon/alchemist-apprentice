@@ -1,4 +1,5 @@
 use bevy::{app::PluginGroupBuilder, prelude::*};
+pub mod bjorn;
 pub mod dialogue;
 pub mod game_phase;
 pub mod information;
@@ -6,6 +7,7 @@ pub mod ingredients;
 pub mod level;
 pub mod phases;
 pub mod potion;
+pub mod status;
 
 use self::{
     game_phase::GamePhasePlugin,

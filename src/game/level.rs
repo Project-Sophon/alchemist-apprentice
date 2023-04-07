@@ -16,6 +16,7 @@ use super::{
     information::build_information_panel,
     ingredients::{build_ingredients_panel, SelectedIngredient},
     potion::build_potion_panel,
+    status::build_status_panel,
 };
 
 pub struct LevelPlugin;
@@ -71,6 +72,7 @@ fn build_level(
                     NodeBundle {
                         style: Style {
                             align_self: AlignSelf::Center,
+                            flex_direction: FlexDirection::Column,
                             margin: UiRect {
                                 left: Val::Auto,
                                 right: Val::Auto,
@@ -89,6 +91,24 @@ fn build_level(
                     Name::new("Game UI Container"),
                 ))
                 .with_children(|parent| {
+                    parent
+                        .spawn((
+                            NodeBundle {
+                                style: Style {
+                                    size: Size::new(Val::Px(WINDOW_WIDTH.into()), Val::Px(300.0)),
+                                    align_self: AlignSelf::FlexStart,
+                                    flex_direction: FlexDirection::RowReverse,
+                                    padding: UiRect::all(Val::Px(10.)),
+                                    ..default()
+                                },
+                                ..default()
+                            },
+                            Name::new("Game Status Container"),
+                        ))
+                        .with_children(|parent| {
+                            build_status_panel(parent);
+                        });
+
                     parent
                         .spawn((
                             ImageBundle {
