@@ -10,6 +10,7 @@ pub mod potion;
 pub mod status;
 
 use self::{
+    bjorn::BjornPlugin,
     game_phase::GamePhasePlugin,
     information::InformationPlugin,
     ingredients::IngredientsPlugin,
@@ -29,5 +30,6 @@ impl PluginGroup for DefaultGamePlugins {
             .add(PotionPlugin)
             .add(PotionAssemblyPlugin)
             .add(ConcoctPlugin)
+            .add(BjornPlugin)
     }
 }

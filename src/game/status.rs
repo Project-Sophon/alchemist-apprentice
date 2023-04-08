@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::style::color::{PALETTE_CREAM};
+use crate::style::color::PALETTE_CREAM;
 
 pub struct StatusPlugin;
 impl Plugin for StatusPlugin {
