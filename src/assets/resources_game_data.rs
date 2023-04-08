@@ -40,16 +40,46 @@ pub struct IngredientAssets {
 pub struct SymptomAssets {
     #[asset(key = "headache")]
     pub headache: Handle<Symptom>,
-    #[asset(key = "genital_sores")]
-    pub genital_sores: Handle<Symptom>,
-    #[asset(key = "flatulence")]
-    pub flatulence: Handle<Symptom>,
-    #[asset(key = "hearing_voices")]
-    pub hearing_voices: Handle<Symptom>,
-    #[asset(key = "muscle_soreness")]
-    pub muscle_soreness: Handle<Symptom>,
-    #[asset(key = "burning_pee")]
-    pub burning_pee: Handle<Symptom>,
+    #[asset(key = "parasitic_infestation")]
+    pub parasitic_infestation: Handle<Symptom>,
+    #[asset(key = "unseen_presence")]
+    pub unseen_presence: Handle<Symptom>,
+    #[asset(key = "explosive_burp")]
+    pub explosive_burp: Handle<Symptom>,
+    #[asset(key = "soothing_balm")]
+    pub soothing_balm: Handle<Symptom>,
+    #[asset(key = "euphoric_bliss")]
+    pub euphoric_bliss: Handle<Symptom>,
+    #[asset(key = "bitter_aftershock")]
+    pub bitter_aftershock: Handle<Symptom>,
+    #[asset(key = "burning_sensation")]
+    pub burning_sensation: Handle<Symptom>,
+    #[asset(key = "confusion")]
+    pub confusion: Handle<Symptom>,
+    #[asset(key = "muscle_cramps")]
+    pub muscle_cramps: Handle<Symptom>,
+    #[asset(key = "cursed")]
+    pub cursed: Handle<Symptom>,
+    #[asset(key = "nauseating_odor")]
+    pub nauseating_odor: Handle<Symptom>,
+    #[asset(key = "anxiety")]
+    pub anxiety: Handle<Symptom>,
+    #[asset(key = "diarrhea")]
+    pub diarrhea: Handle<Symptom>,
+    #[asset(key = "purging_purgatory")]
+    pub purging_purgatory: Handle<Symptom>,
+    #[asset(key = "vivid_dreams")]
+    pub vivid_dreams: Handle<Symptom>,
+    #[asset(key = "itchy_pustules")]
+    pub itchy_pustules: Handle<Symptom>,
+    #[asset(key = "mysterious_markings")]
+    pub mysterious_markings: Handle<Symptom>,
+    #[asset(key = "insomnia")]
+    pub insomnia: Handle<Symptom>,
+    #[asset(key = "nightmares_lullaby")]
+    pub nightmares_lullaby: Handle<Symptom>,
+    #[asset(key = "possession")]
+    pub possession: Handle<Symptom>,
 }
 
 #[derive(serde::Deserialize, bevy::reflect::TypeUuid)]
@@ -68,6 +98,7 @@ impl DynamicAssetCollection for GameDataAssetDynamicCollection {
 enum GameDataAsset {
     Symptom {
         name: String,
+        description: String,
         class: Vec<SideEffectClass>,
     },
     Ingredient {
@@ -96,7 +127,11 @@ impl DynamicAsset for GameDataAsset {
             .expect("Failed to get asset server");
 
         match self {
-            GameDataAsset::Symptom { name, class } => {
+            GameDataAsset::Symptom {
+                name,
+                description,
+                class,
+            } => {
                 let mut symptoms = cell
                     .get_resource_mut::<Assets<Symptom>>()
                     .expect("Failed to get symptom asset");
@@ -104,6 +139,7 @@ impl DynamicAsset for GameDataAsset {
                 let handle = symptoms
                     .add(Symptom {
                         name: name.clone(),
+                        description: description.clone(),
                         class: class.clone(),
                     })
                     .clone_untyped();

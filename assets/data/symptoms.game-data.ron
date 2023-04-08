@@ -1,26 +1,106 @@
 ({
   "headache": Symptom (
       name: "Headache",
+      description: "Pain in the head can be caused by a variety of reasons.",
       class: [Pain]
     ),
-  "genital_sores": Symptom (
-      name: "Genital Sores",
+  "parasitic_infestation": Symptom (
+      name: "Parasitic Infestation",
+      description: "Tiny parasitic creatures, causing discomfort and itching.",
       class: [Parasite]
     ),
-  "flatulence": Symptom (
-      name: "Flatuence",
+  "unseen_presence": Symptom (
+      name: "Unseen Presence",
+      description: "A sense of unease and paranoia.",
+      class: [Occult]
+    ),
+  "explosive_burp": Symptom (
+      name: "Explosive Burp",
+      description: "Uncontrollable and loud burping, which can be embarrassing and disruptive.",
       class: [Gastrointestinal]
     ),
-  "hearing_voices": Symptom (
-      name: "Hearing Voices",
+  "soothing_balm": Symptom (
+      name: "Soothing Balm",
+      description: "Any wounds or irritations are soothed. However, a temporary blue discoloration on the skin occurs.",
+      class: [Skin]
+    ),
+  "euphoric_bliss": Symptom (
+      name: "Euphoric Bliss",
+      description: "A surge of euphoria and joy, but may also become overly impulsive and reckless.",
       class: [Mental]
     ),
-  "muscle_soreness": Symptom (
-      name: "Muscle Soreness",
-      class: [Pain]
+  "bitter_aftershock": Symptom (
+    name: "Bitter Aftershock",
+    description: "Stomach churns with discomfort, causing nausea and abdominal pain.",
+    class: [Pain, Gastrointestinal]
     ),
-  "burning_pee": Symptom (
-      name: "Burning Pee",
-      class: [Parasite]
+  "burning_sensation": Symptom (
+    name: "Burning Sensation",
+    description: "Burning sensation on the skin, accompanied by mild to moderate pain.",
+    class: [Pain, Skin]
+    ),
+  "confusion": Symptom (
+    name: "Confusion",
+    description: "A state of mental disorientation, having difficulty concentrating, making decisions, or understanding their surroundings.",
+    class: [Pain, Mental]
+    ),
+  "muscle_cramps": Symptom (
+    name: "Muscle Cramps",
+    description: "Involuntary and painful contractions of muscles brought on by a parasitic infestation, often resulting in discomfort and limited mobility.",
+    class: [Pain, Parasite]
+    ), 
+  "cursed": Symptom (
+    name: "Cursed",
+    description: "Afflicted with a malevolent curse, resulting in various supernatural or occult phenomena that may cause harm or distress.",
+    class: [Pain, Occult]
+    ), 
+  "nauseating_odor": Symptom (
+    name: "Nauseating Odor",
+    description: "A foul odor that emanates from the body, causing discomfort and repulsion to those around them.",
+    class: [Gastrointestinal, Skin]
+    ),
+  "anxiety": Symptom (
+    name: "Anxiety",
+    description: "A state of excessive worry, nervousness, or unease, often accompanied by physical symptoms such as restlessness or an increased heart rate.",
+    class: [Gastrointestinal, Mental]
+    ),
+  "diarrhea": Symptom (
+    name: "Diarrhea",
+    description: "Loose bowel movements and abdominal discomfort due to the presence of parasites in the gastrointestinal tract.",
+    class: [Gastrointestinal, Parasite]
+    ), 
+  "purging_purgatory": Symptom (
+    name: "Purging Purgatory",
+    description: "Intense purging, with frequent vomiting and diarrhea, as the potion flushes out toxins from the body along with temporary infestation by parasitic creatures.",
+    class: [Gastrointestinal, Occult]
+    ),
+  "vivid_dreams": Symptom (
+    name: "Vivid Dreams",
+    description: "Vivid and immersive dreams, which may be pleasant or disturbing, but can also affect sleep quality and overall mental state.",
+    class: [Skin, Mental]
+    ),
+  "itchy_pustules": Symptom (
+    name: "Itchy Pustules",
+    description: "Itchy and painful pustules on the skin due to a temporary infestation by parasitic creatures.",
+    class: [Skin, Parasite]
+    ),
+  "mysterious_markings": Symptom (
+    name: "Mysterious Markings",
+    description: "Skin develops mysterious markings or symbols, which may have hidden meanings or effects, but their nature and purpose remain unknown.",
+    class: [Skin, Occult]
+    ),
+  "insomnia": Symptom (
+    name: "Insomnia",
+    description: "Difficulty falling asleep or staying asleep casued by an ear parasite, resulting in inadequate or poor-quality sleep.",
+    class: [Mental, Parasite]
+    ),
+  "nightmares_lullaby": Symptom (
+    name: "Nightmare's Lullaby",
+    description: "A deep slumber, but is plagued by unsettling nightmares and disturbed sleep patterns.",
+    class: [Mental, Occult]),
+  "possession": Symptom (
+    name: "Possession",
+    description: "Possessed by a malevolent entity or spirit, resulting in loss of control over the body and mind, and potentially harmful or aberrant behavior.",
+    class: [Parasite, Occult]
     ),
 })

@@ -9,6 +9,7 @@ use bevy::{
 #[uuid = "766152e8-d85f-4e58-b4f8-4e375a99ac53"]
 pub struct Symptom {
     pub name: String,
+    pub description: String,
     pub class: Vec<SideEffectClass>,
 }
 
@@ -23,7 +24,7 @@ impl PartialEq for Symptom {
 
 impl fmt::Display for Symptom {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:?}", self.name)
+        write!(f, "{:?}\n{:?}", self.name, self.description)
     }
 }
 
