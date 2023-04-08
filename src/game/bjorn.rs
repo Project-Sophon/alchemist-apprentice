@@ -1,5 +1,7 @@
+use anyhow::Ok;
 use bevy::prelude::*;
 use std::collections::HashSet;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 use crate::{
     assets::{assets_game_data::Symptom, resources_game_data::SymptomAssets},
@@ -34,7 +36,7 @@ impl Default for BjornStatus {
 // ------ SYSTEMS ------
 
 fn setup_initial_bjorn_status(
-    bjorn_status: ResMut<BjornStatus>,
+    mut bjorn_status: ResMut<BjornStatus>,
     symptom_assets: Res<Assets<Symptom>>,
 ) {
     let mut initial_symptom_pool: HashSet<Symptom> = HashSet::new();
@@ -42,4 +44,18 @@ fn setup_initial_bjorn_status(
     for (_, symptom) in symptom_assets.iter() {
         initial_symptom_pool.insert(symptom.clone());
     }
+
+    let n = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
+    let digits: Vec<_> = n
+        .as_secs()
+        .to_string()
+        .chars()
+        .map(|d| d.to_digit(10).unwrap())
+        .collect();
+    let digit = digits.last().unwrap_or(&0);
+    let index = usize::try_from(digit % 2).unwrap();
+
+    let initial_symptom = Vec::from_iter(&initial_symptom_pool)[index];
+    bjorn_status.symptoms = HashSet::from_iter(vec![initial_symptom.clone()]);
+    info!("Initial Symptoms of Bjorn: {:?}", bjorn_status.symptoms);
 }

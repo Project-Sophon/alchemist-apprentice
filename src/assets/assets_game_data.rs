@@ -3,7 +3,7 @@ use bevy::{
     reflect::TypeUuid,
 };
 
-#[derive(TypeUuid, Clone, Eq, Hash)]
+#[derive(TypeUuid, Clone, Eq, Hash, Debug)]
 #[uuid = "766152e8-d85f-4e58-b4f8-4e375a99ac53"]
 pub struct Symptom {
     pub name: String,
