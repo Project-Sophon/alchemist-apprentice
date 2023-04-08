@@ -123,6 +123,7 @@ pub fn concoct(potion_mix: PotionMix, ingredients: &Res<Assets<Ingredient>>) -> 
     let mut causes: HashSet<SideEffectClass> = HashSet::new();
     let mut toxicity: i32 = 0;
 
+    // First build cures of the concoction
     for ingredient in potion_mix.ingredients.clone() {
         match ingredient {
             Some(handle) => {
@@ -136,8 +137,7 @@ pub fn concoct(potion_mix: PotionMix, ingredients: &Res<Assets<Ingredient>>) -> 
         }
     }
 
-    info!("Current potion: {:?}", cures);
-
+    // Now that we have gathered all cures, figure out which side effects are still relevant
     for ingredient in potion_mix.ingredients.clone() {
         match ingredient {
             Some(handle) => {
