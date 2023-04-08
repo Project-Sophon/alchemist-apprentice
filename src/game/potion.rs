@@ -193,10 +193,7 @@ fn slot_interactions(
                 commands.entity(entity).despawn_descendants();
                 // Add texture of the ingredient with correct background
                 commands.entity(entity).with_children(|parent| {
-                    render_occupied_slot(
-                        parent,
-                        ingredient,
-                    );
+                    render_occupied_slot(parent, ingredient);
                 });
 
                 // Log inner array
@@ -230,10 +227,7 @@ fn slot_interactions(
     }
 }
 
-fn render_occupied_slot(
-    parent: &mut ChildBuilder,
-    ingredient: &Ingredient,
-) {
+fn render_occupied_slot(parent: &mut ChildBuilder, ingredient: &Ingredient) {
     parent.spawn((
         ImageBundle {
             style: Style {

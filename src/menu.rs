@@ -70,20 +70,6 @@ fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
         align_items: AlignItems::Center,
         ..default()
     };
-    let button_icon_style = Style {
-        size: Size::new(Val::Px(30.0), Val::Auto),
-        // This takes the icons out of the flexbox flow, to be positioned exactly
-        position_type: PositionType::Absolute,
-        position: UiRect {
-            left: Val::Px(10.0),
-            right: Val::Auto,
-            ..default()
-        },
-        // The icon will be close to the left border of the button
-        // left: Val::Px(10.0),
-        // right: Val::Auto,
-        ..default()
-    };
     let button_text_style = TextStyle {
         font: font,
         font_size: 40.0,

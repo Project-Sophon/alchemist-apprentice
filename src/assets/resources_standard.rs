@@ -8,7 +8,7 @@ pub struct GlobalAssets {
     #[asset(path = "branding/main_menu.png")]
     pub main_menu_banner: Handle<Image>,
     #[asset(path = "fonts/alagard.ttf")]
-    pub font: Handle<Font>
+    pub font: Handle<Font>,
 }
 
 #[derive(AssetCollection, Resource)]

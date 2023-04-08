@@ -42,5 +42,4 @@ fn setup_initial_bjorn_status(
     for (_, symptom) in symptom_assets.iter() {
         initial_symptom_pool.insert(symptom.clone());
     }
-
 }
