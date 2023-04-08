@@ -35,6 +35,8 @@ pub struct UiAssets {
     pub potion_circle_slot_hover: Handle<Image>,
     #[asset(path = "textures/ui/potion_circle_slot_occupied.png")]
     pub potion_circle_slot_occupied: Handle<Image>,
+    #[asset(path = "textures/ui/potion_circle_slot_occupied_hover.png")]
+    pub potion_circle_slot_occupied_hover: Handle<Image>,
     #[asset(path = "textures/ui/concoct_button_click.png")]
     pub concoct_button_click: Handle<Image>,
     #[asset(path = "textures/ui/concoct_button_hover.png")]

@@ -215,10 +215,20 @@ fn slot_interactions(
             Interaction::Hovered => {
                 // Should be safe to unwrap as ingredients is a fixed array of Optional<Ingredient>
                 let ingredient_handle = potion_mix.ingredients.get(potion_mix_slot.index).unwrap();
+                commands.entity(entity).despawn_descendants();
                 match ingredient_handle {
-                    Some(i) => {}
+                    Some(i) => {
+                        // Should also be safe as we don't unload ingredients.
+                        let ingredient_asset = ingredients.get(i).unwrap();
+                        commands.entity(entity).with_children(|parent| {
+                            render_occupied_slot(
+                                parent,
+                                ui_assets.potion_circle_slot_occupied_hover.clone(),
+                                ingredient_asset,
+                            );
+                        });
+                    }
                     None => {
-                        commands.entity(entity).despawn_descendants();
                         commands.entity(entity).with_children(|parent| {
                             parent.spawn((
                                 ImageBundle {
