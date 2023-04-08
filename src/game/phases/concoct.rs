@@ -1,9 +1,12 @@
 use crate::{
     assets::{
-        assets_game_data::{Ingredient, SymptomClass},
+        assets_game_data::{Ingredient, Symptom, SymptomClass},
         resources_standard::UiAssets,
     },
-    game::potion::PotionMix,
+    game::{
+        bjorn::{give_bjorn_concoction, BjornStatus},
+        potion::PotionMix,
+    },
     style::color::PALETTE_DARK_BLUE,
     ui::disable_ui::EnableUiElement,
     world::global_state::GlobalState,
@@ -53,6 +56,8 @@ pub fn concoct_interaction(
     potion_mix: Res<PotionMix>,
     ingredients: Res<Assets<Ingredient>>,
     ui_assets: Res<UiAssets>,
+    mut bjorn_status: ResMut<BjornStatus>,
+    symptoms: Res<Assets<Symptom>>,
 ) {
     for (entity, interaction, mut ui_image) in &mut interaction_query {
         match *interaction {
@@ -61,6 +66,7 @@ pub fn concoct_interaction(
                 info!("{}", concoction.to_string());
                 commands.entity(entity).remove::<EnableUiElement>();
                 ui_image.texture = ui_assets.concoct_button_click.clone();
+                give_bjorn_concoction(concoction, &mut bjorn_status, &symptoms)
             }
             Interaction::Hovered => {
                 ui_image.texture = ui_assets.concoct_button_hover.clone();

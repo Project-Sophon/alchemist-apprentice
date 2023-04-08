@@ -44,6 +44,12 @@ pub struct SymptomAssets {
     pub genital_sores: Handle<Symptom>,
     #[asset(key = "flatulence")]
     pub flatulence: Handle<Symptom>,
+    #[asset(key = "hearing_voices")]
+    pub hearing_voices: Handle<Symptom>,
+    #[asset(key = "muscle_soreness")]
+    pub muscle_soreness: Handle<Symptom>,
+    #[asset(key = "burning_pee")]
+    pub burning_pee: Handle<Symptom>,
 }
 
 #[derive(serde::Deserialize, bevy::reflect::TypeUuid)]

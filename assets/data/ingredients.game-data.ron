@@ -48,8 +48,8 @@
       name: "Garlic",
       description: "Household garlic, grown in the garden next to the shop. All but guaranteed to leave a patient's breath smelling worse than before.",
       texture: "textures/ingredients/garlic_clove.png",
-      cures: [Pain],
-      causes: [Gastro, Mental],
+      cures: [Gastro],
+      causes: [Mental],
       toxicity: 1,
       starter: false
     ),
@@ -57,7 +57,7 @@
       name: "Jar of Eyes",
       description: "A jar of preserved eyes. You can’t bear to stare at them for more than a few moments. A powerful reagent in the hands of a skillful alchemist.",
       texture: "textures/ingredients/jar_of_eyes.png",
-      cures: [Pain],
+      cures: [Mental],
       causes: [Gastro, Mental],
       toxicity: 1,
       starter: false
@@ -84,7 +84,7 @@
       name: "Nightshade",
       description: "Nightshade grows only in dark, overcast environments.",
       texture: "textures/ingredients/nightshade.png",
-      cures: [Pain],
+      cures: [STI],
       causes: [Gastro, Mental],
       toxicity: 1,
       starter: false

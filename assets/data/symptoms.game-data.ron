@@ -10,5 +10,17 @@
   "flatulence": Symptom (
       name: "Flatuence",
       class: [Gastro]
-    )
+    ),
+  "hearing_voices": Symptom (
+      name: "Hearing Voices",
+      class: [Mental]
+    ),
+  "muscle_soreness": Symptom (
+      name: "Muscle Soreness",
+      class: [Pain]
+    ),
+  "burning_pee": Symptom (
+      name: "Burning Pee",
+      class: [STI]
+    ),
 })
