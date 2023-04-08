@@ -122,12 +122,79 @@ pub fn build_ingredient_information(
     ));
     commands.spawn((
         TextBundle {
-            text: Text::from_section(ingredient.description.clone(), get_info_text_style(font, 16.)),
-            style: INFO_TEXT_BUNDLE_STYLE,
+            text: Text::from_section(
+                ingredient.description.clone(),
+                get_info_text_style(font, 16.),
+            ),
+            style: Style {
+                margin: UiRect::bottom(Val::Px(20.)),
+                ..INFO_TEXT_BUNDLE_STYLE
+            },
             ..default()
         },
         Name::new("Ingredient Description"),
     ));
+    commands
+        .spawn((
+            NodeBundle {
+                style: Style {
+                    flex_direction: FlexDirection::Row,
+                    justify_content: JustifyContent::SpaceEvenly,
+                    ..default()
+                },
+                ..default()
+            },
+            Name::new("Cures and Causes"),
+        ))
+        .with_children(|parent| {
+            parent
+                .spawn((
+                    NodeBundle {
+                        style: Style {
+                            flex_direction: FlexDirection::Column,
+                            size: Size::new(Val::Px(140.), Val::Px(200.0)),
+                            ..default()
+                        },
+                        ..default()
+                    },
+                    Name::new("Ingredient Cures"),
+                ))
+                .with_children(|parent| {
+                    parent.spawn(TextBundle::from_section(
+                        "Cures",
+                        get_info_text_style(font, 18.),
+                    ));
+
+                    parent.spawn((TextBundle::from_sections([
+                        TextSection::new("asdasdasd\n", get_info_text_style(font, 18.)),
+                        TextSection::new("asdasdasd\n", get_info_text_style(font, 16.)),
+                    ]),));
+                });
+
+            parent
+                .spawn((
+                    NodeBundle {
+                        style: Style {
+                            flex_direction: FlexDirection::Column,
+                            size: Size::new(Val::Px(140.), Val::Px(200.0)),
+                            ..default()
+                        },
+                        ..default()
+                    },
+                    Name::new("Ingredient Causes"),
+                ))
+                .with_children(|parent| {
+                    parent.spawn(TextBundle::from_section(
+                        "Causes",
+                        get_info_text_style(font, 18.),
+                    ));
+
+                    parent.spawn((TextBundle::from_sections([
+                        TextSection::new("asdasdasd\n", get_info_text_style(font, 18.)),
+                        TextSection::new("asdasdasd\n", get_info_text_style(font, 16.)),
+                    ]),));
+                });
+        });
 }
 
 pub fn build_default_information_text(commands: &mut ChildBuilder, font: &Handle<Font>) {
