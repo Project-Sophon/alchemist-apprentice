@@ -58,14 +58,17 @@ fn setup_initial_bjorn_status(
 
     let initial_side_effect = Vec::from_iter(&initial_side_effect_pool)[rand_index];
     bjorn_status.side_effects = HashSet::from_iter(vec![initial_side_effect.clone()]);
-    info!("Initial Side Effects of Bjorn: {:?}", bjorn_status.side_effects);
+    info!(
+        "Initial Side Effects of Bjorn: {:?}",
+        bjorn_status.side_effects
+    );
 }
 
 pub fn give_bjorn_concoction(
     concoction: Concoction,
     bjorn_status: &mut ResMut<BjornStatus>,
     side_effects: &Res<Assets<SideEffect>>,
-) {
+) -> (i32, usize) {
     let cures = concoction.cures;
     for cure in cures {
         let current_bjorn_side_effects = bjorn_status.side_effects.clone();
@@ -102,4 +105,7 @@ pub fn give_bjorn_concoction(
     bjorn_status.toxicity = bjorn_status.toxicity + concoction.toxicity;
 
     info!("{}", bjorn_status.to_string());
+
+    // Return (toxicity, num_side_effects)
+    return (bjorn_status.toxicity, bjorn_status.side_effects.len());
 }

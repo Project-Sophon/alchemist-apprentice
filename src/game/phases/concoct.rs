@@ -8,6 +8,7 @@ use crate::{
     },
     style::color::PALETTE_DARK_BLUE,
     ui::disable_ui::EnableUiElement,
+    world::global_state::GlobalState,
 };
 use bevy::prelude::*;
 use core::fmt;
@@ -19,6 +20,10 @@ impl Plugin for ConcoctPlugin {
         app.add_system(on_concoct.in_schedule(OnEnter(GamePhase::Concoct)));
     }
 }
+
+// ------ ENUMS, CONSTANTS ------
+
+const MAX_TOXICITY: i32 = 5;
 
 // ------ COMPONENTS ------
 
@@ -46,6 +51,7 @@ impl fmt::Display for Concoction {
 // ------ SYSTEMS ------
 
 fn on_concoct(
+    mut global_state: ResMut<NextState<GlobalState>>,
     mut game_phase: ResMut<NextState<GamePhase>>,
     potion_mix: Res<PotionMix>,
     mut ingredients: ResMut<Assets<Ingredient>>,
@@ -54,9 +60,22 @@ fn on_concoct(
 ) {
     let concoction = concoct(potion_mix.clone(), &ingredients);
     info!("{}", concoction.to_string());
-    give_bjorn_concoction(concoction, &mut bjorn_status, &side_effects);
+
+    // Update ingredients used in concoction
     update_ingredients_used(&mut ingredients, &potion_mix.ingredients);
-    game_phase.set(GamePhase::PotionAssembly);
+
+    // Get Bjorn's toxicity and number of side effects after giving him the concoction
+    let (toxicity, num_side_effects) =
+        give_bjorn_concoction(concoction, &mut bjorn_status, &side_effects);
+
+    // Advance game appropriately based on Bjorn's toxicity and side effect count
+    if toxicity == MAX_TOXICITY {
+        global_state.set(GlobalState::Lose);
+    } else if num_side_effects == 0 {
+        global_state.set(GlobalState::Win);
+    } else {
+        game_phase.set(GamePhase::PotionAssembly);
+    }
 }
 
 pub fn spawn_concoct_action(
@@ -97,7 +116,7 @@ pub fn spawn_concoct_action(
         });
 }
 
-pub fn concoct(potion_mix: PotionMix, ingredients: &ResMut<Assets<Ingredient>>) -> Concoction {
+fn concoct(potion_mix: PotionMix, ingredients: &ResMut<Assets<Ingredient>>) -> Concoction {
     let mut cures: HashSet<SideEffectClass> = HashSet::new();
     let mut causes: HashSet<SideEffectClass> = HashSet::new();
     let mut toxicity: i32 = 0;
@@ -142,7 +161,7 @@ pub fn concoct(potion_mix: PotionMix, ingredients: &ResMut<Assets<Ingredient>>) 
 // ------ TESTS ------
 
 #[test]
-fn test_conconction() {
+fn test_concoction() {
     let mut app = App::new();
 
     app.add_plugin(crate::world::global_state::GlobalStatePlugin);

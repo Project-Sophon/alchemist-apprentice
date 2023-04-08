@@ -99,6 +99,7 @@
       starter: false,
       order: 9
     ),
+  // TODO: THE NEXT TWO INGREDIENTS ARE AN INSTANT WIN IF USED TOGTHER, CHANGE THIS BEFORE PLAY TESTING
   "pearl": Ingredient (
       name: "Pearl",
       description: "A dark, glistening pearl extracted from a nearly extinct mollusk. Useful when crushed into a powder.",
