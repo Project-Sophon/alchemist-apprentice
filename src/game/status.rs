@@ -31,7 +31,7 @@ pub fn build_status_panel(commands: &mut ChildBuilder, ui_assets: &Res<UiAssets>
                 flex_basis: Val::Percent(100.),
                 flex_direction: FlexDirection::Column,
                 align_self: AlignSelf::FlexEnd,
-                padding: UiRect::all(Val::Px(20.)),
+                padding: UiRect::all(Val::Px(32.)),
                 margin: UiRect::new(Val::Undefined, Val::Px(10.), Val::Px(10.), Val::Undefined),
                 ..default()
             },
@@ -80,16 +80,65 @@ fn render_symptoms_in_panel(
     bjorn_status: BjornStatus,
     font: &Handle<Font>,
 ) {
-    let text_sections = bjorn_status.symptoms.iter().map(|s| {
-        TextSection::new(
-            format!("{}\n", s.to_string()),
-            TextStyle {
-                font: font.clone(),
-                font_size: 16.,
-                color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+    let text_sections: Vec<TextSection> = bjorn_status
+        .symptoms
+        .iter()
+        .map(|s| {
+            TextSection::new(
+                format!("- {}\n", s.to_string()),
+                TextStyle {
+                    font: font.clone(),
+                    font_size: 16.,
+                    color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+                },
+            )
+        })
+        .collect();
+
+    parent.spawn(TextBundle {
+        style: Style {
+            margin: UiRect {
+                bottom: Val::Px(10.),
+                ..default()
             },
-        )
+            ..default()
+        },
+        text: Text {
+            sections: vec![
+                TextSection::new(
+                    format!("Toxicity: {}\n", bjorn_status.toxicity),
+                    TextStyle {
+                        font: font.clone(),
+                        font_size: 18.,
+                        color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+                    },
+                ),
+                TextSection::new(
+                    format!("Symptoms:\n"),
+                    TextStyle {
+                        font: font.clone(),
+                        font_size: 18.,
+                        color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+                    },
+                ),
+            ],
+            ..default()
+        },
+        ..default()
     });
 
-    parent.spawn(TextBundle::from_sections(text_sections));
+    parent.spawn(TextBundle {
+        style: Style {
+            margin: UiRect {
+                bottom: Val::Px(10.),
+                ..default()
+            },
+            ..default()
+        },
+        text: Text {
+            sections: text_sections,
+            ..default()
+        },
+        ..default()
+    });
 }
