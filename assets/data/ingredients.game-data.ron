@@ -1,110 +1,122 @@
 ({
+    "garlic_clove": Ingredient (
+      name: "Garlic",
+      description: "Household garlic, grown in the garden next to the shop. All but guaranteed to leave a patient's breath smelling worse than before.",
+      texture: "textures/ingredients/garlic_clove.png",
+      cures: [Gastrointestinal],
+      causes: [Skin],
+      toxicity: 0,
+      starter: true,
+      order: 0
+    ),
+    "feather": Ingredient (
+      name: "Raven Feather",
+      description: "The feather of a three-eyed raven. Can cause hallucinations.",
+      texture: "textures/ingredients/feather.png",
+      cures: [Occult],
+      causes: [Mental],
+      toxicity: 0,
+      starter: true,
+      order: 1
+    ),
   "blackened_skull": Ingredient (
       name: "Blackened Skull",
       description: "A skull left charred by flames. What profane secrets did its owner once hold?",
       texture: "textures/ingredients/blackened_skull.png",
       cures: [Skin],
       causes: [Pain],
-      toxicity: 1,
-      starter: true
+      toxicity: 0,
+      starter: true,
+      order: 2
+    ),
+    "claw": Ingredient (
+      name: "Claw",
+      description: "The claw of a noble falcon, sharper than the deadliest sword.",
+      texture: "textures/ingredients/claw.png",
+      cures: [Mental],
+      causes: [Parasite],
+      toxicity: 0,
+      starter: true,
+      order: 3
+    ),
+    "nightshade": Ingredient (
+      name: "Nightshade",
+      description: "Nightshade grows only in dark, overcast environments.",
+      texture: "textures/ingredients/nightshade.png",
+      cures: [Parasite],
+      causes: [Occult],
+      toxicity: 0,
+      starter: true,
+      order: 4
+    ),
+    "obsidian": Ingredient (
+      name: "Obsidian",
+      description: "Volcanic stone, blacker than the night sky before dawn.",
+      texture: "textures/ingredients/obsidian.png",
+      cures: [Pain],
+      causes: [Gastrointestinal],
+      toxicity: 0,
+      starter: true,
+      order: 5
     ),
   "bowl_of_dust": Ingredient (
       name: "Grave Dust",
       description: "A fine powder, almost iridescent dust. Refrain from inhaling.",
       texture: "textures/ingredients/bowl_of_dust.png",
-      cures: [Pain],
+      cures: [Pain, Occult],
       causes: [Gastrointestinal, Mental],
-      toxicity: 1,
-      starter: true
-    ),
-  "claw": Ingredient (
-      name: "Claw",
-      description: "The claw of a noble falcon, sharper than the deadliest sword.",
-      texture: "textures/ingredients/claw.png",
-      cures: [Pain],
-      causes: [Gastrointestinal, Mental],
-      toxicity: 1,
-      starter: true
-    ),
-  "obsidian": Ingredient (
-      name: "Obsidian",
-      description: "Volcanic stone, blacker than the night sky before dawn.",
-      texture: "textures/ingredients/obsidian.png",
-      cures: [Pain],
-      causes: [Gastrointestinal, Mental],
-      toxicity: 1,
-      starter: false
-    ),
-  "feather": Ingredient (
-      name: "Raven Feather",
-      description: "The feather of a three-eyed raven. Can cause hallucinations.",
-      texture: "textures/ingredients/feather.png",
-      cures: [Pain],
-      causes: [Gastrointestinal, Mental],
-      toxicity: 1,
-      starter: false
-    ),
-  "garlic_clove": Ingredient (
-      name: "Garlic",
-      description: "Household garlic, grown in the garden next to the shop. All but guaranteed to leave a patient's breath smelling worse than before.",
-      texture: "textures/ingredients/garlic_clove.png",
-      cures: [Gastrointestinal],
-      causes: [Mental],
-      toxicity: 1,
-      starter: false
+      toxicity: 2,
+      starter: false,
+      order: 6
     ),
   "jar_of_eyes": Ingredient (
       name: "Jar of Eyes",
-      description: "A jar of preserved eyes. You can’t bear to stare at them for more than a few moments. A powerful reagent in the hands of a skillful alchemist.",
+      description: "A jar of preserved eyes. You can't bear to stare at them for more than a few moments. A powerful reagent in the hands of a skillful alchemist.",
       texture: "textures/ingredients/jar_of_eyes.png",
-      cures: [Mental],
-      causes: [Gastrointestinal, Mental],
+      cures: [Mental, Gastrointestinal],
+      causes: [Parasite, Skin],
       toxicity: 1,
-      starter: false
+      starter: false,
+      order: 7
     ),
   "lead_bar": Ingredient (
       name: "Lead bar",
       description: "A simple lead bar. Soft and cool to the touch. All alchemy begins with base materials and an ambition to transform them into something more.",
       texture: "textures/ingredients/lead_bar.png",
-      cures: [Pain],
-      causes: [Gastrointestinal, Mental],
+      cures: [Parasite, Skin],
+      causes: [Occult, Pain],
       toxicity: 1,
-      starter: false
+      starter: false,
+      order: 8
     ),
   "mushroom": Ingredient (
       name: "Deathbloom Mushroom",
       description: "The cap of a Deathbloom mushroom, deadly in all but the smallest doses. Sometimes a little poison is necessary to cure stubborn ailments.",
       texture: "textures/ingredients/mushroom.png",
-      cures: [Pain],
-      causes: [Gastrointestinal, Mental],
-      toxicity: 1,
-      starter: false
-    ),
-  "nightshade": Ingredient (
-      name: "Nightshade",
-      description: "Nightshade grows only in dark, overcast environments.",
-      texture: "textures/ingredients/nightshade.png",
-      cures: [Parasite],
-      causes: [Gastrointestinal, Mental],
-      toxicity: 1,
-      starter: false
+      cures: [Occult, Parasite],
+      causes: [Mental, Pain, Gastrointestinal],
+      toxicity: 2,
+      starter: false,
+      order: 9
     ),
   "pearl": Ingredient (
       name: "Pearl",
       description: "A dark, glistening pearl extracted from a nearly extinct mollusk. Useful when crushed into a powder.",
       texture: "textures/ingredients/pearl.png",
-      cures: [Pain],
-      causes: [Gastrointestinal, Mental],
-      toxicity: 1,
-      starter: false
+      cures: [Parasite, Gastrointestinal,Skin ],
+      causes: [Mental, Pain],
+      toxicity: 0,
+      starter: false,
+      order: 10
     ),
   "tear": Ingredient (
       name: "Crystalized Tear",
       description: "An ancient crystallized tear of unknown origin. Where your master obtained this reagent, you dare not ask.",
       texture: "textures/ingredients/tear.png",
-      cures: [Pain],
-      causes: [Gastrointestinal, Mental],
+      cures: [Occult, Mental, Pain],
+      causes: [Gastrointestinal, Skin],
       toxicity: 1,
-      starter: false
+      starter: false,
+      order: 11
     )
 })

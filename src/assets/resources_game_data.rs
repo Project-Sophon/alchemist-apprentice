@@ -6,7 +6,7 @@ use bevy_asset_loader::prelude::{
     AssetCollection, DynamicAsset, DynamicAssetCollection, DynamicAssetType, DynamicAssets,
 };
 
-use super::assets_game_data::{Ingredient, SideEffectClass, SideEffect};
+use super::assets_game_data::{Ingredient, SideEffect, SideEffectClass};
 
 #[derive(AssetCollection, Resource)]
 pub struct IngredientAssets {
@@ -109,6 +109,7 @@ enum GameDataAsset {
         causes: Vec<SideEffectClass>,
         toxicity: i32,
         starter: bool,
+        order: u16,
     },
 }
 
@@ -154,6 +155,7 @@ impl DynamicAsset for GameDataAsset {
                 causes,
                 toxicity,
                 starter,
+                order,
             } => {
                 let mut ingredients = cell
                     .get_resource_mut::<Assets<Ingredient>>()
@@ -166,9 +168,10 @@ impl DynamicAsset for GameDataAsset {
                         texture: asset_server.load(texture.clone()),
                         cures: cures.clone(),
                         causes: causes.clone(),
-                        toxicity: toxicity.clone(),
-                        starter: starter.clone(),
+                        toxicity: *toxicity,
+                        starter: *starter,
                         used: false,
+                        order: *order,
                     })
                     .clone_untyped();
 

@@ -39,6 +39,7 @@ pub struct Ingredient {
     pub toxicity: i32,
     pub starter: bool,
     pub used: bool,
+    pub order: u16,
 }
 
 #[derive(serde::Deserialize, Debug, Clone, PartialEq, Eq, Hash)]
