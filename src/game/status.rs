@@ -14,7 +14,7 @@ pub fn build_status_panel(commands: &mut ChildBuilder, ui_assets: &Res<UiAssets>
     commands.spawn((
         ImageBundle {
             style: Style {
-                size: Size::new(Val::Px(274.), Val::Px(300.)),
+                size: Size::new(Val::Px(298.), Val::Px(300.)),
                 flex_basis: Val::Percent(100.),
                 flex_direction: FlexDirection::Column,
                 align_self: AlignSelf::FlexEnd,
