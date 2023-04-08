@@ -1,5 +1,6 @@
 use crate::{
     assets::resources_standard::GlobalAssets,
+    game::game_phase::GamePhase,
     style::color::GAME_BACKGROUND_COLOR,
     world::{
         common::{WINDOW_HEIGHT, WINDOW_WIDTH},
@@ -193,6 +194,7 @@ fn menu_action(
     mut app_exit_events: EventWriter<AppExit>,
     mut menu_state: ResMut<NextState<MenuState>>,
     mut game_state: ResMut<NextState<GlobalState>>,
+    mut game_phase: ResMut<NextState<GamePhase>>,
 ) {
     for (interaction, menu_button_action) in &interaction_query {
         if *interaction == Interaction::Clicked {
@@ -201,6 +203,7 @@ fn menu_action(
                 MenuButtonAction::Play => {
                     game_state.set(GlobalState::Game);
                     menu_state.set(MenuState::Disabled);
+                    game_phase.set(GamePhase::PotionAssembly);
                 }
                 MenuButtonAction::Settings => menu_state.set(MenuState::Settings),
             }

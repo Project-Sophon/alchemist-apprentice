@@ -5,7 +5,7 @@ use crate::{
         assets_game_data::{Ingredient, SideEffectClass},
         resources_standard::{GlobalAssets, UiAssets},
     },
-    style::color::{PALETTE_CREAM, PALETTE_DARK_BLUE},
+    style::color::PALETTE_DARK_BLUE,
     world::global_state::GlobalState,
 };
 
@@ -16,7 +16,7 @@ impl Plugin for InformationPlugin {
         app.register_type::<InformationPanel>()
             .register_type::<InformationPanelContent>()
             .add_system(update_information_panel.in_set(OnUpdate(GlobalState::Game)))
-            .add_system(reset_information_panel.in_schedule(OnEnter(GamePhase::PotionAssembly)));
+            .add_system(reset_information_panel.in_schedule(OnExit(GamePhase::Concoct)));
     }
 }
 

@@ -1,8 +1,5 @@
 use crate::{
-    assets::{
-        assets_game_data::{Ingredient, SideEffect, SideEffectClass},
-        resources_standard::UiAssets,
-    },
+    assets::assets_game_data::{Ingredient, SideEffect, SideEffectClass},
     game::{
         bjorn::{give_bjorn_concoction, BjornStatus},
         game_phase::GamePhase,
@@ -11,7 +8,6 @@ use crate::{
     },
     style::color::PALETTE_DARK_BLUE,
     ui::disable_ui::EnableUiElement,
-    world::global_state::GlobalState,
 };
 use bevy::prelude::*;
 use core::fmt;
@@ -20,7 +16,7 @@ use std::collections::HashSet;
 pub struct ConcoctPlugin;
 impl Plugin for ConcoctPlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(concoct_interaction.in_set(OnUpdate(GlobalState::Game)));
+        app.add_system(on_concoct.in_schedule(OnEnter(GamePhase::Concoct)));
     }
 }
 
@@ -49,42 +45,18 @@ impl fmt::Display for Concoction {
 
 // ------ SYSTEMS ------
 
-pub fn concoct_interaction(
+pub fn on_concoct(
     mut game_phase: ResMut<NextState<GamePhase>>,
-    mut interaction_query: Query<
-        (Entity, &Interaction, &mut UiImage),
-        (With<ConcoctAction>, With<EnableUiElement>),
-    >,
     potion_mix: Res<PotionMix>,
     mut ingredients: ResMut<Assets<Ingredient>>,
-    ui_assets: Res<UiAssets>,
     mut bjorn_status: ResMut<BjornStatus>,
     side_effects: Res<Assets<SideEffect>>,
-    buttons: Res<Input<MouseButton>>,
 ) {
-    for (_, interaction, mut ui_image) in &mut interaction_query {
-        match *interaction {
-            Interaction::Clicked => {
-                if buttons.just_pressed(MouseButton::Left) {
-                    // TODO: The interaction could just set the concoct state
-                    // and then a concoct system could run onEnter that does all this
-                    game_phase.set(GamePhase::Concoct);
-                    let concoction = concoct(potion_mix.clone(), &ingredients);
-                    info!("{}", concoction.to_string());
-                    ui_image.texture = ui_assets.concoct_button_click.clone();
-                    give_bjorn_concoction(concoction, &mut bjorn_status, &side_effects);
-                    update_ingredients_used(&mut ingredients, &potion_mix.ingredients);
-                    game_phase.set(GamePhase::PotionAssembly);
-                }
-            }
-            Interaction::Hovered => {
-                ui_image.texture = ui_assets.concoct_button_hover.clone();
-            }
-            Interaction::None => {
-                ui_image.texture = ui_assets.concoct_button_normal.clone();
-            }
-        }
-    }
+    let concoction = concoct(potion_mix.clone(), &ingredients);
+    info!("{}", concoction.to_string());
+    give_bjorn_concoction(concoction, &mut bjorn_status, &side_effects);
+    update_ingredients_used(&mut ingredients, &potion_mix.ingredients);
+    game_phase.set(GamePhase::PotionAssembly);
 }
 
 pub fn spawn_concoct_action(

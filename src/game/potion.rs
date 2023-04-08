@@ -6,11 +6,14 @@ use crate::{
         assets_game_data::Ingredient,
         resources_standard::{GlobalAssets, UiAssets},
     },
-    world::global_state::GlobalState,
+    ui::disable_ui::EnableUiElement,
 };
 
 use super::{
-    bjorn::BjornStatus, ingredients::SelectedIngredient, phases::concoct::spawn_concoct_action,
+    bjorn::BjornStatus,
+    game_phase::GamePhase,
+    ingredients::SelectedIngredient,
+    phases::concoct::{spawn_concoct_action, ConcoctAction},
 };
 
 pub struct PotionPlugin;
@@ -19,7 +22,8 @@ impl Plugin for PotionPlugin {
         app.register_type::<PotionPanel>()
             .init_resource::<PotionMix>()
             .add_systems(
-                (slot_interactions, clear_potion_slots).in_set(OnUpdate(GlobalState::Game)),
+                (slot_interactions, clear_potion_slots, concoct_interaction)
+                    .in_set(OnUpdate(GamePhase::PotionAssembly)),
             );
     }
 }
@@ -241,6 +245,33 @@ fn slot_interactions(
                         ui_image.texture = ui_assets.potion_circle_slot_empty.clone();
                     }
                 }
+            }
+        }
+    }
+}
+
+pub fn concoct_interaction(
+    mut game_phase: ResMut<NextState<GamePhase>>,
+    mut interaction_query: Query<
+        (Entity, &Interaction, &mut UiImage),
+        (With<ConcoctAction>, With<EnableUiElement>),
+    >,
+    ui_assets: Res<UiAssets>,
+    buttons: Res<Input<MouseButton>>,
+) {
+    for (_, interaction, mut ui_image) in &mut interaction_query {
+        match *interaction {
+            Interaction::Clicked => {
+                if buttons.just_pressed(MouseButton::Left) {
+                    ui_image.texture = ui_assets.concoct_button_click.clone();
+                    game_phase.set(GamePhase::Concoct);
+                }
+            }
+            Interaction::Hovered => {
+                ui_image.texture = ui_assets.concoct_button_hover.clone();
+            }
+            Interaction::None => {
+                ui_image.texture = ui_assets.concoct_button_normal.clone();
             }
         }
     }
