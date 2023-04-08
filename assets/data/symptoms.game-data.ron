@@ -5,11 +5,11 @@
     ),
   "genital_sores": Symptom (
       name: "Genital Sores",
-      class: [STI]
+      class: [Parasite]
     ),
   "flatulence": Symptom (
       name: "Flatuence",
-      class: [Gastro]
+      class: [Gastrointestinal]
     ),
   "hearing_voices": Symptom (
       name: "Hearing Voices",
@@ -21,6 +21,6 @@
     ),
   "burning_pee": Symptom (
       name: "Burning Pee",
-      class: [STI]
+      class: [Parasite]
     ),
 })

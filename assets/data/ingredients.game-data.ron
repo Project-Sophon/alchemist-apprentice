@@ -13,7 +13,7 @@
       description: "A fine powder, almost iridescent dust. Refrain from inhaling.",
       texture: "textures/ingredients/bowl_of_dust.png",
       cures: [Pain],
-      causes: [Gastro, Mental],
+      causes: [Gastrointestinal, Mental],
       toxicity: 1,
       starter: true
     ),
@@ -22,7 +22,7 @@
       description: "The claw of a noble falcon, sharper than the deadliest sword.",
       texture: "textures/ingredients/claw.png",
       cures: [Pain],
-      causes: [Gastro, Mental],
+      causes: [Gastrointestinal, Mental],
       toxicity: 1,
       starter: true
     ),
@@ -31,7 +31,7 @@
       description: "Volcanic stone, blacker than the night sky before dawn.",
       texture: "textures/ingredients/obsidian.png",
       cures: [Pain],
-      causes: [Gastro, Mental],
+      causes: [Gastrointestinal, Mental],
       toxicity: 1,
       starter: false
     ),
@@ -40,7 +40,7 @@
       description: "The feather of a three-eyed raven. Can cause hallucinations.",
       texture: "textures/ingredients/feather.png",
       cures: [Pain],
-      causes: [Gastro, Mental],
+      causes: [Gastrointestinal, Mental],
       toxicity: 1,
       starter: false
     ),
@@ -48,7 +48,7 @@
       name: "Garlic",
       description: "Household garlic, grown in the garden next to the shop. All but guaranteed to leave a patient's breath smelling worse than before.",
       texture: "textures/ingredients/garlic_clove.png",
-      cures: [Gastro],
+      cures: [Gastrointestinal],
       causes: [Mental],
       toxicity: 1,
       starter: false
@@ -58,7 +58,7 @@
       description: "A jar of preserved eyes. You can’t bear to stare at them for more than a few moments. A powerful reagent in the hands of a skillful alchemist.",
       texture: "textures/ingredients/jar_of_eyes.png",
       cures: [Mental],
-      causes: [Gastro, Mental],
+      causes: [Gastrointestinal, Mental],
       toxicity: 1,
       starter: false
     ),
@@ -67,7 +67,7 @@
       description: "A simple lead bar. Soft and cool to the touch. All alchemy begins with base materials and an ambition to transform them into something more.",
       texture: "textures/ingredients/lead_bar.png",
       cures: [Pain],
-      causes: [Gastro, Mental],
+      causes: [Gastrointestinal, Mental],
       toxicity: 1,
       starter: false
     ),
@@ -76,7 +76,7 @@
       description: "The cap of a Deathbloom mushroom, deadly in all but the smallest doses. Sometimes a little poison is necessary to cure stubborn ailments.",
       texture: "textures/ingredients/mushroom.png",
       cures: [Pain],
-      causes: [Gastro, Mental],
+      causes: [Gastrointestinal, Mental],
       toxicity: 1,
       starter: false
     ),
@@ -84,8 +84,8 @@
       name: "Nightshade",
       description: "Nightshade grows only in dark, overcast environments.",
       texture: "textures/ingredients/nightshade.png",
-      cures: [STI],
-      causes: [Gastro, Mental],
+      cures: [Parasite],
+      causes: [Gastrointestinal, Mental],
       toxicity: 1,
       starter: false
     ),
@@ -94,7 +94,7 @@
       description: "A dark, glistening pearl extracted from a nearly extinct mollusk. Useful when crushed into a powder.",
       texture: "textures/ingredients/pearl.png",
       cures: [Pain],
-      causes: [Gastro, Mental],
+      causes: [Gastrointestinal, Mental],
       toxicity: 1,
       starter: false
     ),
@@ -103,7 +103,7 @@
       description: "An ancient crystallized tear of unknown origin. Where your master obtained this reagent, you dare not ask.",
       texture: "textures/ingredients/tear.png",
       cures: [Pain],
-      causes: [Gastro, Mental],
+      causes: [Gastrointestinal, Mental],
       toxicity: 1,
       starter: false
     )

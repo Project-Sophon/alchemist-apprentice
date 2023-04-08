@@ -43,14 +43,11 @@ pub struct Ingredient {
 #[derive(serde::Deserialize, Debug, Clone, PartialEq, Eq, Hash)]
 pub enum SymptomClass {
     Pain,
-    STI,
-    Congestion,
-    Gastro,
-    Skin,
     Parasite,
     Occult,
+    Gastrointestinal,
+    Skin,
     Mental,
-    EndGame,
 }
 
 impl fmt::Display for SymptomClass {
