@@ -5,6 +5,7 @@ use crate::{
     },
     game::{
         bjorn::{give_bjorn_concoction, BjornStatus},
+        game_phase::GamePhase,
         ingredients::update_ingredients_used,
         potion::PotionMix,
     },
@@ -49,6 +50,7 @@ impl fmt::Display for Concoction {
 // ------ SYSTEMS ------
 
 pub fn concoct_interaction(
+    mut game_phase: ResMut<NextState<GamePhase>>,
     mut interaction_query: Query<
         (Entity, &Interaction, &mut UiImage),
         (With<ConcoctAction>, With<EnableUiElement>),
@@ -64,11 +66,15 @@ pub fn concoct_interaction(
         match *interaction {
             Interaction::Clicked => {
                 if buttons.just_pressed(MouseButton::Left) {
+                    // TODO: The interaction could just set the concoct state
+                    // and then a concoct system could run onEnter that does all this
+                    game_phase.set(GamePhase::Concoct);
                     let concoction = concoct(potion_mix.clone(), &ingredients);
                     info!("{}", concoction.to_string());
                     ui_image.texture = ui_assets.concoct_button_click.clone();
                     give_bjorn_concoction(concoction, &mut bjorn_status, &side_effects);
-                    update_ingredients_used(&mut ingredients, &potion_mix.ingredients)
+                    update_ingredients_used(&mut ingredients, &potion_mix.ingredients);
+                    game_phase.set(GamePhase::PotionAssembly);
                 }
             }
             Interaction::Hovered => {

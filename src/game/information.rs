@@ -9,13 +9,14 @@ use crate::{
     world::global_state::GlobalState,
 };
 
-use super::ingredients::SelectedIngredient;
+use super::{bjorn::BjornStatus, game_phase::GamePhase, ingredients::SelectedIngredient};
 pub struct InformationPlugin;
 impl Plugin for InformationPlugin {
     fn build(&self, app: &mut App) {
         app.register_type::<InformationPanel>()
             .register_type::<InformationPanelContent>()
-            .add_system(update_information_panel.in_set(OnUpdate(GlobalState::Game)));
+            .add_system(update_information_panel.in_set(OnUpdate(GlobalState::Game)))
+            .add_system(reset_information_panel.in_schedule(OnEnter(GamePhase::PotionAssembly)));
     }
 }
 
@@ -58,6 +59,26 @@ fn update_information_panel(
                 None => build_default_information_text(parent, &global_assets.font),
             };
         });
+    }
+}
+
+fn reset_information_panel(
+    mut commands: Commands,
+    panel_content: Query<Entity, With<InformationPanel>>,
+    bjorn_status: ResMut<BjornStatus>,
+    global_assets: Res<GlobalAssets>,
+) {
+    if !bjorn_status.is_changed() {
+        return;
+    }
+
+    if let Ok(target) = panel_content.get_single() {
+        // remove existing child elements
+        commands.entity(target).despawn_descendants();
+
+        commands
+            .entity(target)
+            .with_children(|parent| build_default_information_text(parent, &global_assets.font));
     }
 }
 
@@ -218,8 +239,8 @@ pub fn build_default_information_text(commands: &mut ChildBuilder, font: &Handle
     commands.spawn((
         TextBundle {
             text: Text::from_section(
-                "This text shows when no ingredients are selected ...",
-                get_info_text_style(font, 18.),
+                "Take heed, young apprentice, for this workshop holds ingredients that you have not yet grasped fully. Alchemy is a delicate art that demands precise formulas, as heedless mixing may yield unintended consequences!",
+                get_info_text_style(font, 20.),
             ),
             style: INFO_TEXT_BUNDLE_STYLE,
             ..default()

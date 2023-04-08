@@ -165,7 +165,7 @@ pub fn spawn_potion_mix_slot(commands: &mut ChildBuilder, icon: &Handle<Image>, 
     ));
 }
 
-pub fn clear_potion_slots(
+fn clear_potion_slots(
     mut commands: Commands,
     mut potion_slot_query: Query<(Entity, &mut UiImage, &mut PotionMixSlot), With<PotionMixSlot>>,
     mut potion_mix: ResMut<PotionMix>,
