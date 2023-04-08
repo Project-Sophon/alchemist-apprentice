@@ -7,10 +7,8 @@ pub struct GlobalAssets {
     pub splash: Handle<Image>,
     #[asset(path = "branding/main_menu.png")]
     pub main_menu_banner: Handle<Image>,
-    #[asset(path = "fonts/DePixelKlein.ttf")]
-    pub font: Handle<Font>,
-    #[asset(path = "fonts/DePixelHalbfett.ttf")]
-    pub font_bold: Handle<Font>,
+    #[asset(path = "fonts/alagard.ttf")]
+    pub font: Handle<Font>
 }
 
 #[derive(AssetCollection, Resource)]

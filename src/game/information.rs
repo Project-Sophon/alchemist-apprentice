@@ -53,7 +53,6 @@ fn update_information_panel(
                 Some(handle) => build_ingredient_information(
                     parent,
                     &global_assets.font,
-                    &global_assets.font_bold,
                     ingredients.get(handle).unwrap(),
                 ),
                 None => build_default_information_text(parent, &global_assets.font),
@@ -67,7 +66,6 @@ pub fn build_information_panel(
     ingredients: &Res<Assets<Ingredient>>,
     selected_ingredient: &Res<SelectedIngredient>,
     font: &Handle<Font>,
-    font_bold: &Handle<Font>,
     ui_assets: &Res<UiAssets>,
 ) -> Entity {
     commands
@@ -87,12 +85,9 @@ pub fn build_information_panel(
             Name::new("Information Panel"),
         ))
         .with_children(|parent| match &selected_ingredient.ingredient {
-            Some(handle) => build_ingredient_information(
-                parent,
-                font,
-                font_bold,
-                ingredients.get(handle).unwrap(),
-            ),
+            Some(handle) => {
+                build_ingredient_information(parent, font, ingredients.get(handle).unwrap())
+            }
             None => build_default_information_text(parent, font),
         })
         .id()
@@ -101,12 +96,11 @@ pub fn build_information_panel(
 pub fn build_ingredient_information(
     commands: &mut ChildBuilder,
     font: &Handle<Font>,
-    font_bold: &Handle<Font>,
     ingredient: &Ingredient,
 ) {
     commands.spawn((
         TextBundle {
-            text: Text::from_section(ingredient.name.clone(), get_info_text_style(font_bold)),
+            text: Text::from_section(ingredient.name.clone(), get_info_text_style(font, 24.)),
             style: Style {
                 margin: UiRect::bottom(Val::Px(10.)),
                 ..INFO_TEXT_BUNDLE_STYLE
@@ -128,7 +122,7 @@ pub fn build_ingredient_information(
     ));
     commands.spawn((
         TextBundle {
-            text: Text::from_section(ingredient.description.clone(), get_info_text_style(font)),
+            text: Text::from_section(ingredient.description.clone(), get_info_text_style(font, 16.)),
             style: INFO_TEXT_BUNDLE_STYLE,
             ..default()
         },
@@ -141,7 +135,7 @@ pub fn build_default_information_text(commands: &mut ChildBuilder, font: &Handle
         TextBundle {
             text: Text::from_section(
                 "This text shows when no ingredients are selected ...",
-                get_info_text_style(font),
+                get_info_text_style(font, 18.),
             ),
             style: INFO_TEXT_BUNDLE_STYLE,
             ..default()
@@ -160,10 +154,10 @@ const INFO_TEXT_BUNDLE_STYLE: Style = Style {
     ..Style::DEFAULT
 };
 
-fn get_info_text_style(font: &Handle<Font>) -> TextStyle {
+fn get_info_text_style(font: &Handle<Font>, size: f32) -> TextStyle {
     return TextStyle {
         font: font.clone(),
-        font_size: 16.,
+        font_size: size,
         color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
     };
 }

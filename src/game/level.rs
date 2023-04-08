@@ -122,7 +122,6 @@ fn build_level(
                                 &ingredients,
                                 &selected_ingredient,
                                 &global_assets.font,
-                                &global_assets.font_bold,
                                 &ui_assets,
                             );
                             build_potion_panel(parent, &global_assets, &ui_assets);

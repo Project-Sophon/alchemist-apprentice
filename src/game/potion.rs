@@ -122,7 +122,7 @@ pub fn build_potion_panel(
             spawn_concoct_action(
                 parent,
                 &ui_assets.concoct_button_normal,
-                &global_assets.font_bold,
+                &global_assets.font,
             );
         })
         .id()
@@ -280,19 +280,22 @@ fn render_occupied_slot(
     ingredient: &Ingredient,
 ) {
     parent
-        .spawn((ImageBundle {
-            style: Style {
-                align_items: AlignItems::Center,
-                justify_content: JustifyContent::Center,
-                size: Size {
-                    height: Val::Px(64.),
-                    width: Val::Px(64.),
+        .spawn((
+            ImageBundle {
+                style: Style {
+                    align_items: AlignItems::Center,
+                    justify_content: JustifyContent::Center,
+                    size: Size {
+                        height: Val::Px(64.),
+                        width: Val::Px(64.),
+                    },
+                    ..default()
                 },
+                image: UiImage::new(occupied),
                 ..default()
             },
-            image: UiImage::new(occupied),
-            ..default()
-        }, Name::new(format!("Selected Slot: {}", ingredient.name)),))
+            Name::new(format!("Selected Slot: {}", ingredient.name)),
+        ))
         .with_children(|parent| {
             parent.spawn((
                 ImageBundle {

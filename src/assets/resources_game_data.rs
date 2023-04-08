@@ -16,8 +16,8 @@ pub struct IngredientAssets {
     pub bowl_of_dust: Handle<Ingredient>,
     #[asset(key = "claw")]
     pub claw: Handle<Ingredient>,
-    #[asset(key = "diamond")]
-    pub diamond: Handle<Ingredient>,
+    #[asset(key = "obsidian")]
+    pub obsidian: Handle<Ingredient>,
     #[asset(key = "feather")]
     pub feather: Handle<Ingredient>,
     #[asset(key = "garlic_clove")]
