@@ -9,14 +9,13 @@ use crate::{
     world::global_state::GlobalState,
 };
 
-use super::{bjorn::BjornStatus, game_phase::GamePhase, ingredients::SelectedIngredient};
+use super::ingredients::SelectedIngredient;
 pub struct InformationPlugin;
 impl Plugin for InformationPlugin {
     fn build(&self, app: &mut App) {
         app.register_type::<InformationPanel>()
             .register_type::<InformationPanelContent>()
-            .add_system(update_information_panel.in_set(OnUpdate(GlobalState::Game)))
-            .add_system(reset_information_panel.in_schedule(OnExit(GamePhase::Concoct)));
+            .add_system(update_information_panel.in_set(OnUpdate(GlobalState::Game)));
     }
 }
 
@@ -59,26 +58,6 @@ fn update_information_panel(
                 None => build_default_information_text(parent, &global_assets.font),
             };
         });
-    }
-}
-
-fn reset_information_panel(
-    mut commands: Commands,
-    panel_content: Query<Entity, With<InformationPanel>>,
-    bjorn_status: ResMut<BjornStatus>,
-    global_assets: Res<GlobalAssets>,
-) {
-    if !bjorn_status.is_changed() {
-        return;
-    }
-
-    if let Ok(target) = panel_content.get_single() {
-        // remove existing child elements
-        commands.entity(target).despawn_descendants();
-
-        commands
-            .entity(target)
-            .with_children(|parent| build_default_information_text(parent, &global_assets.font));
     }
 }
 
