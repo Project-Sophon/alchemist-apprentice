@@ -9,7 +9,7 @@ use bevy::{
 #[uuid = "766152e8-d85f-4e58-b4f8-4e375a99ac53"]
 pub struct Symptom {
     pub name: String,
-    pub class: Vec<SymptomClass>,
+    pub class: Vec<SideEffectClass>,
 }
 
 impl PartialEq for Symptom {
@@ -33,15 +33,15 @@ pub struct Ingredient {
     pub name: String,
     pub description: String,
     pub texture: Handle<Image>,
-    pub cures: Vec<SymptomClass>,
-    pub causes: Vec<SymptomClass>,
+    pub cures: Vec<SideEffectClass>,
+    pub causes: Vec<SideEffectClass>,
     pub toxicity: i32,
     pub starter: bool,
     pub used: bool,
 }
 
 #[derive(serde::Deserialize, Debug, Clone, PartialEq, Eq, Hash)]
-pub enum SymptomClass {
+pub enum SideEffectClass {
     Pain,
     Parasite,
     Occult,
@@ -50,7 +50,7 @@ pub enum SymptomClass {
     Mental,
 }
 
-impl fmt::Display for SymptomClass {
+impl fmt::Display for SideEffectClass {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{:?}", self)
     }

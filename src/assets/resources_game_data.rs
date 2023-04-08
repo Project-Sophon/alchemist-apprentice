@@ -6,7 +6,7 @@ use bevy_asset_loader::prelude::{
     AssetCollection, DynamicAsset, DynamicAssetCollection, DynamicAssetType, DynamicAssets,
 };
 
-use super::assets_game_data::{Ingredient, Symptom, SymptomClass};
+use super::assets_game_data::{Ingredient, Symptom, SideEffectClass};
 
 #[derive(AssetCollection, Resource)]
 pub struct IngredientAssets {
@@ -68,14 +68,14 @@ impl DynamicAssetCollection for GameDataAssetDynamicCollection {
 enum GameDataAsset {
     Symptom {
         name: String,
-        class: Vec<SymptomClass>,
+        class: Vec<SideEffectClass>,
     },
     Ingredient {
         name: String,
         description: String,
         texture: String,
-        cures: Vec<SymptomClass>,
-        causes: Vec<SymptomClass>,
+        cures: Vec<SideEffectClass>,
+        causes: Vec<SideEffectClass>,
         toxicity: i32,
         starter: bool,
     },

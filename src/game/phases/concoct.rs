@@ -1,6 +1,6 @@
 use crate::{
     assets::{
-        assets_game_data::{Ingredient, Symptom, SymptomClass},
+        assets_game_data::{Ingredient, Symptom, SideEffectClass},
         resources_standard::UiAssets,
     },
     game::{
@@ -31,8 +31,8 @@ pub struct ConcoctAction;
 #[derive(Component, Default)]
 pub struct Concoction {
     pub toxicity: i32,
-    pub cures: HashSet<SymptomClass>,
-    pub causes: HashSet<SymptomClass>,
+    pub cures: HashSet<SideEffectClass>,
+    pub causes: HashSet<SideEffectClass>,
 }
 
 impl fmt::Display for Concoction {
@@ -119,8 +119,8 @@ pub fn spawn_concoct_action(
 }
 
 pub fn concoct(potion_mix: PotionMix, ingredients: &Res<Assets<Ingredient>>) -> Concoction {
-    let mut cures: HashSet<SymptomClass> = HashSet::new();
-    let mut causes: HashSet<SymptomClass> = HashSet::new();
+    let mut cures: HashSet<SideEffectClass> = HashSet::new();
+    let mut causes: HashSet<SideEffectClass> = HashSet::new();
     let mut toxicity: i32 = 0;
 
     for ingredient in potion_mix.ingredients {
