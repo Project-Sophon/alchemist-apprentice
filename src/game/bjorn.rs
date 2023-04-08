@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use rand::{Rng, SeedableRng};
 use std::{collections::HashSet, fmt};
 
-use crate::{assets::assets_game_data::Symptom, world::global_state::GlobalState};
+use crate::{assets::assets_game_data::SideEffect, world::global_state::GlobalState};
 
 use super::phases::concoct::Concoction;
 
@@ -18,14 +18,14 @@ impl Plugin for BjornPlugin {
 
 #[derive(Resource, Clone)]
 pub struct BjornStatus {
-    pub symptoms: HashSet<Symptom>,
+    pub side_effects: HashSet<SideEffect>,
     pub toxicity: i32,
 }
 
 impl Default for BjornStatus {
     fn default() -> BjornStatus {
         BjornStatus {
-            symptoms: HashSet::new(),
+            side_effects: HashSet::new(),
             toxicity: 0,
         }
     }
@@ -35,8 +35,8 @@ impl fmt::Display for BjornStatus {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Bjorn Status:: Toxicity:{:?}, Symptoms: {:?}",
-            self.toxicity, self.symptoms
+            "Bjorn Status:: Toxicity:{:?}, Ailments: {:?}",
+            self.toxicity, self.side_effects
         )
     }
 }
@@ -45,47 +45,47 @@ impl fmt::Display for BjornStatus {
 
 fn setup_initial_bjorn_status(
     mut bjorn_status: ResMut<BjornStatus>,
-    symptom_assets: Res<Assets<Symptom>>,
+    side_effect_assets: Res<Assets<SideEffect>>,
 ) {
-    let mut initial_symptom_pool: HashSet<Symptom> = HashSet::new();
+    let mut initial_side_effect_pool: HashSet<SideEffect> = HashSet::new();
     info!("Setup initial status on entering game state...");
-    for (_, symptom) in symptom_assets.iter() {
-        initial_symptom_pool.insert(symptom.clone());
+    for (_, side_effect) in side_effect_assets.iter() {
+        initial_side_effect_pool.insert(side_effect.clone());
     }
 
     let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(10);
     let rand_index: usize = rng.gen_range(0..2);
 
-    let initial_symptom = Vec::from_iter(&initial_symptom_pool)[rand_index];
-    bjorn_status.symptoms = HashSet::from_iter(vec![initial_symptom.clone()]);
-    info!("Initial Symptoms of Bjorn: {:?}", bjorn_status.symptoms);
+    let initial_side_effect = Vec::from_iter(&initial_side_effect_pool)[rand_index];
+    bjorn_status.side_effects = HashSet::from_iter(vec![initial_side_effect.clone()]);
+    info!("Initial Side Effects of Bjorn: {:?}", bjorn_status.side_effects);
 }
 
 pub fn give_bjorn_concoction(
     concoction: Concoction,
     bjorn_status: &mut ResMut<BjornStatus>,
-    symptoms: &Res<Assets<Symptom>>,
+    side_effects: &Res<Assets<SideEffect>>,
 ) {
     let cures = concoction.cures;
     for cure in cures {
-        let current_bjorn_symptoms = bjorn_status.symptoms.clone();
-        let cured_symptoms: Vec<&Symptom> = current_bjorn_symptoms
+        let current_bjorn_side_effects = bjorn_status.side_effects.clone();
+        let cured_side_effects: Vec<&SideEffect> = current_bjorn_side_effects
             .iter()
             .filter(|s| s.class.contains(&cure))
             .collect();
-        for cured in cured_symptoms {
-            bjorn_status.symptoms.remove(cured);
+        for cured in cured_side_effects {
+            bjorn_status.side_effects.remove(cured);
         }
     }
 
-    let side_effects = concoction.causes;
+    let causes = concoction.causes;
     info!("Number of side effects {}", side_effects.len().to_string());
-    for effect in side_effects {
-        let symptom_iter = symptoms.clone().iter();
-        let possible_side_effects: Vec<Symptom> = symptom_iter
+    for cause in causes {
+        let side_effect_iter = side_effects.clone().iter();
+        let possible_side_effects: Vec<SideEffect> = side_effect_iter
             .filter(|s| {
-                let symptom = s.1;
-                symptom.class.contains(&effect)
+                let side_effect = s.1;
+                side_effect.class.contains(&cause)
             })
             .map(|s| s.1.clone())
             .collect();
@@ -94,7 +94,7 @@ pub fn give_bjorn_concoction(
             let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(10);
             let rand_index: usize = rng.gen_range(0..possible_side_effects.len());
             bjorn_status
-                .symptoms
+                .side_effects
                 .insert(possible_side_effects[rand_index].clone());
         }
     }

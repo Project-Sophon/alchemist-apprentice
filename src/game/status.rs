@@ -53,7 +53,7 @@ fn initial_status_panel_values(
     query.for_each(|e| {
         commands.entity(e).remove::<NotInitialized>();
         commands.entity(e).with_children(|parent| {
-            render_symptoms_in_panel(parent, bjorn_status.clone(), &global_assets.font);
+            render_side_effects_in_panel(parent, bjorn_status.clone(), &global_assets.font);
         });
     })
 }
@@ -70,18 +70,18 @@ fn update_status_panel(
     query.for_each(|e| {
         commands.entity(e).despawn_descendants();
         commands.entity(e).with_children(|parent| {
-            render_symptoms_in_panel(parent, bjorn_status.clone(), &global_assets.font);
+            render_side_effects_in_panel(parent, bjorn_status.clone(), &global_assets.font);
         });
     });
 }
 
-fn render_symptoms_in_panel(
+fn render_side_effects_in_panel(
     parent: &mut ChildBuilder,
     bjorn_status: BjornStatus,
     font: &Handle<Font>,
 ) {
     let text_sections: Vec<TextSection> = bjorn_status
-        .symptoms
+        .side_effects
         .iter()
         .map(|s| {
             TextSection::new(
@@ -114,7 +114,7 @@ fn render_symptoms_in_panel(
                     },
                 ),
                 TextSection::new(
-                    format!("Symptoms:\n"),
+                    format!("Ailments:\n"),
                     TextStyle {
                         font: font.clone(),
                         font_size: 18.,

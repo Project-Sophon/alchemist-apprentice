@@ -1,104 +1,104 @@
 ({
-  "headache": Symptom (
+  "headache": SideEffect (
       name: "Headache",
       description: "Pain in the head can be caused by a variety of reasons.",
       class: [Pain]
     ),
-  "parasitic_infestation": Symptom (
+  "parasitic_infestation": SideEffect (
       name: "Parasitic Infestation",
       description: "Tiny parasitic creatures, causing discomfort and itching.",
       class: [Parasite]
     ),
-  "unseen_presence": Symptom (
+  "unseen_presence": SideEffect (
       name: "Unseen Presence",
       description: "A sense of unease and paranoia.",
       class: [Occult]
     ),
-  "explosive_burp": Symptom (
+  "explosive_burp": SideEffect (
       name: "Explosive Burp",
       description: "Uncontrollable and loud burping, which can be embarrassing and disruptive.",
       class: [Gastrointestinal]
     ),
-  "soothing_balm": Symptom (
+  "soothing_balm": SideEffect (
       name: "Soothing Balm",
       description: "Any wounds or irritations are soothed. However, a temporary blue discoloration on the skin occurs.",
       class: [Skin]
     ),
-  "euphoric_bliss": Symptom (
+  "euphoric_bliss": SideEffect (
       name: "Euphoric Bliss",
       description: "A surge of euphoria and joy, but may also become overly impulsive and reckless.",
       class: [Mental]
     ),
-  "bitter_aftershock": Symptom (
+  "bitter_aftershock": SideEffect (
     name: "Bitter Aftershock",
     description: "Stomach churns with discomfort, causing nausea and abdominal pain.",
     class: [Pain, Gastrointestinal]
     ),
-  "burning_sensation": Symptom (
+  "burning_sensation": SideEffect (
     name: "Burning Sensation",
     description: "Burning sensation on the skin, accompanied by mild to moderate pain.",
     class: [Pain, Skin]
     ),
-  "confusion": Symptom (
+  "confusion": SideEffect (
     name: "Confusion",
     description: "A state of mental disorientation, having difficulty concentrating, making decisions, or understanding their surroundings.",
     class: [Pain, Mental]
     ),
-  "muscle_cramps": Symptom (
+  "muscle_cramps": SideEffect (
     name: "Muscle Cramps",
     description: "Involuntary and painful contractions of muscles brought on by a parasitic infestation, often resulting in discomfort and limited mobility.",
     class: [Pain, Parasite]
     ), 
-  "cursed": Symptom (
+  "cursed": SideEffect (
     name: "Cursed",
     description: "Afflicted with a malevolent curse, resulting in various supernatural or occult phenomena that may cause harm or distress.",
     class: [Pain, Occult]
     ), 
-  "nauseating_odor": Symptom (
+  "nauseating_odor": SideEffect (
     name: "Nauseating Odor",
     description: "A foul odor that emanates from the body, causing discomfort and repulsion to those around them.",
     class: [Gastrointestinal, Skin]
     ),
-  "anxiety": Symptom (
+  "anxiety": SideEffect (
     name: "Anxiety",
     description: "A state of excessive worry, nervousness, or unease, often accompanied by physical symptoms such as restlessness or an increased heart rate.",
     class: [Gastrointestinal, Mental]
     ),
-  "diarrhea": Symptom (
+  "diarrhea": SideEffect (
     name: "Diarrhea",
     description: "Loose bowel movements and abdominal discomfort due to the presence of parasites in the gastrointestinal tract.",
     class: [Gastrointestinal, Parasite]
     ), 
-  "purging_purgatory": Symptom (
+  "purging_purgatory": SideEffect (
     name: "Purging Purgatory",
     description: "Intense purging, with frequent vomiting and diarrhea, as the potion flushes out toxins from the body along with temporary infestation by parasitic creatures.",
     class: [Gastrointestinal, Occult]
     ),
-  "vivid_dreams": Symptom (
+  "vivid_dreams": SideEffect (
     name: "Vivid Dreams",
     description: "Vivid and immersive dreams, which may be pleasant or disturbing, but can also affect sleep quality and overall mental state.",
     class: [Skin, Mental]
     ),
-  "itchy_pustules": Symptom (
+  "itchy_pustules": SideEffect (
     name: "Itchy Pustules",
     description: "Itchy and painful pustules on the skin due to a temporary infestation by parasitic creatures.",
     class: [Skin, Parasite]
     ),
-  "mysterious_markings": Symptom (
+  "mysterious_markings": SideEffect (
     name: "Mysterious Markings",
     description: "Skin develops mysterious markings or symbols, which may have hidden meanings or effects, but their nature and purpose remain unknown.",
     class: [Skin, Occult]
     ),
-  "insomnia": Symptom (
+  "insomnia": SideEffect (
     name: "Insomnia",
     description: "Difficulty falling asleep or staying asleep casued by an ear parasite, resulting in inadequate or poor-quality sleep.",
     class: [Mental, Parasite]
     ),
-  "nightmares_lullaby": Symptom (
+  "nightmares_lullaby": SideEffect (
     name: "Nightmare's Lullaby",
     description: "A deep slumber, but is plagued by unsettling nightmares and disturbed sleep patterns.",
     class: [Mental, Occult]),
-  "possession": Symptom (
+  "possession": SideEffect (
     name: "Possession",
     description: "Possessed by a malevolent entity or spirit, resulting in loss of control over the body and mind, and potentially harmful or aberrant behavior.",
     class: [Parasite, Occult]

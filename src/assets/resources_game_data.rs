@@ -6,7 +6,7 @@ use bevy_asset_loader::prelude::{
     AssetCollection, DynamicAsset, DynamicAssetCollection, DynamicAssetType, DynamicAssets,
 };
 
-use super::assets_game_data::{Ingredient, SideEffectClass, Symptom};
+use super::assets_game_data::{Ingredient, SideEffectClass, SideEffect};
 
 #[derive(AssetCollection, Resource)]
 pub struct IngredientAssets {
@@ -37,49 +37,49 @@ pub struct IngredientAssets {
 }
 
 #[derive(AssetCollection, Resource)]
-pub struct SymptomAssets {
+pub struct SideEffectAssets {
     #[asset(key = "headache")]
-    pub headache: Handle<Symptom>,
+    pub headache: Handle<SideEffect>,
     #[asset(key = "parasitic_infestation")]
-    pub parasitic_infestation: Handle<Symptom>,
+    pub parasitic_infestation: Handle<SideEffect>,
     #[asset(key = "unseen_presence")]
-    pub unseen_presence: Handle<Symptom>,
+    pub unseen_presence: Handle<SideEffect>,
     #[asset(key = "explosive_burp")]
-    pub explosive_burp: Handle<Symptom>,
+    pub explosive_burp: Handle<SideEffect>,
     #[asset(key = "soothing_balm")]
-    pub soothing_balm: Handle<Symptom>,
+    pub soothing_balm: Handle<SideEffect>,
     #[asset(key = "euphoric_bliss")]
-    pub euphoric_bliss: Handle<Symptom>,
+    pub euphoric_bliss: Handle<SideEffect>,
     #[asset(key = "bitter_aftershock")]
-    pub bitter_aftershock: Handle<Symptom>,
+    pub bitter_aftershock: Handle<SideEffect>,
     #[asset(key = "burning_sensation")]
-    pub burning_sensation: Handle<Symptom>,
+    pub burning_sensation: Handle<SideEffect>,
     #[asset(key = "confusion")]
-    pub confusion: Handle<Symptom>,
+    pub confusion: Handle<SideEffect>,
     #[asset(key = "muscle_cramps")]
-    pub muscle_cramps: Handle<Symptom>,
+    pub muscle_cramps: Handle<SideEffect>,
     #[asset(key = "cursed")]
-    pub cursed: Handle<Symptom>,
+    pub cursed: Handle<SideEffect>,
     #[asset(key = "nauseating_odor")]
-    pub nauseating_odor: Handle<Symptom>,
+    pub nauseating_odor: Handle<SideEffect>,
     #[asset(key = "anxiety")]
-    pub anxiety: Handle<Symptom>,
+    pub anxiety: Handle<SideEffect>,
     #[asset(key = "diarrhea")]
-    pub diarrhea: Handle<Symptom>,
+    pub diarrhea: Handle<SideEffect>,
     #[asset(key = "purging_purgatory")]
-    pub purging_purgatory: Handle<Symptom>,
+    pub purging_purgatory: Handle<SideEffect>,
     #[asset(key = "vivid_dreams")]
-    pub vivid_dreams: Handle<Symptom>,
+    pub vivid_dreams: Handle<SideEffect>,
     #[asset(key = "itchy_pustules")]
-    pub itchy_pustules: Handle<Symptom>,
+    pub itchy_pustules: Handle<SideEffect>,
     #[asset(key = "mysterious_markings")]
-    pub mysterious_markings: Handle<Symptom>,
+    pub mysterious_markings: Handle<SideEffect>,
     #[asset(key = "insomnia")]
-    pub insomnia: Handle<Symptom>,
+    pub insomnia: Handle<SideEffect>,
     #[asset(key = "nightmares_lullaby")]
-    pub nightmares_lullaby: Handle<Symptom>,
+    pub nightmares_lullaby: Handle<SideEffect>,
     #[asset(key = "possession")]
-    pub possession: Handle<Symptom>,
+    pub possession: Handle<SideEffect>,
 }
 
 #[derive(serde::Deserialize, bevy::reflect::TypeUuid)]
@@ -96,7 +96,7 @@ impl DynamicAssetCollection for GameDataAssetDynamicCollection {
 
 #[derive(serde::Deserialize, Debug, Clone)]
 enum GameDataAsset {
-    Symptom {
+    SideEffect {
         name: String,
         description: String,
         class: Vec<SideEffectClass>,
@@ -115,7 +115,7 @@ enum GameDataAsset {
 impl DynamicAsset for GameDataAsset {
     fn load(&self, asset_server: &AssetServer) -> Vec<HandleUntyped> {
         match self {
-            GameDataAsset::Symptom { .. } => vec![],
+            GameDataAsset::SideEffect { .. } => vec![],
             GameDataAsset::Ingredient { texture, .. } => vec![asset_server.load_untyped(texture)],
         }
     }
@@ -127,17 +127,17 @@ impl DynamicAsset for GameDataAsset {
             .expect("Failed to get asset server");
 
         match self {
-            GameDataAsset::Symptom {
+            GameDataAsset::SideEffect {
                 name,
                 description,
                 class,
             } => {
-                let mut symptoms = cell
-                    .get_resource_mut::<Assets<Symptom>>()
-                    .expect("Failed to get symptom asset");
+                let mut side_effects = cell
+                    .get_resource_mut::<Assets<SideEffect>>()
+                    .expect("Failed to get side effect asset");
 
-                let handle = symptoms
-                    .add(Symptom {
+                let handle = side_effects
+                    .add(SideEffect {
                         name: name.clone(),
                         description: description.clone(),
                         class: class.clone(),

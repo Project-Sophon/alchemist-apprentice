@@ -1,6 +1,6 @@
 use crate::{
     assets::{
-        assets_game_data::{Ingredient, SideEffectClass, Symptom},
+        assets_game_data::{Ingredient, SideEffectClass, SideEffect},
         resources_standard::UiAssets,
     },
     game::{
@@ -57,7 +57,7 @@ pub fn concoct_interaction(
     ingredients: Res<Assets<Ingredient>>,
     ui_assets: Res<UiAssets>,
     mut bjorn_status: ResMut<BjornStatus>,
-    symptoms: Res<Assets<Symptom>>,
+    side_effects: Res<Assets<SideEffect>>,
     buttons: Res<Input<MouseButton>>,
 ) {
     for (entity, interaction, mut ui_image) in &mut interaction_query {
@@ -67,7 +67,7 @@ pub fn concoct_interaction(
                     let concoction = concoct(potion_mix.clone(), &ingredients);
                     info!("{}", concoction.to_string());
                     ui_image.texture = ui_assets.concoct_button_click.clone();
-                    give_bjorn_concoction(concoction, &mut bjorn_status, &symptoms)
+                    give_bjorn_concoction(concoction, &mut bjorn_status, &side_effects)
                 }
             }
             Interaction::Hovered => {
