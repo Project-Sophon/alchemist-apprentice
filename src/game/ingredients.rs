@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::{asset::HandleId, prelude::*};
 
 use crate::{
     assets::{assets_game_data::Ingredient, resources_standard::UiAssets},
@@ -122,6 +122,9 @@ pub fn build_ingredients_panel(
                 style: Style {
                     size: Size::new(Val::Px(300.), Val::Percent(100.)),
                     flex_wrap: FlexWrap::Wrap,
+                    justify_content: JustifyContent::SpaceEvenly,
+                    align_content: AlignContent::SpaceEvenly,
+                    gap: Size::width(Val::Px(48.)),
                     ..default()
                 },
                 ..default()
@@ -130,47 +133,38 @@ pub fn build_ingredients_panel(
             Name::new("Ingredients Panel"),
         ))
         .with_children(|parent| {
-            for (id, ingredient) in ingredients.iter() {
+            // Sort Ingredients before output
+            let mut sorted_ingredient: Vec<(HandleId, &Ingredient)> =
+                ingredients.clone().iter().collect();
+
+            sorted_ingredient.sort_by(|a, b| a.1.order.cmp(&b.1.order));
+
+            for (id, ingredient) in sorted_ingredient {
                 parent
                     .spawn((
-                        NodeBundle {
+                        ButtonBundle {
                             style: Style {
-                                flex_basis: Val::Percent(33.33),
+                                size: Size::new(Val::Px(64.), Val::Px(64.)),
                                 align_items: AlignItems::Center,
                                 justify_content: JustifyContent::Center,
                                 ..default()
                             },
+                            image: UiImage::new(ui_assets.ingredient_button_normal.clone()),
                             ..default()
                         },
-                        Name::new("Ingredient Container"),
+                        IngredientButton {
+                            ingredient: Handle::weak(id),
+                        },
+                        Name::new("Ingredient Button"),
                     ))
                     .with_children(|parent| {
-                        parent
-                            .spawn((
-                                ButtonBundle {
-                                    style: Style {
-                                        size: Size::new(Val::Px(64.), Val::Percent(64.)),
-                                        align_items: AlignItems::Center,
-                                        justify_content: JustifyContent::Center,
-                                        ..default()
-                                    },
-                                    image: UiImage::new(ui_assets.ingredient_button_normal.clone()),
-                                    ..default()
-                                },
-                                IngredientButton {
-                                    ingredient: Handle::weak(id),
-                                },
-                                Name::new("Ingredient Button"),
-                            ))
-                            .with_children(|parent| {
-                                parent.spawn((
-                                    ImageBundle {
-                                        image: UiImage::new(ingredient.texture.clone()),
-                                        ..default()
-                                    },
-                                    Name::new("Ingredient Button Img"),
-                                ));
-                            });
+                        parent.spawn((
+                            ImageBundle {
+                                image: UiImage::new(ingredient.texture.clone()),
+                                ..default()
+                            },
+                            Name::new("Ingredient Button Img"),
+                        ));
                     });
             }
         })
