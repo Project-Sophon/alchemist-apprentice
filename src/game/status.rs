@@ -31,7 +31,7 @@ pub fn build_status_panel(commands: &mut ChildBuilder, ui_assets: &Res<UiAssets>
                 flex_basis: Val::Percent(100.),
                 flex_direction: FlexDirection::Column,
                 align_self: AlignSelf::FlexEnd,
-                padding: UiRect::all(Val::Px(32.)),
+                padding: UiRect::new(Val::Px(32.), Val::Px(0.), Val::Px(10.), Val::Undefined),
                 margin: UiRect::new(Val::Undefined, Val::Px(10.), Val::Px(10.), Val::Undefined),
                 ..default()
             },
@@ -84,21 +84,32 @@ fn render_side_effects_in_panel(
         .side_effects
         .iter()
         .map(|s| {
+            vec![
             TextSection::new(
-                format!("- {}\n", s.to_string()),
+                format!("- {}\n", s.name.to_string()),
                 TextStyle {
                     font: font.clone(),
-                    font_size: 16.,
+                    font_size: 18.,
                     color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
                 },
-            )
+            ),
+            TextSection::new(
+                format!("{}\n", s.description.to_string()),
+                TextStyle {
+                    font: font.clone(),
+                    font_size: 14.,
+                    color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+                },
+            ),
+            ]
         })
+        .flatten()
         .collect();
 
     parent.spawn(TextBundle {
         style: Style {
             margin: UiRect {
-                bottom: Val::Px(10.),
+                bottom: Val::Px(2.),
                 ..default()
             },
             ..default()
@@ -109,7 +120,7 @@ fn render_side_effects_in_panel(
                     format!("Toxicity: {}\n", bjorn_status.toxicity),
                     TextStyle {
                         font: font.clone(),
-                        font_size: 18.,
+                        font_size: 20.,
                         color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
                     },
                 ),
@@ -117,7 +128,7 @@ fn render_side_effects_in_panel(
                     format!("Ailments:\n"),
                     TextStyle {
                         font: font.clone(),
-                        font_size: 18.,
+                        font_size: 20.,
                         color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
                     },
                 ),
@@ -130,7 +141,11 @@ fn render_side_effects_in_panel(
     parent.spawn(TextBundle {
         style: Style {
             margin: UiRect {
-                bottom: Val::Px(10.),
+                bottom: Val::Px(5.),
+                ..default()
+            },
+            size: Size {
+                width: Val::Px(270.),
                 ..default()
             },
             ..default()
