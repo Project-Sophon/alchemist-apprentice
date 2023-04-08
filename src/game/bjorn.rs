@@ -1,8 +1,10 @@
+use bevy::prelude::*;
 use std::collections::HashSet;
 
-use bevy::prelude::*;
-
-use crate::{assets::assets_game_data::Symptom, world::global_state::GlobalState};
+use crate::{
+    assets::{assets_game_data::Symptom, resources_game_data::SymptomAssets},
+    world::global_state::GlobalState,
+};
 
 pub struct BjornPlugin;
 impl Plugin for BjornPlugin {
@@ -33,6 +35,12 @@ impl Default for BjornStatus {
 
 fn setup_initial_bjorn_status(
     bjorn_status: ResMut<BjornStatus>,
+    symptom_assets: Res<Assets<Symptom>>,
 ) {
+    let mut initial_symptom_pool: HashSet<Symptom> = HashSet::new();
     info!("Setup initial status on entering game state...");
+    for (_, symptom) in symptom_assets.iter() {
+        initial_symptom_pool.insert(symptom.clone());
+    }
+
 }

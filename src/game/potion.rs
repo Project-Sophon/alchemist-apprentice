@@ -280,7 +280,7 @@ fn render_occupied_slot(
     ingredient: &Ingredient,
 ) {
     parent
-        .spawn(ImageBundle {
+        .spawn((ImageBundle {
             style: Style {
                 align_items: AlignItems::Center,
                 justify_content: JustifyContent::Center,
@@ -292,7 +292,7 @@ fn render_occupied_slot(
             },
             image: UiImage::new(occupied),
             ..default()
-        })
+        }, Name::new(format!("Selected Slot: {}", ingredient.name)),))
         .with_children(|parent| {
             parent.spawn((
                 ImageBundle {
@@ -306,7 +306,7 @@ fn render_occupied_slot(
                     image: UiImage::new(ingredient.texture.clone()),
                     ..default()
                 },
-                Name::new(format!("Selected Slot: {}", ingredient.name)),
+                Name::new(format!("Selected Slot Icon: {}", ingredient.name)),
             ));
         });
 }

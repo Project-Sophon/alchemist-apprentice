@@ -3,11 +3,20 @@ use bevy::{
     reflect::TypeUuid,
 };
 
-#[derive(TypeUuid, Clone)]
+#[derive(TypeUuid, Clone, Eq, Hash)]
 #[uuid = "766152e8-d85f-4e58-b4f8-4e375a99ac53"]
 pub struct Symptom {
     pub name: String,
     pub class: Vec<SymptomClass>,
+}
+
+impl PartialEq for Symptom {
+    fn eq(&self, other: &Self) -> bool {
+        self.name == other.name
+    }
+    fn ne(&self, other: &Self) -> bool {
+        self.name != other.name
+    }
 }
 
 #[derive(TypeUuid)]
