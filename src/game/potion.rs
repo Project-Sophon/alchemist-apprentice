@@ -189,6 +189,8 @@ fn slot_interactions(
 
                 ui_image.texture = ui_assets.potion_circle_slot_occupied.clone();
 
+                // Despawn previous selection icon
+                commands.entity(entity).despawn_descendants();
                 // Add texture of the ingredient with correct background
                 commands.entity(entity).with_children(|parent| {
                     render_occupied_slot(
