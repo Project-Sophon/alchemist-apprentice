@@ -6,12 +6,14 @@ use crate::{
     world::global_state::GlobalState,
 };
 
-use super::{bjorn::BjornStatus, level::build_level};
+use super::bjorn::BjornStatus;
 
 pub struct StatusPlugin;
 impl Plugin for StatusPlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(initial_status_panel_values.in_set(OnUpdate(GlobalState::Game)));
+        app.add_systems(
+            (initial_status_panel_values, update_status_panel).in_set(OnUpdate(GlobalState::Game)),
+        );
     }
 }
 
@@ -51,22 +53,43 @@ fn initial_status_panel_values(
     query.for_each(|e| {
         commands.entity(e).remove::<NotInitialized>();
         commands.entity(e).with_children(|parent| {
-            let text_sections = bjorn_status.symptoms.iter().map(|s| {
-                TextSection::new(
-                    format!("{}\n", s.to_string()),
-                    TextStyle {
-                        font: global_assets.font.clone(),
-                        font_size: 16.,
-                        color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
-                    },
-                )
-            });
-
-            parent.spawn(TextBundle::from_sections(text_sections));
+            render_symptoms_in_panel(parent, bjorn_status.clone(), &global_assets.font);
         });
     })
 }
 
-fn update_status_panel(mut commands: Commands, query: Query<Entity, With<StatusPanel>>) {
-    // TODO
+fn update_status_panel(
+    mut commands: Commands,
+    query: Query<Entity, With<StatusPanel>>,
+    global_assets: Res<GlobalAssets>,
+    bjorn_status: Res<BjornStatus>,
+) {
+    if !bjorn_status.is_changed() {
+        return;
+    }
+    query.for_each(|e| {
+        commands.entity(e).despawn_descendants();
+        commands.entity(e).with_children(|parent| {
+            render_symptoms_in_panel(parent, bjorn_status.clone(), &global_assets.font);
+        });
+    });
+}
+
+fn render_symptoms_in_panel(
+    parent: &mut ChildBuilder,
+    bjorn_status: BjornStatus,
+    font: &Handle<Font>,
+) {
+    let text_sections = bjorn_status.symptoms.iter().map(|s| {
+        TextSection::new(
+            format!("{}\n", s.to_string()),
+            TextStyle {
+                font: font.clone(),
+                font_size: 16.,
+                color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+            },
+        )
+    });
+
+    parent.spawn(TextBundle::from_sections(text_sections));
 }

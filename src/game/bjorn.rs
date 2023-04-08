@@ -1,10 +1,8 @@
 use bevy::prelude::*;
+use rand::{Rng, SeedableRng};
 use std::collections::HashSet;
 
-use crate::{
-    assets::{assets_game_data::Symptom, resources_game_data::SymptomAssets},
-    world::global_state::GlobalState,
-};
+use crate::{assets::assets_game_data::Symptom, world::global_state::GlobalState};
 
 pub struct BjornPlugin;
 impl Plugin for BjornPlugin {
@@ -43,7 +41,10 @@ fn setup_initial_bjorn_status(
         initial_symptom_pool.insert(symptom.clone());
     }
 
-    let initial_symptom = Vec::from_iter(&initial_symptom_pool)[0];
+    let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(10);
+    let rand_index: usize = rng.gen_range(0..2);
+
+    let initial_symptom = Vec::from_iter(&initial_symptom_pool)[rand_index];
     bjorn_status.symptoms = HashSet::from_iter(vec![initial_symptom.clone()]);
     info!("Initial Symptoms of Bjorn: {:?}", bjorn_status.symptoms);
 }
