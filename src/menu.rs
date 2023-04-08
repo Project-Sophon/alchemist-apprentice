@@ -1,7 +1,10 @@
 use crate::{
     assets::resources_standard::GlobalAssets,
     game::game_phase::GamePhase,
-    style::color::GAME_BACKGROUND_COLOR,
+    style::color::{PALETTE_CREAM, PALETTE_GOLD},
+    ui::buttons::{
+        get_menu_button_style, get_menu_button_text_style, get_normal_menu_button_color, MenuButton,
+    },
     world::{
         common::{WINDOW_HEIGHT, WINDOW_WIDTH},
         despawn::despawn_entity,
@@ -11,12 +14,6 @@ use crate::{
 use bevy::{app::AppExit, prelude::*};
 
 // ------ ENUMS, CONSTANTS ------
-
-const TEXT_COLOR: Color = Color::rgb(0.9, 0.9, 0.9);
-const NORMAL_BUTTON: Color = Color::rgb(0.15, 0.15, 0.15);
-const HOVERED_BUTTON: Color = Color::rgb(0.25, 0.25, 0.25);
-const HOVERED_PRESSED_BUTTON: Color = Color::rgb(0.25, 0.65, 0.25);
-const PRESSED_BUTTON: Color = Color::rgb(0.35, 0.75, 0.35);
 
 #[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash, States)]
 enum MenuState {
@@ -36,7 +33,7 @@ impl Plugin for MenuPlugin {
             .add_system(menu_setup.in_schedule(OnEnter(GlobalState::Menu)))
             .add_system(despawn_entity::<MainMenu>.in_schedule(OnExit(GlobalState::Menu)))
             .add_system(main_menu_setup.in_schedule(OnEnter(MenuState::Main)))
-            .add_systems((menu_action, button_system).in_set(OnUpdate(GlobalState::Menu)));
+            .add_system(menu_action.in_set(OnUpdate(GlobalState::Menu)));
     }
 }
 
@@ -52,9 +49,6 @@ enum MenuButtonAction {
     Quit,
 }
 
-#[derive(Component)]
-struct SelectedOption;
-
 // ------ SYSTEMS ------
 
 fn menu_setup(mut menu_state: ResMut<NextState<MenuState>>) {
@@ -63,19 +57,6 @@ fn menu_setup(mut menu_state: ResMut<NextState<MenuState>>) {
 
 fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
     let font = global_assets.font.clone();
-    // Common style for all buttons on the screen
-    let button_style = Style {
-        size: Size::new(Val::Px(250.0), Val::Px(65.0)),
-        margin: UiRect::all(Val::Px(20.0)),
-        justify_content: JustifyContent::Center,
-        align_items: AlignItems::Center,
-        ..default()
-    };
-    let button_text_style = TextStyle {
-        font: font,
-        font_size: 40.0,
-        color: TEXT_COLOR,
-    };
 
     commands
         .spawn((
@@ -93,7 +74,7 @@ fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
                     justify_content: JustifyContent::Center,
                     ..default()
                 },
-                background_color: Color::hex(GAME_BACKGROUND_COLOR).unwrap().into(),
+                background_color: Color::hex(PALETTE_CREAM).unwrap().into(),
                 ..default()
             },
             MainMenu,
@@ -106,7 +87,7 @@ fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
                         align_items: AlignItems::Center,
                         ..default()
                     },
-                    background_color: Color::hex(GAME_BACKGROUND_COLOR).unwrap().into(),
+                    background_color: Color::hex(PALETTE_CREAM).unwrap().into(),
                     ..default()
                 })
                 .with_children(|parent| {
@@ -127,63 +108,53 @@ fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
                     parent
                         .spawn((
                             ButtonBundle {
-                                style: button_style.clone(),
-                                background_color: NORMAL_BUTTON.into(),
+                                style: get_menu_button_style(),
+                                background_color: get_normal_menu_button_color().into(),
                                 ..default()
                             },
+                            MenuButton,
                             MenuButtonAction::Play,
                         ))
                         .with_children(|parent| {
                             parent.spawn(TextBundle::from_section(
                                 "New Game",
-                                button_text_style.clone(),
+                                get_menu_button_text_style(&font),
                             ));
                         });
                     parent
                         .spawn((
                             ButtonBundle {
-                                style: button_style.clone(),
-                                background_color: NORMAL_BUTTON.into(),
+                                style: get_menu_button_style(),
+                                background_color: get_normal_menu_button_color().into(),
                                 ..default()
                             },
+                            MenuButton,
                             MenuButtonAction::Settings,
                         ))
                         .with_children(|parent| {
                             parent.spawn(TextBundle::from_section(
                                 "Settings",
-                                button_text_style.clone(),
+                                get_menu_button_text_style(&font),
                             ));
                         });
                     parent
                         .spawn((
                             ButtonBundle {
-                                style: button_style,
-                                background_color: NORMAL_BUTTON.into(),
+                                style: get_menu_button_style(),
+                                background_color: get_normal_menu_button_color().into(),
                                 ..default()
                             },
+                            MenuButton,
                             MenuButtonAction::Quit,
                         ))
                         .with_children(|parent| {
-                            parent.spawn(TextBundle::from_section("Quit", button_text_style));
+                            parent.spawn(TextBundle::from_section(
+                                "Quit",
+                                get_menu_button_text_style(&font),
+                            ));
                         });
                 });
         });
-}
-
-fn button_system(
-    mut interaction_query: Query<
-        (&Interaction, &mut BackgroundColor, Option<&SelectedOption>),
-        (Changed<Interaction>, With<Button>),
-    >,
-) {
-    for (interaction, mut color, selected) in &mut interaction_query {
-        *color = match (*interaction, selected) {
-            (Interaction::Clicked, _) | (Interaction::None, Some(_)) => PRESSED_BUTTON.into(),
-            (Interaction::Hovered, Some(_)) => HOVERED_PRESSED_BUTTON.into(),
-            (Interaction::Hovered, None) => HOVERED_BUTTON.into(),
-            (Interaction::None, None) => NORMAL_BUTTON.into(),
-        }
-    }
 }
 
 fn menu_action(

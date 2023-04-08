@@ -41,6 +41,8 @@ pub struct UiAssets {
     pub concoct_button_hover: Handle<Image>,
     #[asset(path = "textures/ui/concoct_button_normal.png")]
     pub concoct_button_normal: Handle<Image>,
+    #[asset(path = "textures/ui/end_screen.png")]
+    pub end_screen: Handle<Image>,
 }
 
 #[derive(AssetCollection, Resource)]

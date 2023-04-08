@@ -1,21 +1,20 @@
+use bevy::prelude::*;
+
 use crate::{
-    assets::resources_standard::GlobalAssets,
+    assets::resources_standard::{GlobalAssets, UiAssets},
     style::color::PALETTE_CREAM,
     world::{
         common::{WINDOW_HEIGHT, WINDOW_WIDTH},
-        despawn::despawn_entity,
+        global_state::GlobalState,
     },
-    GlobalState,
 };
-use bevy::prelude::*;
 
-pub struct SplashPlugin;
+pub struct EndPlugin;
 
-impl Plugin for SplashPlugin {
+impl Plugin for EndPlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(setup_splash.in_schedule(OnEnter(GlobalState::Splash)))
-            .add_system(countdown.in_set(OnUpdate(GlobalState::Splash)))
-            .add_system(despawn_entity::<SplashScreen>.in_schedule(OnExit(GlobalState::Splash)));
+        app.add_system(on_win.in_schedule(OnEnter(GlobalState::Win)))
+            .add_system(on_lose.in_schedule(OnEnter(GlobalState::Lose)));
     }
 }
 
@@ -23,20 +22,33 @@ impl Plugin for SplashPlugin {
 
 #[derive(Reflect, Component, Default)]
 #[reflect(Component)]
-struct SplashScreen;
+struct EndScreen;
 
-#[derive(Resource, Deref, DerefMut)]
-struct SplashTimer(Timer);
+#[derive(Reflect, Component, Default)]
+#[reflect(Component)]
+struct ResetButton;
 
 // ------ SYSTEMS ------
 
-fn setup_splash(mut commands: Commands, global_assets: Res<GlobalAssets>) {
-    let splash_image = global_assets.splash.clone();
+fn on_win(mut commands: Commands, global_assets: Res<GlobalAssets>, ui_assets: Res<UiAssets>) {
+    build_end_screen(&mut commands, &global_assets, &ui_assets, true)
+}
 
+fn on_lose(mut commands: Commands, global_assets: Res<GlobalAssets>, ui_assets: Res<UiAssets>) {
+    build_end_screen(&mut commands, &global_assets, &ui_assets, false)
+}
+
+fn build_end_screen(
+    commands: &mut Commands,
+    global_assets: &Res<GlobalAssets>,
+    ui_assets: &Res<UiAssets>,
+    win: bool,
+) {
     commands
         .spawn((
             NodeBundle {
                 style: Style {
+                    flex_direction: FlexDirection::Row,
                     align_self: AlignSelf::Center,
                     margin: UiRect {
                         left: Val::Auto,
@@ -52,25 +64,14 @@ fn setup_splash(mut commands: Commands, global_assets: Res<GlobalAssets>) {
                 background_color: Color::hex(PALETTE_CREAM).unwrap().into(),
                 ..default()
             },
-            SplashScreen,
+            EndScreen,
         ))
         .with_children(|parent| {
             parent.spawn(ImageBundle {
                 style: Style { ..default() },
-                image: UiImage::new(splash_image),
+                // todo: different sprite for win vs lose
+                image: UiImage::new(ui_assets.end_screen.clone()),
                 ..default()
             });
         });
-
-    commands.insert_resource(SplashTimer(Timer::from_seconds(2.0, TimerMode::Once)));
-}
-
-fn countdown(
-    mut game_state: ResMut<NextState<GlobalState>>,
-    time: Res<Time>,
-    mut timer: ResMut<SplashTimer>,
-) {
-    if timer.tick(time.delta()).finished() {
-        game_state.set(GlobalState::Menu);
-    }
 }

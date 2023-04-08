@@ -5,8 +5,10 @@ mod splash;
 mod style;
 mod ui;
 mod world;
+mod end;
 
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
+use end::EndPlugin;
 use world::{
     common::{WINDOW_HEIGHT, WINDOW_WIDTH},
     global_state::GlobalState,
@@ -48,5 +50,6 @@ fn main() {
         .add_plugin(SplashPlugin)
         .add_plugin(MenuPlugin)
         .add_plugin(AssetPlugin)
+        .add_plugin(EndPlugin)
         .run();
 }

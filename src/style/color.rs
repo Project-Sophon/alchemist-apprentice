@@ -1,6 +1,4 @@
-// ------ GLOBAL COLORS ------
-
-pub const GAME_BACKGROUND_COLOR: &str = "#F5EDE9";
+use bevy::prelude::Color;
 
 // Palette Ref: https://lospec.com/palette-list/slso8
 pub const PALETTE_DARK_BLUE: &str = "#0d2b45";
