@@ -37,7 +37,6 @@ fn setup_initial_bjorn_status(
     mut bjorn_status: ResMut<BjornStatus>,
     symptom_assets: Res<Assets<Symptom>>,
 ) {
-    let then = Instant::now();
     let mut initial_symptom_pool: HashSet<Symptom> = HashSet::new();
     info!("Setup initial status on entering game state...");
     for (_, symptom) in symptom_assets.iter() {
