@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::{
     assets::{
-        assets_game_data::Ingredient,
+        assets_game_data::{Ingredient, SideEffectClass},
         resources_standard::{GlobalAssets, UiAssets},
     },
     style::color::{PALETTE_CREAM, PALETTE_DARK_BLUE},
@@ -170,7 +170,10 @@ pub fn build_ingredient_information(
                         .iter()
                         .map(|s| {
                             TextSection::new(
-                                format!("{}\n", s.to_string()),
+                                format!(
+                                    "{}\n",
+                                    get_text_or_unknown(s, ingredient.starter, ingredient.used)
+                                ),
                                 get_info_text_style(font, 16.),
                             )
                         })
@@ -200,7 +203,8 @@ pub fn build_ingredient_information(
                         .iter()
                         .map(|s| {
                             TextSection::new(
-                                format!("{}\n", s.to_string()),
+                                // causes are only known if they are used
+                                format!("{}\n", get_text_or_unknown(s, false, ingredient.used)),
                                 get_info_text_style(font, 16.),
                             )
                         })
@@ -222,6 +226,14 @@ pub fn build_default_information_text(commands: &mut ChildBuilder, font: &Handle
         },
         Name::new("Default Info Text"),
     ));
+}
+
+fn get_text_or_unknown(side_effect: &SideEffectClass, starter: bool, used: bool) -> String {
+    if starter || used {
+        side_effect.to_string()
+    } else {
+        "??????".into()
+    }
 }
 
 // ------ STYLES ------
