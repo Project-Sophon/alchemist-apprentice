@@ -1,11 +1,11 @@
 mod assets;
+mod end;
 mod game;
 mod menu;
 mod splash;
 mod style;
 mod ui;
 mod world;
-mod end;
 
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use end::EndPlugin;

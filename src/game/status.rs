@@ -85,22 +85,22 @@ fn render_side_effects_in_panel(
         .iter()
         .map(|s| {
             vec![
-            TextSection::new(
-                format!("- {}\n", s.name.to_string()),
-                TextStyle {
-                    font: font.clone(),
-                    font_size: 18.,
-                    color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
-                },
-            ),
-            TextSection::new(
-                format!("{}\n", s.description.to_string()),
-                TextStyle {
-                    font: font.clone(),
-                    font_size: 14.,
-                    color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
-                },
-            ),
+                TextSection::new(
+                    format!("- {}\n", s.name.to_string()),
+                    TextStyle {
+                        font: font.clone(),
+                        font_size: 18.,
+                        color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+                    },
+                ),
+                TextSection::new(
+                    format!("{}\n", s.description.to_string()),
+                    TextStyle {
+                        font: font.clone(),
+                        font_size: 14.,
+                        color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+                    },
+                ),
             ]
         })
         .flatten()
