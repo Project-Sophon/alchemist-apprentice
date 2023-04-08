@@ -12,14 +12,18 @@ use crate::{
     world::global_state::GlobalState,
 };
 
-use super::{ingredients::SelectedIngredient, phases::concoct::spawn_concoct_action, bjorn::BjornStatus};
+use super::{
+    bjorn::BjornStatus, ingredients::SelectedIngredient, phases::concoct::spawn_concoct_action,
+};
 
 pub struct PotionPlugin;
 impl Plugin for PotionPlugin {
     fn build(&self, app: &mut App) {
         app.register_type::<PotionPanel>()
             .init_resource::<PotionMix>()
-            .add_systems((slot_interactions, clear_potion_slots).in_set(OnUpdate(GlobalState::Game)));
+            .add_systems(
+                (slot_interactions, clear_potion_slots).in_set(OnUpdate(GlobalState::Game)),
+            );
     }
 }
 
@@ -169,7 +173,7 @@ pub fn clear_potion_slots(
     mut potion_slot_query: Query<(Entity, &mut UiImage, &mut PotionMixSlot), With<PotionMixSlot>>,
     mut potion_mix: ResMut<PotionMix>,
     ui_assets: Res<UiAssets>,
-    bjorn_status: ResMut<BjornStatus>
+    bjorn_status: ResMut<BjornStatus>,
 ) {
     if !bjorn_status.is_changed() {
         return;

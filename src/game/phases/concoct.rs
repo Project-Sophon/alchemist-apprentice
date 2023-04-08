@@ -1,6 +1,6 @@
 use crate::{
     assets::{
-        assets_game_data::{Ingredient, Symptom, SideEffectClass},
+        assets_game_data::{Ingredient, SideEffectClass, Symptom},
         resources_standard::UiAssets,
     },
     game::{

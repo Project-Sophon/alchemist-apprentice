@@ -6,7 +6,7 @@ use bevy_asset_loader::prelude::{
     AssetCollection, DynamicAsset, DynamicAssetCollection, DynamicAssetType, DynamicAssets,
 };
 
-use super::assets_game_data::{Ingredient, Symptom, SideEffectClass};
+use super::assets_game_data::{Ingredient, SideEffectClass, Symptom};
 
 #[derive(AssetCollection, Resource)]
 pub struct IngredientAssets {
