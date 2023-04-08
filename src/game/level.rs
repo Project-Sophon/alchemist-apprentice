@@ -40,7 +40,7 @@ pub struct GameUiContainer;
 
 // ------ SYSTEMS ------
 
-fn build_level(
+pub fn build_level(
     mut commands: Commands,
     global_assets: Res<GlobalAssets>,
     ui_assets: Res<UiAssets>,

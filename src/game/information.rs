@@ -166,15 +166,15 @@ pub fn build_ingredient_information(
                     ));
 
                     let text_sections: Vec<TextSection> = ingredient
-                    .cures
-                    .iter()
-                    .map(|s| {
-                        TextSection::new(
-                            format!("{}\n", s.to_string()),
-                            get_info_text_style(font, 16.),
-                        )
-                    })
-                    .collect();
+                        .cures
+                        .iter()
+                        .map(|s| {
+                            TextSection::new(
+                                format!("{}\n", s.to_string()),
+                                get_info_text_style(font, 16.),
+                            )
+                        })
+                        .collect();
                     parent.spawn((TextBundle::from_sections(text_sections),));
                 });
 

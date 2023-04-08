@@ -21,6 +21,12 @@ impl PartialEq for Symptom {
     }
 }
 
+impl fmt::Display for Symptom {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self.name)
+    }
+}
+
 #[derive(TypeUuid)]
 #[uuid = "9f249ef7-0fbe-441e-bf87-6cacdc9340e4"]
 pub struct Ingredient {
