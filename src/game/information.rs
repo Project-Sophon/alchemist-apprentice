@@ -105,17 +105,6 @@ pub fn build_ingredient_information(
     ingredient: &Ingredient,
 ) {
     commands.spawn((
-        ImageBundle {
-            image: UiImage::new(ingredient.texture.clone()),
-            style: Style {
-                margin: UiRect::bottom(Val::Px(20.)),
-                ..default()
-            },
-            ..default()
-        },
-        Name::new("Ingredient Image"),
-    ));
-    commands.spawn((
         TextBundle {
             text: Text::from_section(ingredient.name.clone(), get_info_text_style(font_bold)),
             style: Style {
@@ -125,6 +114,17 @@ pub fn build_ingredient_information(
             ..default()
         },
         Name::new("Ingredient Name"),
+    ));
+    commands.spawn((
+        ImageBundle {
+            image: UiImage::new(ingredient.texture.clone()),
+            style: Style {
+                margin: UiRect::bottom(Val::Px(20.)),
+                ..default()
+            },
+            ..default()
+        },
+        Name::new("Ingredient Image"),
     ));
     commands.spawn((
         TextBundle {

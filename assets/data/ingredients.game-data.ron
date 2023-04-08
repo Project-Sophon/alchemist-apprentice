@@ -1,107 +1,107 @@
 ({
-  "solisaurum": Ingredient (
-      name: "Solisaurum",
+  "blackened_skull": Ingredient (
+      name: "Blackened Skull",
       description: "A rare and precious metal found only in the deepest mines of the earth. It has a brilliant golden hue and is believed to possess properties that can enhance vitality and promote longevity.",
-      texture: "textures/ingredients/shadow_beetle.png",
+      texture: "textures/ingredients/blackened_skull.png",
       cures: [Skin],
       causes: [Pain],
       toxicity: 1,
       starter: true
     ),
-  "lunadewleaf": Ingredient (
-      name: "Lunadewleaf",
+  "bowl_of_dust": Ingredient (
+      name: "Grave Dust",
       description: "A delicate, silvery-green leaf that grows only in the light of the full moon. It is known to have potent calming and soothing properties, often used in alchemical preparations for stress relief and sleep aids.",
-      texture: "textures/ingredients/crow_foot.png",
+      texture: "textures/ingredients/bowl_of_dust.png",
       cures: [Pain],
       causes: [Gastro, Mental],
       toxicity: 1,
       starter: true
     ),
-  "draconiscale": Ingredient (
-      name: "Draconiscale",
+  "claw": Ingredient (
+      name: "Claw",
       description: "A tough, scale-like substance obtained from the hide of a mythical dragon. It is believed to possess powerful protective properties and is often used in alchemical rituals for creating potent shields and barriers against negative.",
-      texture: "textures/ingredients/zizima_root.png",
+      texture: "textures/ingredients/claw.png",
       cures: [Pain],
       causes: [Gastro, Mental],
       toxicity: 1,
       starter: true
     ),
-  "celestine_crystal": Ingredient (
-      name: "Celestine Crystal",
+  "diamond": Ingredient (
+      name: "Diamond",
       description: "A shimmering, translucent crystal that is said to have fallen from the heavens. It is believed to hold the power of the stars and is used in alchemy to enhance intuition, promote spiritual connection, and amplify psychic abilities.",
-      texture: "textures/ingredients/dluger_heart.png",
+      texture: "textures/ingredients/diamond.png",
       cures: [Pain],
       causes: [Gastro, Mental],
       toxicity: 1,
       starter: false
     ),
-  "venombane_flower": Ingredient (
-      name: "Venombane Flower",
+  "feather": Ingredient (
+      name: "Raven Feather",
       description: "A rare and exotic flower that blooms only in the darkest corners of dense forests. It is known for its potent antidotal properties and is often used in alchemical remedies for countering venom and poisons.",
-      texture: "textures/ingredients/zizima_root.png",
+      texture: "textures/ingredients/feather.png",
       cures: [Pain],
       causes: [Gastro, Mental],
       toxicity: 1,
       starter: false
     ),
-  "ignisroot": Ingredient (
-      name: "Ignisroot",
+  "garlic_clove": Ingredient (
+      name: "Garlic",
       description: "A fiery red root that grows in volcanic regions, known for its intense heat and energy. It is used in alchemical preparations for creating potent elixirs of power and transformation, believed to bestow great strength and courage.",
-      texture: "textures/ingredients/auria_leaf.png",
+      texture: "textures/ingredients/garlic_clove.png",
       cures: [Pain],
       causes: [Gastro, Mental],
       toxicity: 1,
       starter: false
     ),
-  "aquamaris_pearl": Ingredient (
-      name: "Aquamaris Pearl",
+  "jar_of_eyes": Ingredient (
+      name: "Jar of Eyes",
       description: "A luminous pearl-like gemstone that is found in the depths of the ocean. It is known for its purifying and cleansing properties, often used in alchemy for purifying water and creating elixirs of rejuvenation.",
-      texture: "textures/ingredients/dluger_heart.png",
+      texture: "textures/ingredients/jar_of_eyes.png",
       cures: [Pain],
       causes: [Gastro, Mental],
       toxicity: 1,
       starter: false
     ),
-  "ethernium_dust": Ingredient (
-      name: "Ethernium Dust",
+  "lead_bar": Ingredient (
+      name: "Lead bar",
       description: "A fine, shimmering dust that glows with a celestial light. It is believed to be a fragment of the ethereal realm and is used in alchemical rituals for enhancing spiritual connection, astral projection, and dream work.",
-      texture: "textures/ingredients/zizima_root.png",
+      texture: "textures/ingredients/lead_bar.png",
       cures: [Pain],
       causes: [Gastro, Mental],
       toxicity: 1,
       starter: false
     ),
-  "verdantia_leaf": Ingredient (
-      name: "Verdantia Leaf",
+  "mushroom": Ingredient (
+      name: "Deathbloom Mushroom",
       description: "A lush, emerald-green leaf that grows in enchanted forests. It is believed to possess powerful regenerative properties and is used in alchemical preparations for healing and restoring vitality to the body and mind.",
-      texture: "textures/ingredients/ghost_twig.png",
+      texture: "textures/ingredients/mushroom.png",
       cures: [Pain],
       causes: [Gastro, Mental],
       toxicity: 1,
       starter: false
     ),
-  "phantasma_essence": Ingredient (
-      name: "Phantasma Essence",
+  "nightshade": Ingredient (
+      name: "Nightshade",
       description: "A ghostly, translucent liquid that is said to be extracted from the essence of spirits. It is believed to hold potent energy from the spirit realm and is used in alchemy for creating elixirs that enhance psychic abilities, divination, and communication with the spirit world.",
-      texture: "textures/ingredients/zizima_root.png",
+      texture: "textures/ingredients/nightshade.png",
       cures: [Pain],
       causes: [Gastro, Mental],
       toxicity: 1,
       starter: false
     ),
-  "amethyst_ember": Ingredient (
-      name: "Amethyst Ember",
+  "pearl": Ingredient (
+      name: "Pearl",
       description: "A rare gemstone that resembles a burning purple flame frozen in crystal form. It is believed to hold the power of transformation and transmutation, and is used in alchemical rituals for enhancing spiritual growth, intuition, and inner alchemy.",
-      texture: "textures/ingredients/auria_leaf.png",
+      texture: "textures/ingredients/pearl.png",
       cures: [Pain],
       causes: [Gastro, Mental],
       toxicity: 1,
       starter: false
     ),
-  "silvermist_moss": Ingredient (
-      name: "Silvermist Moss",
+  "tear": Ingredient (
+      name: "Crystalized Tear",
       description: "A silvery-blue moss that grows in the deepest parts of ancient forests, shrouded in mist. It is believed to possess mystical properties and is used in alchemical preparations for enhancing clarity, insight, and connection with higher realms of consciousness. It is also known to have purifying properties, often used in alchemy for cleansing and purifying the mind, body, and spirit.",
-      texture: "textures/ingredients/zizima_root.png",
+      texture: "textures/ingredients/tear.png",
       cures: [Pain],
       causes: [Gastro, Mental],
       toxicity: 1,

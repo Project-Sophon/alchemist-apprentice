@@ -10,30 +10,30 @@ use super::assets_game_data::{Ingredient, Symptom, SymptomClass};
 
 #[derive(AssetCollection, Resource)]
 pub struct IngredientAssets {
-    #[asset(key = "solisaurum")]
-    pub solisaurum: Handle<Ingredient>,
-    #[asset(key = "lunadewleaf")]
-    pub lunadewleaf: Handle<Ingredient>,
-    #[asset(key = "draconiscale")]
-    pub draconiscale: Handle<Ingredient>,
-    #[asset(key = "celestine_crystal")]
-    pub celestine_crystal: Handle<Ingredient>,
-    #[asset(key = "venombane_flower")]
-    pub venombane_flower: Handle<Ingredient>,
-    #[asset(key = "ignisroot")]
-    pub ignisroot: Handle<Ingredient>,
-    #[asset(key = "aquamaris_pearl")]
-    pub aquamaris_pearl: Handle<Ingredient>,
-    #[asset(key = "ethernium_dust")]
-    pub ethernium_dust: Handle<Ingredient>,
-    #[asset(key = "verdantia_leaf")]
-    pub verdantia_leaf: Handle<Ingredient>,
-    #[asset(key = "phantasma_essence")]
-    pub phantasma_essence: Handle<Ingredient>,
-    #[asset(key = "amethyst_ember")]
-    pub amethyst_ember: Handle<Ingredient>,
-    #[asset(key = "silvermist_moss")]
-    pub silvermist_moss: Handle<Ingredient>,
+    #[asset(key = "blackened_skull")]
+    pub blackened_skull: Handle<Ingredient>,
+    #[asset(key = "bowl_of_dust")]
+    pub bowl_of_dust: Handle<Ingredient>,
+    #[asset(key = "claw")]
+    pub claw: Handle<Ingredient>,
+    #[asset(key = "diamond")]
+    pub diamond: Handle<Ingredient>,
+    #[asset(key = "feather")]
+    pub feather: Handle<Ingredient>,
+    #[asset(key = "garlic_clove")]
+    pub garlic_clove: Handle<Ingredient>,
+    #[asset(key = "jar_of_eyes")]
+    pub jar_of_eyes: Handle<Ingredient>,
+    #[asset(key = "lead_bar")]
+    pub lead_bar: Handle<Ingredient>,
+    #[asset(key = "mushroom")]
+    pub mushroom: Handle<Ingredient>,
+    #[asset(key = "nightshade")]
+    pub nightshade: Handle<Ingredient>,
+    #[asset(key = "pearl")]
+    pub pearl: Handle<Ingredient>,
+    #[asset(key = "tear")]
+    pub tear: Handle<Ingredient>,
 }
 
 #[derive(AssetCollection, Resource)]
