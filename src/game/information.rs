@@ -172,7 +172,7 @@ pub fn build_ingredient_information(
                             TextSection::new(
                                 format!(
                                     "{}\n",
-                                    get_text_or_unknown(s, ingredient.starter, ingredient.used)
+                                    get_text_or_unknown(s, ingredient.used, ingredient.starter)
                                 ),
                                 get_info_text_style(font, 16.),
                             )
@@ -204,7 +204,7 @@ pub fn build_ingredient_information(
                         .map(|s| {
                             TextSection::new(
                                 // causes are only known if they are used
-                                format!("{}\n", get_text_or_unknown(s, false, ingredient.used)),
+                                format!("{}\n", get_text_or_unknown(s, ingredient.used, false)),
                                 get_info_text_style(font, 16.),
                             )
                         })
@@ -228,8 +228,8 @@ pub fn build_default_information_text(commands: &mut ChildBuilder, font: &Handle
     ));
 }
 
-fn get_text_or_unknown(side_effect: &SideEffectClass, starter: bool, used: bool) -> String {
-    if starter || used {
+fn get_text_or_unknown(side_effect: &SideEffectClass, used: bool, starter: bool) -> String {
+    if used || starter {
         side_effect.to_string()
     } else {
         "??????".into()
