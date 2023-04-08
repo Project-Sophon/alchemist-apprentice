@@ -2,7 +2,10 @@ use bevy::prelude::*;
 
 use crate::{
     assets::resources_standard::{GlobalAssets, UiAssets},
-    style::color::PALETTE_CREAM,
+    style::color::{PALETTE_CREAM, PALETTE_DARK_BLUE},
+    ui::buttons::{
+        get_menu_button_style, get_menu_button_text_style, get_normal_menu_button_color, MenuButton,
+    },
     world::{
         common::{WINDOW_HEIGHT, WINDOW_WIDTH},
         global_state::GlobalState,
@@ -48,7 +51,7 @@ fn build_end_screen(
         .spawn((
             NodeBundle {
                 style: Style {
-                    flex_direction: FlexDirection::Row,
+                    flex_direction: FlexDirection::Column,
                     align_self: AlignSelf::Center,
                     margin: UiRect {
                         left: Val::Auto,
@@ -58,6 +61,7 @@ fn build_end_screen(
                     },
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
+                    gap: Size::height(Val::Px(20.)),
                     size: Size::new(Val::Px(WINDOW_WIDTH.into()), Val::Px(WINDOW_HEIGHT.into())),
                     ..default()
                 },
@@ -67,11 +71,37 @@ fn build_end_screen(
             EndScreen,
         ))
         .with_children(|parent| {
+            parent.spawn(TextBundle::from_section(
+                if win { "You Win!" } else { "Game Over!" },
+                TextStyle {
+                    font: global_assets.font.clone(),
+                    font_size: 48.,
+                    color: Color::hex(PALETTE_DARK_BLUE).unwrap(),
+                },
+            ));
+
             parent.spawn(ImageBundle {
                 style: Style { ..default() },
                 // todo: different sprite for win vs lose
                 image: UiImage::new(ui_assets.end_screen.clone()),
                 ..default()
             });
+
+            parent
+                .spawn((
+                    ButtonBundle {
+                        style: get_menu_button_style(),
+                        background_color: get_normal_menu_button_color().into(),
+                        ..default()
+                    },
+                    MenuButton,
+                    ResetButton,
+                ))
+                .with_children(|parent| {
+                    parent.spawn(TextBundle::from_section(
+                        "Play Again",
+                        get_menu_button_text_style(&global_assets.font),
+                    ));
+                });
         });
 }
