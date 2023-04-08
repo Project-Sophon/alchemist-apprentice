@@ -58,15 +58,17 @@ pub fn concoct_interaction(
     ui_assets: Res<UiAssets>,
     mut bjorn_status: ResMut<BjornStatus>,
     symptoms: Res<Assets<Symptom>>,
+    buttons: Res<Input<MouseButton>>,
 ) {
     for (entity, interaction, mut ui_image) in &mut interaction_query {
         match *interaction {
             Interaction::Clicked => {
-                let concoction = concoct(potion_mix.clone(), &ingredients);
-                info!("{}", concoction.to_string());
-                commands.entity(entity).remove::<EnableUiElement>();
-                ui_image.texture = ui_assets.concoct_button_click.clone();
-                give_bjorn_concoction(concoction, &mut bjorn_status, &symptoms)
+                if buttons.just_pressed(MouseButton::Left) {
+                    let concoction = concoct(potion_mix.clone(), &ingredients);
+                    info!("{}", concoction.to_string());
+                    ui_image.texture = ui_assets.concoct_button_click.clone();
+                    give_bjorn_concoction(concoction, &mut bjorn_status, &symptoms)
+                }
             }
             Interaction::Hovered => {
                 ui_image.texture = ui_assets.concoct_button_hover.clone();
