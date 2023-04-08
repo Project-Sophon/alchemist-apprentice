@@ -123,7 +123,7 @@ pub fn concoct(potion_mix: PotionMix, ingredients: &Res<Assets<Ingredient>>) -> 
     let mut causes: HashSet<SideEffectClass> = HashSet::new();
     let mut toxicity: i32 = 0;
 
-    for ingredient in potion_mix.ingredients {
+    for ingredient in potion_mix.ingredients.clone() {
         match ingredient {
             Some(handle) => {
                 let i = ingredients.get(&handle).unwrap().clone();
@@ -131,15 +131,24 @@ pub fn concoct(potion_mix: PotionMix, ingredients: &Res<Assets<Ingredient>>) -> 
                 for c in i.cures.clone() {
                     cures.insert(c);
                 }
+            }
+            None => {}
+        }
+    }
+
+    info!("Current potion: {:?}", cures);
+
+    for ingredient in potion_mix.ingredients.clone() {
+        match ingredient {
+            Some(handle) => {
+                let i = ingredients.get(&handle).unwrap().clone();
                 for c in i.causes.clone() {
                     if !cures.contains(&c) {
                         causes.insert(c);
                     }
                 }
             }
-            None => {
-                // do nothing
-            }
+            None => {}
         }
     }
 
