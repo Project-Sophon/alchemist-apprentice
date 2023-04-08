@@ -1,14 +1,11 @@
 use bevy::prelude::*;
 use core::fmt;
-use std::borrow::Borrow;
 
 use crate::{
     assets::{
-        self,
         assets_game_data::Ingredient,
         resources_standard::{GlobalAssets, UiAssets},
     },
-    style::color::PALETTE_PURPLE,
     world::global_state::GlobalState,
 };
 

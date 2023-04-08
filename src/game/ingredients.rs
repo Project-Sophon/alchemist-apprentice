@@ -170,3 +170,16 @@ pub fn build_ingredients_panel(
         })
         .id()
 }
+
+pub fn update_ingredients_used(
+    ingredients: &mut ResMut<Assets<Ingredient>>,
+    used_ingredients: &[Option<Handle<Ingredient>>; 3],
+) {
+    used_ingredients.iter().for_each(|maybe_ingredient| {
+        maybe_ingredient.as_ref().map(|ingredient| {
+            if let Some(ingredient) = ingredients.get_mut(&ingredient) {
+                ingredient.used = true;
+            }
+        });
+    });
+}

@@ -1,10 +1,11 @@
 use crate::{
     assets::{
-        assets_game_data::{Ingredient, SideEffectClass, SideEffect},
+        assets_game_data::{Ingredient, SideEffect, SideEffectClass},
         resources_standard::UiAssets,
     },
     game::{
         bjorn::{give_bjorn_concoction, BjornStatus},
+        ingredients::update_ingredients_used,
         potion::PotionMix,
     },
     style::color::PALETTE_DARK_BLUE,
@@ -48,26 +49,26 @@ impl fmt::Display for Concoction {
 // ------ SYSTEMS ------
 
 pub fn concoct_interaction(
-    mut commands: Commands,
     mut interaction_query: Query<
         (Entity, &Interaction, &mut UiImage),
         (With<ConcoctAction>, With<EnableUiElement>),
     >,
     potion_mix: Res<PotionMix>,
-    ingredients: Res<Assets<Ingredient>>,
+    mut ingredients: ResMut<Assets<Ingredient>>,
     ui_assets: Res<UiAssets>,
     mut bjorn_status: ResMut<BjornStatus>,
     side_effects: Res<Assets<SideEffect>>,
     buttons: Res<Input<MouseButton>>,
 ) {
-    for (entity, interaction, mut ui_image) in &mut interaction_query {
+    for (_, interaction, mut ui_image) in &mut interaction_query {
         match *interaction {
             Interaction::Clicked => {
                 if buttons.just_pressed(MouseButton::Left) {
                     let concoction = concoct(potion_mix.clone(), &ingredients);
                     info!("{}", concoction.to_string());
                     ui_image.texture = ui_assets.concoct_button_click.clone();
-                    give_bjorn_concoction(concoction, &mut bjorn_status, &side_effects)
+                    give_bjorn_concoction(concoction, &mut bjorn_status, &side_effects);
+                    update_ingredients_used(&mut ingredients, &potion_mix.ingredients)
                 }
             }
             Interaction::Hovered => {
@@ -118,7 +119,7 @@ pub fn spawn_concoct_action(
         });
 }
 
-pub fn concoct(potion_mix: PotionMix, ingredients: &Res<Assets<Ingredient>>) -> Concoction {
+pub fn concoct(potion_mix: PotionMix, ingredients: &ResMut<Assets<Ingredient>>) -> Concoction {
     let mut cures: HashSet<SideEffectClass> = HashSet::new();
     let mut causes: HashSet<SideEffectClass> = HashSet::new();
     let mut toxicity: i32 = 0;
