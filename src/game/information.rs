@@ -165,10 +165,17 @@ pub fn build_ingredient_information(
                         get_info_text_style(font, 18.),
                     ));
 
-                    parent.spawn((TextBundle::from_sections([
-                        TextSection::new("asdasdasd\n", get_info_text_style(font, 18.)),
-                        TextSection::new("asdasdasd\n", get_info_text_style(font, 16.)),
-                    ]),));
+                    let text_sections: Vec<TextSection> = ingredient
+                    .cures
+                    .iter()
+                    .map(|s| {
+                        TextSection::new(
+                            format!("{}\n", s.to_string()),
+                            get_info_text_style(font, 16.),
+                        )
+                    })
+                    .collect();
+                    parent.spawn((TextBundle::from_sections(text_sections),));
                 });
 
             parent
@@ -188,11 +195,17 @@ pub fn build_ingredient_information(
                         "Causes",
                         get_info_text_style(font, 18.),
                     ));
-
-                    parent.spawn((TextBundle::from_sections([
-                        TextSection::new("asdasdasd\n", get_info_text_style(font, 18.)),
-                        TextSection::new("asdasdasd\n", get_info_text_style(font, 16.)),
-                    ]),));
+                    let text_sections: Vec<TextSection> = ingredient
+                        .causes
+                        .iter()
+                        .map(|s| {
+                            TextSection::new(
+                                format!("{}\n", s.to_string()),
+                                get_info_text_style(font, 16.),
+                            )
+                        })
+                        .collect();
+                    parent.spawn((TextBundle::from_sections(text_sections),));
                 });
         });
 }

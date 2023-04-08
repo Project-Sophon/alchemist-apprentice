@@ -1,3 +1,5 @@
+use std::fmt;
+
 use bevy::{
     prelude::{Handle, Image},
     reflect::TypeUuid,
@@ -43,4 +45,10 @@ pub enum SymptomClass {
     Occult,
     Mental,
     EndGame,
+}
+
+impl fmt::Display for SymptomClass {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
