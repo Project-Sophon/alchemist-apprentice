@@ -15,10 +15,10 @@ pub struct GlobalAssets {
 
 #[derive(AssetCollection, Resource)]
 pub struct UiAssets {
-    #[asset(path = "textures/ui/game_level_bkg.png")]
-    pub game_level_bkg: Handle<Image>,
     #[asset(path = "textures/ui/game_ui_bkg.png")]
     pub game_ui_bkg: Handle<Image>,
+    #[asset(path = "textures/ui/status_panel_bkg.png")]
+    pub status_panel_bkg: Handle<Image>,
     #[asset(path = "textures/ui/info_panel_bkg.png")]
     pub info_panel_bkg: Handle<Image>,
     #[asset(path = "textures/ui/ingredient_button_normal.png")]

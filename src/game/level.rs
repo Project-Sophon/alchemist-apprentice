@@ -5,6 +5,7 @@ use crate::{
         assets_game_data::Ingredient,
         resources_standard::{GlobalAssets, UiAssets},
     },
+    style::color::PALETTE_CREAM,
     world::{
         common::{WINDOW_HEIGHT, WINDOW_WIDTH},
         despawn::despawn_entity,
@@ -48,10 +49,11 @@ fn build_level(
 ) {
     commands
         .spawn((
-            ImageBundle {
+            NodeBundle {
                 style: Style {
                     size: Size::new(Val::Px(WINDOW_WIDTH.into()), Val::Px(WINDOW_HEIGHT.into())),
                     align_self: AlignSelf::Center,
+                    flex_direction: FlexDirection::Column,
                     margin: UiRect {
                         left: Val::Auto,
                         right: Val::Auto,
@@ -60,19 +62,24 @@ fn build_level(
                     },
                     ..default()
                 },
-                image: ui_assets.game_level_bkg.clone().into(),
+                background_color: Color::hex(PALETTE_CREAM).unwrap().into(),
                 ..default()
             },
             LevelContainer,
             Name::new("Level Container"),
         ))
         .with_children(|parent| {
+            // Build Status Panel
+            build_status_panel(parent, &ui_assets);
+
+            // Build Main UI
             parent
                 .spawn((
                     NodeBundle {
                         style: Style {
                             align_self: AlignSelf::Center,
                             flex_direction: FlexDirection::Column,
+                            flex_basis: Val::Percent(100.),
                             margin: UiRect {
                                 left: Val::Auto,
                                 right: Val::Auto,
@@ -91,24 +98,6 @@ fn build_level(
                     Name::new("Game UI Container"),
                 ))
                 .with_children(|parent| {
-                    parent
-                        .spawn((
-                            NodeBundle {
-                                style: Style {
-                                    size: Size::new(Val::Px(WINDOW_WIDTH.into()), Val::Px(300.0)),
-                                    align_self: AlignSelf::FlexStart,
-                                    flex_direction: FlexDirection::RowReverse,
-                                    padding: UiRect::all(Val::Px(10.)),
-                                    ..default()
-                                },
-                                ..default()
-                            },
-                            Name::new("Game Status Container"),
-                        ))
-                        .with_children(|parent| {
-                            build_status_panel(parent);
-                        });
-
                     parent
                         .spawn((
                             ImageBundle {
