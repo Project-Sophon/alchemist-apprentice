@@ -10,7 +10,6 @@ use crate::{
 };
 
 use super::{
-    bjorn::BjornStatus,
     game_phase::GamePhase,
     ingredients::SelectedIngredient,
     phases::concoct::{spawn_concoct_action, ConcoctAction},
@@ -22,7 +21,7 @@ impl Plugin for PotionPlugin {
         app.register_type::<PotionPanel>()
             .init_resource::<PotionMix>()
             .add_systems(
-                (slot_interactions, clear_potion_slots, concoct_interaction)
+                (slot_interactions, concoct_interaction)
                     .in_set(OnUpdate(GamePhase::PotionAssembly)),
             );
     }
@@ -169,24 +168,6 @@ pub fn spawn_potion_mix_slot(commands: &mut ChildBuilder, icon: &Handle<Image>, 
     ));
 }
 
-fn clear_potion_slots(
-    mut commands: Commands,
-    mut potion_slot_query: Query<(Entity, &mut UiImage, &mut PotionMixSlot), With<PotionMixSlot>>,
-    mut potion_mix: ResMut<PotionMix>,
-    ui_assets: Res<UiAssets>,
-    bjorn_status: ResMut<BjornStatus>,
-) {
-    if !bjorn_status.is_changed() {
-        return;
-    }
-
-    for (entity, mut ui_image, potion_mix_slot) in &mut potion_slot_query {
-        commands.entity(entity).despawn_descendants();
-        potion_mix.ingredients[potion_mix_slot.index] = Option::None;
-        ui_image.texture = ui_assets.potion_circle_slot_empty.clone();
-    }
-}
-
 fn slot_interactions(
     mut commands: Commands,
     mut interaction_query: Query<
@@ -250,7 +231,7 @@ fn slot_interactions(
     }
 }
 
-pub fn concoct_interaction(
+fn concoct_interaction(
     mut game_phase: ResMut<NextState<GamePhase>>,
     mut interaction_query: Query<
         (Entity, &Interaction, &mut UiImage),

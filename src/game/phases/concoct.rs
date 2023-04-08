@@ -45,7 +45,7 @@ impl fmt::Display for Concoction {
 
 // ------ SYSTEMS ------
 
-pub fn on_concoct(
+fn on_concoct(
     mut game_phase: ResMut<NextState<GamePhase>>,
     potion_mix: Res<PotionMix>,
     mut ingredients: ResMut<Assets<Ingredient>>,

@@ -1,12 +1,12 @@
 use bevy::prelude::*;
 
 use crate::{
-    assets::resources_standard::GlobalAssets,
+    assets::resources_standard::{GlobalAssets, UiAssets},
     game::{
-        bjorn::BjornStatus,
         game_phase::GamePhase,
         information::{build_default_information_text, InformationPanel},
         ingredients::{IngredientButton, SelectedIngredient},
+        potion::{PotionMix, PotionMixSlot},
     },
     ui::disable_ui::{DisabledUiElement, EnableUiElement},
 };
@@ -19,6 +19,7 @@ impl Plugin for PotionAssemblyPlugin {
                 enable_potion_assembly_ui,
                 reset_ingredient_selection,
                 reset_information_panel,
+                reset_potion_slots,
             )
                 .in_schedule(OnEnter(GamePhase::PotionAssembly)),
         )
@@ -51,13 +52,8 @@ fn reset_ingredient_selection(mut selected_ingredient: ResMut<SelectedIngredient
 fn reset_information_panel(
     mut commands: Commands,
     panel_content: Query<Entity, With<InformationPanel>>,
-    bjorn_status: ResMut<BjornStatus>,
     global_assets: Res<GlobalAssets>,
 ) {
-    if !bjorn_status.is_changed() {
-        return;
-    }
-
     if let Ok(target) = panel_content.get_single() {
         // remove existing child elements
         commands.entity(target).despawn_descendants();
@@ -65,5 +61,18 @@ fn reset_information_panel(
         commands
             .entity(target)
             .with_children(|parent| build_default_information_text(parent, &global_assets.font));
+    }
+}
+
+fn reset_potion_slots(
+    mut commands: Commands,
+    mut potion_slot_query: Query<(Entity, &mut UiImage, &mut PotionMixSlot), With<PotionMixSlot>>,
+    mut potion_mix: ResMut<PotionMix>,
+    ui_assets: Res<UiAssets>,
+) {
+    for (entity, mut ui_image, potion_mix_slot) in &mut potion_slot_query {
+        commands.entity(entity).despawn_descendants();
+        potion_mix.ingredients[potion_mix_slot.index] = Option::None;
+        ui_image.texture = ui_assets.potion_circle_slot_empty.clone();
     }
 }
