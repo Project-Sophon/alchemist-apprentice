@@ -141,70 +141,58 @@ pub fn spawn_potion_mix_slot(commands: &mut ChildBuilder, icon: &Handle<Image>, 
         _ => (1000., 1000.),
     };
 
-    commands
-        .spawn((
-            ButtonBundle {
-                style: Style {
-                    size: Size::new(Val::Px(64.), Val::Px(64.)),
-                    position: UiRect::new(
-                        Val::Px(pox_x),
-                        Val::Undefined,
-                        Val::Px(pos_y),
-                        Val::Undefined,
-                    ),
-                    position_type: PositionType::Absolute,
-                    align_items: AlignItems::Center,
-                    justify_content: JustifyContent::Center,
-                    ..default()
-                },
-                background_color: BackgroundColor::from(Color::rgba(0., 0., 0., 0.)),
+    commands.spawn((
+        ButtonBundle {
+            style: Style {
+                size: Size::new(Val::Px(64.), Val::Px(64.)),
+                position: UiRect::new(
+                    Val::Px(pox_x),
+                    Val::Undefined,
+                    Val::Px(pos_y),
+                    Val::Undefined,
+                ),
+                position_type: PositionType::Absolute,
+                align_items: AlignItems::Center,
+                justify_content: JustifyContent::Center,
                 ..default()
             },
-            PotionMixSlot { index: index },
-            Name::new("Potion Mix Slot"),
-        ))
-        .with_children(|parent| {
-            parent.spawn((
-                ImageBundle {
-                    image: UiImage::new(icon.clone()),
-                    ..default()
-                },
-                Name::new(format!("Empty Slot: {}", index)),
-            ));
-        });
+            image: UiImage::new(icon.clone()),
+            ..default()
+        },
+        PotionMixSlot { index: index },
+        Name::new("Potion Mix Slot"),
+    ));
 }
 
 fn slot_interactions(
     mut commands: Commands,
     mut interaction_query: Query<
-        (Entity, &Interaction, &mut PotionMixSlot),
-        (Changed<Interaction>, Without<FilledMixSlot>),
+        (Entity, &Interaction, &mut UiImage, &mut PotionMixSlot),
+        (Changed<Interaction>, With<PotionMixSlot>),
     >,
     selected_ingredient: Res<SelectedIngredient>,
     mut potion_mix: ResMut<PotionMix>,
     ingredients: Res<Assets<Ingredient>>,
     ui_assets: Res<UiAssets>,
 ) {
-    if selected_ingredient.ingredient.is_none() {
-        return;
-    }
-
-    for (entity, interaction, potion_mix_slot) in &mut interaction_query {
+    for (entity, interaction, mut ui_image, potion_mix_slot) in &mut interaction_query {
         match *interaction {
             Interaction::Clicked => {
+                if selected_ingredient.ingredient.is_none() {
+                    return;
+                }
+
                 // Get Handles and update PotionMix resource
                 let handle = selected_ingredient.ingredient.clone().unwrap();
                 let ingredient = ingredients.get(&handle).unwrap();
                 potion_mix.update_ingredients(potion_mix_slot.index, Option::Some(handle.clone()));
 
-                // Despawn the default slot icon
-                commands.entity(entity).despawn_descendants();
+                ui_image.texture = ui_assets.potion_circle_slot_occupied.clone();
 
                 // Add texture of the ingredient with correct background
                 commands.entity(entity).with_children(|parent| {
                     render_occupied_slot(
                         parent,
-                        ui_assets.potion_circle_slot_occupied.clone(),
                         ingredient,
                     );
                 });
@@ -215,58 +203,24 @@ fn slot_interactions(
             Interaction::Hovered => {
                 // Should be safe to unwrap as ingredients is a fixed array of Optional<Ingredient>
                 let ingredient_handle = potion_mix.ingredients.get(potion_mix_slot.index).unwrap();
-                commands.entity(entity).despawn_descendants();
                 match ingredient_handle {
-                    Some(i) => {
-                        // Should also be safe as we don't unload ingredients.
-                        let ingredient_asset = ingredients.get(i).unwrap();
-                        commands.entity(entity).with_children(|parent| {
-                            render_occupied_slot(
-                                parent,
-                                ui_assets.potion_circle_slot_occupied_hover.clone(),
-                                ingredient_asset,
-                            );
-                        });
+                    Some(_) => {
+                        ui_image.texture = ui_assets.potion_circle_slot_occupied_hover.clone();
                     }
                     None => {
-                        commands.entity(entity).with_children(|parent| {
-                            parent.spawn((
-                                ImageBundle {
-                                    image: UiImage::new(ui_assets.potion_circle_slot_hover.clone()),
-                                    ..default()
-                                },
-                                Name::new(format!("Hover Slot: {}", potion_mix_slot.index)),
-                            ));
-                        });
+                        ui_image.texture = ui_assets.potion_circle_slot_hover.clone();
                     }
                 }
             }
             Interaction::None => {
                 // Should be safe to unwrap as ingredients is a fixed array of Optional<Ingredient>
                 let ingredient_handle = potion_mix.ingredients.get(potion_mix_slot.index).unwrap();
-                commands.entity(entity).despawn_descendants();
                 match ingredient_handle {
-                    Some(i) => {
-                        // Should also be safe as we don't unload ingredients.
-                        let ingredient_asset = ingredients.get(i).unwrap();
-                        commands.entity(entity).with_children(|parent| {
-                            render_occupied_slot(
-                                parent,
-                                ui_assets.potion_circle_slot_occupied.clone(),
-                                ingredient_asset,
-                            );
-                        });
+                    Some(_) => {
+                        ui_image.texture = ui_assets.potion_circle_slot_occupied.clone();
                     }
                     None => {
-                        commands.entity(entity).with_children(|parent| {
-                            parent.spawn((
-                                ImageBundle {
-                                    image: UiImage::new(ui_assets.potion_circle_slot_empty.clone()),
-                                    ..default()
-                                },
-                                Name::new(format!("Empty Slot: {}", potion_mix_slot.index)),
-                            ));
-                        });
+                        ui_image.texture = ui_assets.potion_circle_slot_empty.clone();
                     }
                 }
             }
@@ -276,40 +230,20 @@ fn slot_interactions(
 
 fn render_occupied_slot(
     parent: &mut ChildBuilder,
-    occupied: Handle<Image>,
     ingredient: &Ingredient,
 ) {
-    parent
-        .spawn((
-            ImageBundle {
-                style: Style {
-                    align_items: AlignItems::Center,
-                    justify_content: JustifyContent::Center,
-                    size: Size {
-                        height: Val::Px(64.),
-                        width: Val::Px(64.),
-                    },
-                    ..default()
+    parent.spawn((
+        ImageBundle {
+            style: Style {
+                size: Size {
+                    height: Val::Px(32.),
+                    width: Val::Px(32.),
                 },
-                image: UiImage::new(occupied),
                 ..default()
             },
-            Name::new(format!("Selected Slot: {}", ingredient.name)),
-        ))
-        .with_children(|parent| {
-            parent.spawn((
-                ImageBundle {
-                    style: Style {
-                        size: Size {
-                            height: Val::Px(32.),
-                            width: Val::Px(32.),
-                        },
-                        ..default()
-                    },
-                    image: UiImage::new(ingredient.texture.clone()),
-                    ..default()
-                },
-                Name::new(format!("Selected Slot Icon: {}", ingredient.name)),
-            ));
-        });
+            image: UiImage::new(ingredient.texture.clone()),
+            ..default()
+        },
+        Name::new(format!("Selected Slot Icon: {}", ingredient.name)),
+    ));
 }
