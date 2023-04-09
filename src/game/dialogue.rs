@@ -19,7 +19,7 @@ pub struct DialogueBox;
 // ------ PUB FUNCTIONS ------
 
 pub fn create_dialogue_box(
-    commands: &mut Commands,
+    commands: &mut ChildBuilder,
     font: &Handle<Font>,
     ui_assets: &Res<UiAssets>,
     text: &str,

@@ -16,7 +16,10 @@ use self::{
     information::InformationPlugin,
     ingredients::IngredientsPlugin,
     level::LevelPlugin,
-    phases::{concoct::ConcoctPlugin, potion_assembly::PotionAssemblyPlugin},
+    phases::{
+        ailment_statement::AilmentStatementPlugin, concoct::ConcoctPlugin,
+        potion_assembly::PotionAssemblyPlugin,
+    },
     potion::PotionPlugin,
     status::StatusPlugin,
     workshop::WorkshopPlugin,
@@ -31,6 +34,7 @@ impl PluginGroup for DefaultGamePlugins {
             .add(IngredientsPlugin)
             .add(InformationPlugin)
             .add(PotionPlugin)
+            .add(AilmentStatementPlugin)
             .add(PotionAssemblyPlugin)
             .add(ConcoctPlugin)
             .add(BjornPlugin)
