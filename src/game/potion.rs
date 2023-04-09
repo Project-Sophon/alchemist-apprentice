@@ -243,6 +243,7 @@ fn concoct_interaction(
         (Entity, &Interaction, &mut UiImage),
         (With<ConcoctAction>, With<EnableUiElement>),
     >,
+    potion_mix: ResMut<PotionMix>,
     ui_assets: Res<UiAssets>,
     buttons: Res<Input<MouseButton>>,
     audio_assets: Res<AudioAssets>,
@@ -252,6 +253,14 @@ fn concoct_interaction(
         match *interaction {
             Interaction::Clicked => {
                 if buttons.just_pressed(MouseButton::Left) {
+                    for slot in &potion_mix.ingredients.clone() {
+                        match *slot {
+                            Some(_) => {}
+                            None => {
+                                return;
+                            }
+                        }
+                    }
                     audio.play(audio_assets.concoct.clone());
                     ui_image.texture = ui_assets.concoct_button_click.clone();
                     game_phase.set(GamePhase::Concoct);

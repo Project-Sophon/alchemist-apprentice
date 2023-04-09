@@ -215,7 +215,10 @@ pub fn build_ingredient_information(
         });
     commands.spawn(TextBundle {
         text: Text {
-            sections: vec![TextSection::new(format!("Toxicity: {}\n", get_tox_or_unknown(ingredient)), get_info_text_style(font, 18.))],
+            sections: vec![TextSection::new(
+                format!("Toxicity: {}\n", get_tox_or_unknown(ingredient)),
+                get_info_text_style(font, 18.),
+            )],
             ..default()
         },
         ..default()

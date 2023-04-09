@@ -153,7 +153,7 @@ fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
                     //             get_menu_button_text_style(&font),
                     //         ));
                     //     });
-                    
+
                     parent
                         .spawn((
                             ButtonBundle {
