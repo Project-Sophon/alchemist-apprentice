@@ -31,7 +31,7 @@ pub fn build_status_panel(commands: &mut ChildBuilder, ui_assets: &Res<UiAssets>
                 flex_basis: Val::Percent(100.),
                 flex_direction: FlexDirection::Column,
                 align_self: AlignSelf::FlexEnd,
-                padding: UiRect::new(Val::Px(27.), Val::Px(0.), Val::Px(10.), Val::Undefined),
+                padding: UiRect::new(Val::Px(33.), Val::Undefined, Val::Px(16.), Val::Undefined),
                 margin: UiRect::new(Val::Undefined, Val::Px(10.), Val::Px(10.), Val::Undefined),
                 ..default()
             },
@@ -89,7 +89,7 @@ fn render_side_effects_in_panel(
                     format!("- {}\n", s.name.to_string()),
                     TextStyle {
                         font: font.clone(),
-                        font_size: 16.,
+                        font_size: 14.,
                         color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
                     },
                 ),
@@ -109,30 +109,20 @@ fn render_side_effects_in_panel(
     parent.spawn(TextBundle {
         style: Style {
             margin: UiRect {
-                bottom: Val::Px(1.),
+                bottom: Val::Px(8.),
                 ..default()
             },
             ..default()
         },
         text: Text {
-            sections: vec![
-                TextSection::new(
-                    format!("Toxicity: {}\n", bjorn_status.toxicity),
-                    TextStyle {
-                        font: font.clone(),
-                        font_size: 19.,
-                        color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
-                    },
-                ),
-                TextSection::new(
-                    format!("Ailments:\n"),
-                    TextStyle {
-                        font: font.clone(),
-                        font_size: 19.,
-                        color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
-                    },
-                ),
-            ],
+            sections: vec![TextSection::new(
+                format!("Toxicity: {}\n", bjorn_status.toxicity),
+                TextStyle {
+                    font: font.clone(),
+                    font_size: 18.,
+                    color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+                },
+            )],
             ..default()
         },
         ..default()
@@ -141,11 +131,29 @@ fn render_side_effects_in_panel(
     parent.spawn(TextBundle {
         style: Style {
             margin: UiRect {
-                bottom: Val::Px(3.),
+                bottom: Val::Px(6.),
                 ..default()
             },
+            ..default()
+        },
+        text: Text {
+            sections: vec![TextSection::new(
+                format!("Ailments:\n"),
+                TextStyle {
+                    font: font.clone(),
+                    font_size: 16.,
+                    color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+                },
+            )],
+            ..default()
+        },
+        ..default()
+    });
+
+    parent.spawn(TextBundle {
+        style: Style {
             size: Size {
-                width: Val::Px(270.),
+                width: Val::Px(246.),
                 ..default()
             },
             ..default()
