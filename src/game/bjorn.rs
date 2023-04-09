@@ -53,7 +53,7 @@ fn setup_initial_bjorn_status(
     let mut initial_side_effect_pool: HashSet<SideEffect> = HashSet::new();
     info!("Setup initial status on entering game state...");
     for (_, side_effect) in side_effect_assets.iter() {
-        if (side_effect.class.len() == 1) {
+        if side_effect.class.len() == 1 {
             initial_side_effect_pool.insert(side_effect.clone());
         }
     }
