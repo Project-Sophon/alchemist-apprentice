@@ -148,7 +148,7 @@ fn render_side_effects_in_panel(
                     ..default()
                 },
                 style: Style {
-                    margin: UiRect::right(Val::Px(4.)),
+                    margin: UiRect::right(Val::Px(6.)),
                     ..default()
                 },
                 ..default()
