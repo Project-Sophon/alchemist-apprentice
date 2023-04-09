@@ -48,8 +48,8 @@ fn main() {
                 .set(ImagePlugin::default_nearest()),
         )
         .add_plugin(AudioPlugin)
-        // Inspector Plugin
-        .add_plugin(WorldInspectorPlugin::new())
+        // Inspector Plugin can be enabled for debugging
+        //.add_plugin(WorldInspectorPlugin::new())
         // Our Plugins
         .add_plugins(DefaultWorldPlugins)
         .add_plugins(DefaultGamePlugins)
