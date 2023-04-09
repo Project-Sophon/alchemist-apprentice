@@ -1,4 +1,4 @@
-use std::fmt;
+use std::{collections::HashSet, fmt};
 
 use bevy::{
     prelude::{Handle, Image},
@@ -50,6 +50,17 @@ pub enum SideEffectClass {
     Gastrointestinal,
     Skin,
     Mental,
+}
+
+pub fn cant_you_just_do_it() -> HashSet<SideEffectClass> {
+    let mut hs = HashSet::new();
+    hs.insert(SideEffectClass::Pain);
+    hs.insert(SideEffectClass::Parasite);
+    hs.insert(SideEffectClass::Occult);
+    hs.insert(SideEffectClass::Gastrointestinal);
+    hs.insert(SideEffectClass::Skin);
+    hs.insert(SideEffectClass::Mental);
+    return hs;
 }
 
 impl fmt::Display for SideEffectClass {
