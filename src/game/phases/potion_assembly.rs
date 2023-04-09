@@ -9,6 +9,7 @@ use crate::{
         potion::{PotionMix, PotionMixSlot},
     },
     ui::disable_ui::{DisabledUiElement, EnableUiElement},
+    world::global_state::GlobalState,
 };
 
 pub struct PotionAssemblyPlugin;
@@ -23,7 +24,8 @@ impl Plugin for PotionAssemblyPlugin {
             )
                 .in_schedule(OnEnter(GamePhase::PotionAssembly)),
         )
-        .add_system(disable_potion_assembly_ui.in_schedule(OnExit(GamePhase::PotionAssembly)));
+        .add_system(disable_potion_assembly_ui.in_schedule(OnExit(GamePhase::PotionAssembly)))
+        .add_system(reset_potion_slots.in_schedule(OnExit(GlobalState::Game)));
     }
 }
 

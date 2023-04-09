@@ -3,7 +3,7 @@ use bevy::prelude::*;
 use crate::{
     assets::{
         assets_game_data::Ingredient,
-        resources_standard::{GlobalAssets, UiAssets, WorkshopAssets, CharacterAssets},
+        resources_standard::{CharacterAssets, GlobalAssets, UiAssets, WorkshopAssets},
     },
     world::{
         common::{WINDOW_HEIGHT, WINDOW_WIDTH},

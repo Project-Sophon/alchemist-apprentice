@@ -106,7 +106,6 @@ pub fn give_bjorn_concoction(
         .map(|s| s.1.clone())
         .collect();
 
-
     let mut final_side_effects: Vec<SideEffect> = Vec::new();
     let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(10);
     //let rand_index: usize = rng.gen_range(0..initial_side_effect_pool.len());
