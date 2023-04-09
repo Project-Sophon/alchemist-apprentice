@@ -7,7 +7,7 @@ use crate::world::global_state::GlobalState;
 use self::{
     assets_game_data::{Ingredient, SideEffect},
     resources_game_data::{GameDataAssetDynamicCollection, IngredientAssets, SideEffectAssets},
-    resources_standard::{CharacterAssets, GlobalAssets, UiAssets},
+    resources_standard::{CharacterAssets, GlobalAssets, UiAssets, WorkshopAssets},
 };
 
 pub mod assets_game_data;
@@ -27,6 +27,7 @@ impl Plugin for AssetPlugin {
             LoadingState::new(GlobalState::AssetLoading).continue_to_state(GlobalState::Splash),
         )
         .add_collection_to_loading_state::<_, GlobalAssets>(GlobalState::AssetLoading)
+        .add_collection_to_loading_state::<_, WorkshopAssets>(GlobalState::AssetLoading)
         .add_collection_to_loading_state::<_, CharacterAssets>(GlobalState::AssetLoading)
         .add_collection_to_loading_state::<_, UiAssets>(GlobalState::AssetLoading)
         .add_dynamic_collection_to_loading_state::<_, GameDataAssetDynamicCollection>(

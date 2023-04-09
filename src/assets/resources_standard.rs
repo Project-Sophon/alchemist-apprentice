@@ -50,3 +50,9 @@ pub struct CharacterAssets {
     #[asset(path = "textures/characters/bjorn.png")]
     pub bjorn: Handle<Image>,
 }
+
+#[derive(AssetCollection, Resource)]
+pub struct WorkshopAssets {
+    #[asset(path = "textures/workshop/workshop_bkg.png")]
+    pub workshop_bkg: Handle<Image>,
+}

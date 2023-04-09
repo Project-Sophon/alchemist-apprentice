@@ -9,6 +9,7 @@ mod world;
 
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use end::EndPlugin;
+use style::color::PALETTE_CREAM;
 use world::{
     common::{WINDOW_HEIGHT, WINDOW_WIDTH},
     global_state::GlobalState,
@@ -25,6 +26,9 @@ use bevy::prelude::*;
 
 fn main() {
     App::new()
+        // Set game background color
+        .insert_resource(ClearColor(Color::hex(PALETTE_CREAM).unwrap()))
+        // Add Plugins
         .add_plugins(
             DefaultPlugins
                 .set(WindowPlugin {

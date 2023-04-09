@@ -3,9 +3,8 @@ use bevy::prelude::*;
 use crate::{
     assets::{
         assets_game_data::Ingredient,
-        resources_standard::{GlobalAssets, UiAssets},
+        resources_standard::{GlobalAssets, UiAssets, WorkshopAssets},
     },
-    style::color::PALETTE_CREAM,
     world::{
         common::{WINDOW_HEIGHT, WINDOW_WIDTH},
         despawn::despawn_entity,
@@ -43,10 +42,17 @@ pub struct GameUiContainer;
 pub fn build_level(
     mut commands: Commands,
     global_assets: Res<GlobalAssets>,
+    workshop_assets: Res<WorkshopAssets>,
     ui_assets: Res<UiAssets>,
     ingredients: Res<Assets<Ingredient>>,
     selected_ingredient: Res<SelectedIngredient>,
 ) {
+    commands.spawn(SpriteBundle {
+        texture: workshop_assets.workshop_bkg.clone(),
+        transform: Transform::from_xyz(-154., 224., 1.),
+        ..default()
+    });
+
     commands
         .spawn((
             NodeBundle {
@@ -62,7 +68,6 @@ pub fn build_level(
                     },
                     ..default()
                 },
-                background_color: Color::hex(PALETTE_CREAM).unwrap().into(),
                 ..default()
             },
             LevelContainer,
