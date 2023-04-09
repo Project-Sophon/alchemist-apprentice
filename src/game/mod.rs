@@ -19,6 +19,7 @@ use self::{
     phases::{concoct::ConcoctPlugin, potion_assembly::PotionAssemblyPlugin},
     potion::PotionPlugin,
     status::StatusPlugin,
+    workshop::WorkshopPlugin,
 };
 
 pub struct DefaultGamePlugins;
@@ -34,5 +35,6 @@ impl PluginGroup for DefaultGamePlugins {
             .add(ConcoctPlugin)
             .add(BjornPlugin)
             .add(StatusPlugin)
+            .add(WorkshopPlugin)
     }
 }

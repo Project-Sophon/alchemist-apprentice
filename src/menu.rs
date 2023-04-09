@@ -1,7 +1,7 @@
 use crate::{
     assets::resources_standard::{AudioAssets, GlobalAssets},
     game::game_phase::GamePhase,
-    style::color::PALETTE_CREAM,
+    style::color::{PALETTE_CREAM, PALETTE_DARK_BLUE},
     ui::buttons::{
         get_menu_button_style, get_menu_button_text_style, get_normal_menu_button_color, MenuButton,
     },
@@ -103,17 +103,20 @@ fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
                     ..default()
                 })
                 .with_children(|parent| {
-                    let main_menu_image = global_assets.main_menu_banner.clone();
-                    parent.spawn(ImageBundle {
-                        style: Style {
-                            padding: UiRect::all(Val::Px(15.0)),
-                            margin: UiRect {
-                                bottom: Val::Px(50.0),
-                                ..default()
+                    parent.spawn(TextBundle {
+                        text: Text::from_section(
+                            "Alchemist's\nAssistant",
+                            TextStyle {
+                                font: font.clone(),
+                                font_size: 64.,
+                                color: Color::hex(PALETTE_DARK_BLUE).unwrap(),
                             },
+                        )
+                        .with_alignment(TextAlignment::Center),
+                        style: Style {
+                            margin: UiRect::bottom(Val::Px(32.)),
                             ..default()
                         },
-                        image: main_menu_image.into(),
                         ..default()
                     });
 
@@ -133,22 +136,24 @@ fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
                                 get_menu_button_text_style(&font),
                             ));
                         });
-                    parent
-                        .spawn((
-                            ButtonBundle {
-                                style: get_menu_button_style(),
-                                background_color: get_normal_menu_button_color().into(),
-                                ..default()
-                            },
-                            MenuButton,
-                            MenuButtonAction::Settings,
-                        ))
-                        .with_children(|parent| {
-                            parent.spawn(TextBundle::from_section(
-                                "Settings",
-                                get_menu_button_text_style(&font),
-                            ));
-                        });
+
+                    // parent
+                    //     .spawn((
+                    //         ButtonBundle {
+                    //             style: get_menu_button_style(),
+                    //             background_color: get_normal_menu_button_color().into(),
+                    //             ..default()
+                    //         },
+                    //         MenuButton,
+                    //         MenuButtonAction::Settings,
+                    //     ))
+                    //     .with_children(|parent| {
+                    //         parent.spawn(TextBundle::from_section(
+                    //             "Settings",
+                    //             get_menu_button_text_style(&font),
+                    //         ));
+                    //     });
+                    
                     parent
                         .spawn((
                             ButtonBundle {
