@@ -218,6 +218,10 @@ pub fn build_ingredient_information(
             sections: vec![TextSection::new(format!("Toxicity: {}\n", get_tox_or_unknown(ingredient)), get_info_text_style(font, 18.))],
             ..default()
         },
+        style: Style {
+            align_self: AlignSelf::FlexEnd,
+            ..default()
+        },
         ..default()
     });
 }

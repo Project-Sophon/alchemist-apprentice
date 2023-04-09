@@ -1,7 +1,4 @@
-use std::default;
-
 use bevy::prelude::*;
-use serde::__private::de;
 
 use crate::{
     assets::resources_standard::{GlobalAssets, ToxAssets, UiAssets},
@@ -20,11 +17,15 @@ impl Plugin for StatusPlugin {
     }
 }
 
+// ------ COMPONENTS ------
+
 #[derive(Component)]
 pub struct StatusPanel;
 
 #[derive(Component)]
 pub struct NotInitialized;
+
+// ------ SYSTEMS ------
 
 pub fn build_status_panel(commands: &mut ChildBuilder, ui_assets: &Res<UiAssets>) {
     commands.spawn((

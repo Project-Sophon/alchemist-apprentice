@@ -8,6 +8,7 @@ pub mod level;
 pub mod phases;
 pub mod potion;
 pub mod status;
+pub mod workshop;
 
 use self::{
     bjorn::BjornPlugin,

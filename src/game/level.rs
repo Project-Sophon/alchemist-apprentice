@@ -17,6 +17,7 @@ use super::{
     ingredients::{build_ingredients_panel, SelectedIngredient},
     potion::build_potion_panel,
     status::build_status_panel,
+    workshop::build_workshop,
 };
 
 pub struct LevelPlugin;
@@ -48,23 +49,7 @@ pub fn build_level(
     ingredients: Res<Assets<Ingredient>>,
     selected_ingredient: Res<SelectedIngredient>,
 ) {
-    commands.spawn(SpriteBundle {
-        texture: workshop_assets.workshop_bkg.clone(),
-        transform: Transform::from_xyz(-154., 224., 1.),
-        ..default()
-    });
-
-    commands.spawn(SpriteBundle {
-        texture: character_assets.bjorn.clone(),
-        transform: Transform::from_xyz(-124., 184., 2.),
-        ..default()
-    });
-
-    commands.spawn(SpriteBundle {
-        texture: character_assets.alchemist.clone(),
-        transform: Transform::from_xyz(-154., 184., 2.),
-        ..default()
-    });
+    build_workshop(&mut commands, &workshop_assets, &character_assets);
 
     commands
         .spawn((
