@@ -56,13 +56,13 @@ pub fn build_level(
 
     commands.spawn(SpriteBundle {
         texture: character_assets.bjorn.clone(),
-        transform: Transform::from_xyz(-124., 224., 2.),
+        transform: Transform::from_xyz(-124., 184., 2.),
         ..default()
     });
 
     commands.spawn(SpriteBundle {
         texture: character_assets.alchemist.clone(),
-        transform: Transform::from_xyz(-154., 224., 2.),
+        transform: Transform::from_xyz(-154., 184., 2.),
         ..default()
     });
 
