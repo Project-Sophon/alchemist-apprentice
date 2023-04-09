@@ -49,7 +49,7 @@ fn main() {
         )
         .add_plugin(AudioPlugin)
         // Inspector Plugin can be enabled for debugging
-        .add_plugin(WorldInspectorPlugin::new())
+        // .add_plugin(WorldInspectorPlugin::new())
         // Our Plugins
         .add_plugins(DefaultWorldPlugins)
         .add_plugins(DefaultGamePlugins)

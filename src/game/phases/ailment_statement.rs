@@ -35,7 +35,7 @@ fn spawn_ailment_statement(
     ui_assets: Res<UiAssets>,
 ) {
     if let Ok(parent) = level_container.get_single() {
-        let intro_text = "Hello Assistant! I am Bjorn Bjornson and am in desperate need of alchemical assistance, surely you can help me? Your master is always going on about some rule of 3, how hard can it really be?";
+        let intro_text = "Hello Assistant! I am Bjorn Bjornson and am in desperate need of alchemical assistance, can you help me?";
 
         commands.entity(parent).with_children(|parent| {
             create_dialogue_box(parent, &global_assets.font, &ui_assets, intro_text);

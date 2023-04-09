@@ -9,6 +9,8 @@ use crate::{
     ui::disable_ui::DisabledUiElement,
     world::global_state::GlobalState,
 };
+
+use super::game_phase::GamePhase;
 pub struct IngredientsPlugin;
 impl Plugin for IngredientsPlugin {
     fn build(&self, app: &mut App) {
@@ -18,7 +20,7 @@ impl Plugin for IngredientsPlugin {
             .add_system(reset_ingredients.in_schedule(OnEnter(GlobalState::Game)))
             .add_systems(
                 (ingredient_button_interactions, select_ingredient)
-                    .in_set(OnUpdate(GlobalState::Game)),
+                    .in_set(OnUpdate(GamePhase::PotionAssembly)),
             );
     }
 }
