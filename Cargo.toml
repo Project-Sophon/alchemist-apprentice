@@ -22,6 +22,7 @@ bevy_pixel_camera = "0.4.0"
 rand = "0.8.5"
 getrandom = { version = "0.2", features = ["js"] }
 rand_chacha = "0.3.1"
+bevy_kira_audio = {version = "0.15", features = ["ogg", "wav"]}
 
 [target.wasm32-unknown-unknown]
 runner = "wasm-server-runner"

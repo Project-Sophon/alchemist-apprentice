@@ -1,7 +1,11 @@
 use bevy::{asset::HandleId, prelude::*};
+use bevy_kira_audio::{prelude::*, Audio};
 
 use crate::{
-    assets::{assets_game_data::Ingredient, resources_standard::UiAssets},
+    assets::{
+        assets_game_data::Ingredient,
+        resources_standard::{AudioAssets, UiAssets},
+    },
     ui::disable_ui::DisabledUiElement,
     world::global_state::GlobalState,
 };
@@ -61,10 +65,13 @@ fn ingredient_button_interactions(
     >,
     mut selected_ingredient: ResMut<SelectedIngredient>,
     ui_assets: Res<UiAssets>,
+    audio_assets: Res<AudioAssets>,
+    audio: Res<Audio>,
 ) {
     for (interaction, ingredient_button, mut bkg_image) in &mut interaction_query {
         match *interaction {
             Interaction::Clicked => {
+                audio.play(audio_assets.click.clone());
                 // Update the selected ingredient (handle)
                 selected_ingredient.ingredient = Some(ingredient_button.ingredient.clone());
 

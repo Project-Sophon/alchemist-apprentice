@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 use bevy_asset_loader::prelude::AssetCollection;
+use bevy_kira_audio::AudioSource;
 
 #[derive(AssetCollection, Resource)]
 pub struct GlobalAssets {
@@ -73,4 +74,14 @@ pub struct ToxAssets {
     pub tox_4: Handle<Image>,
     #[asset(path = "textures/tox/tox_5.png")]
     pub tox_5: Handle<Image>,
+}
+
+#[derive(AssetCollection, Resource)]
+pub struct AudioAssets {
+    #[asset(path = "sounds/menu.wav")]
+    pub menu: Handle<AudioSource>,
+    #[asset(path = "sounds/click.wav")]
+    pub click: Handle<AudioSource>,
+    #[asset(path = "sounds/concoct.wav")]
+    pub concoct: Handle<AudioSource>,
 }

@@ -1,5 +1,5 @@
 use crate::{
-    assets::resources_standard::GlobalAssets,
+    assets::resources_standard::{AudioAssets, GlobalAssets},
     game::game_phase::GamePhase,
     style::color::PALETTE_CREAM,
     ui::buttons::{
@@ -12,6 +12,7 @@ use crate::{
     GlobalState,
 };
 use bevy::{app::AppExit, prelude::*};
+use bevy_kira_audio::{prelude::*, Audio};
 
 // ------ ENUMS, CONSTANTS ------
 
@@ -32,8 +33,11 @@ impl Plugin for MenuPlugin {
         app.add_state::<MenuState>()
             .add_system(menu_setup.in_schedule(OnEnter(GlobalState::Menu)))
             .add_system(despawn_entity::<MainMenu>.in_schedule(OnExit(GlobalState::Menu)))
-            .add_system(main_menu_setup.in_schedule(OnEnter(MenuState::Main)))
-            .add_system(menu_action.in_set(OnUpdate(GlobalState::Menu)));
+            .add_systems(
+                (main_menu_setup, start_background_audio).in_schedule(OnEnter(MenuState::Main)),
+            )
+            .add_system(menu_action.in_set(OnUpdate(GlobalState::Menu)))
+            .add_system(stop_background_audio.in_schedule(OnExit(MenuState::Main)));
     }
 }
 
@@ -53,6 +57,14 @@ enum MenuButtonAction {
 
 fn menu_setup(mut menu_state: ResMut<NextState<MenuState>>) {
     menu_state.set(MenuState::Main);
+}
+
+fn start_background_audio(audio_assets: Res<AudioAssets>, audio: Res<Audio>) {
+    audio.play(audio_assets.menu.clone()).looped();
+}
+
+fn stop_background_audio(audio: Res<Audio>) {
+    audio.stop();
 }
 
 fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
@@ -166,9 +178,12 @@ fn menu_action(
     mut menu_state: ResMut<NextState<MenuState>>,
     mut game_state: ResMut<NextState<GlobalState>>,
     mut game_phase: ResMut<NextState<GamePhase>>,
+    audio_assets: Res<AudioAssets>,
+    audio: Res<Audio>,
 ) {
     for (interaction, menu_button_action) in &interaction_query {
         if *interaction == Interaction::Clicked {
+            audio.play(audio_assets.click.clone());
             match menu_button_action {
                 MenuButtonAction::Quit => app_exit_events.send(AppExit),
                 MenuButtonAction::Play => {

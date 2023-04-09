@@ -23,6 +23,7 @@ use ui::DefaultUIPlugins;
 use world::DefaultWorldPlugins;
 
 use bevy::prelude::*;
+use bevy_kira_audio::prelude::*;
 
 fn main() {
     App::new()
@@ -45,6 +46,7 @@ fn main() {
                 // required for pixel perfect rendering
                 .set(ImagePlugin::default_nearest()),
         )
+        .add_plugin(AudioPlugin)
         // Inspector Plugin
         .add_plugin(WorldInspectorPlugin::new())
         // Our Plugins

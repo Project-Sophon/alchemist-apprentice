@@ -4,7 +4,7 @@ use core::fmt;
 use crate::{
     assets::{
         assets_game_data::Ingredient,
-        resources_standard::{GlobalAssets, UiAssets},
+        resources_standard::{AudioAssets, GlobalAssets, UiAssets},
     },
     ui::disable_ui::EnableUiElement,
 };
@@ -14,6 +14,8 @@ use super::{
     ingredients::SelectedIngredient,
     phases::concoct::{spawn_concoct_action, ConcoctAction},
 };
+
+use bevy_kira_audio::{prelude::*, Audio};
 
 pub struct PotionPlugin;
 impl Plugin for PotionPlugin {
@@ -178,6 +180,8 @@ fn slot_interactions(
     mut potion_mix: ResMut<PotionMix>,
     ingredients: Res<Assets<Ingredient>>,
     ui_assets: Res<UiAssets>,
+    audio_assets: Res<AudioAssets>,
+    audio: Res<Audio>,
 ) {
     for (entity, interaction, mut ui_image, potion_mix_slot) in &mut interaction_query {
         match *interaction {
@@ -185,6 +189,8 @@ fn slot_interactions(
                 if selected_ingredient.ingredient.is_none() {
                     return;
                 }
+
+                audio.play(audio_assets.click.clone());
 
                 // Get Handles and update PotionMix resource
                 let handle = selected_ingredient.ingredient.clone().unwrap();
@@ -239,11 +245,14 @@ fn concoct_interaction(
     >,
     ui_assets: Res<UiAssets>,
     buttons: Res<Input<MouseButton>>,
+    audio_assets: Res<AudioAssets>,
+    audio: Res<Audio>,
 ) {
     for (_, interaction, mut ui_image) in &mut interaction_query {
         match *interaction {
             Interaction::Clicked => {
                 if buttons.just_pressed(MouseButton::Left) {
+                    audio.play(audio_assets.concoct.clone());
                     ui_image.texture = ui_assets.concoct_button_click.clone();
                     game_phase.set(GamePhase::Concoct);
                 }
