@@ -65,6 +65,7 @@ fn setup_initial_bjorn_status(
         "Initial Side Effects of Bjorn: {:?}",
         bjorn_status.side_effects
     );
+    bjorn_status.toxicity = 0;
 }
 
 pub fn give_bjorn_concoction(
