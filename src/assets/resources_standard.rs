@@ -6,8 +6,6 @@ use bevy_kira_audio::AudioSource;
 pub struct GlobalAssets {
     #[asset(path = "branding/splash.png")]
     pub splash: Handle<Image>,
-    #[asset(path = "branding/main_menu.png")]
-    pub main_menu_banner: Handle<Image>,
     #[asset(path = "fonts/alagard.ttf")]
     pub font: Handle<Font>,
 }
@@ -42,16 +40,18 @@ pub struct UiAssets {
     pub concoct_button_hover: Handle<Image>,
     #[asset(path = "textures/ui/concoct_button_normal.png")]
     pub concoct_button_normal: Handle<Image>,
-    #[asset(path = "textures/ui/end_screen.png")]
-    pub end_screen: Handle<Image>,
 }
 
 #[derive(AssetCollection, Resource)]
 pub struct CharacterAssets {
     #[asset(path = "textures/characters/bjorn.png")]
     pub bjorn: Handle<Image>,
+    #[asset(path = "textures/characters/bjorn_dead.png")]
+    pub bjorn_dead: Handle<Image>,
     #[asset(path = "textures/characters/alchemist.png")]
     pub alchemist: Handle<Image>,
+    #[asset(path = "textures/characters/alchemist_win.png")]
+    pub alchemist_win: Handle<Image>,
 }
 
 #[derive(AssetCollection, Resource)]
