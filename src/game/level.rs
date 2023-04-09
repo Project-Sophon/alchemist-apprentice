@@ -3,7 +3,7 @@ use bevy::prelude::*;
 use crate::{
     assets::{
         assets_game_data::Ingredient,
-        resources_standard::{GlobalAssets, UiAssets, WorkshopAssets},
+        resources_standard::{GlobalAssets, UiAssets, WorkshopAssets, CharacterAssets},
     },
     world::{
         common::{WINDOW_HEIGHT, WINDOW_WIDTH},
@@ -43,6 +43,7 @@ pub fn build_level(
     mut commands: Commands,
     global_assets: Res<GlobalAssets>,
     workshop_assets: Res<WorkshopAssets>,
+    character_assets: Res<CharacterAssets>,
     ui_assets: Res<UiAssets>,
     ingredients: Res<Assets<Ingredient>>,
     selected_ingredient: Res<SelectedIngredient>,
@@ -50,6 +51,18 @@ pub fn build_level(
     commands.spawn(SpriteBundle {
         texture: workshop_assets.workshop_bkg.clone(),
         transform: Transform::from_xyz(-154., 224., 1.),
+        ..default()
+    });
+
+    commands.spawn(SpriteBundle {
+        texture: character_assets.bjorn.clone(),
+        transform: Transform::from_xyz(-124., 224., 2.),
+        ..default()
+    });
+
+    commands.spawn(SpriteBundle {
+        texture: character_assets.alchemist.clone(),
+        transform: Transform::from_xyz(-154., 224., 2.),
         ..default()
     });
 

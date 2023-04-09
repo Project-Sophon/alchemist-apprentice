@@ -49,6 +49,8 @@ pub struct UiAssets {
 pub struct CharacterAssets {
     #[asset(path = "textures/characters/bjorn.png")]
     pub bjorn: Handle<Image>,
+    #[asset(path = "textures/characters/alchemist.png")]
+    pub alchemist: Handle<Image>,
 }
 
 #[derive(AssetCollection, Resource)]
