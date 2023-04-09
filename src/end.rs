@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use crate::{
-    assets::resources_standard::{GlobalAssets, UiAssets},
+    assets::resources_standard::{CharacterAssets, GlobalAssets, UiAssets},
     game::game_phase::GamePhase,
     style::color::{PALETTE_CREAM, PALETTE_DARK_BLUE},
     ui::buttons::{
@@ -59,18 +59,26 @@ fn reset_state(
     }
 }
 
-fn on_win(mut commands: Commands, global_assets: Res<GlobalAssets>, ui_assets: Res<UiAssets>) {
-    build_end_screen(&mut commands, &global_assets, &ui_assets, true)
+fn on_win(
+    mut commands: Commands,
+    global_assets: Res<GlobalAssets>,
+    character_assets: Res<CharacterAssets>,
+) {
+    build_end_screen(&mut commands, &global_assets, &character_assets, true)
 }
 
-fn on_lose(mut commands: Commands, global_assets: Res<GlobalAssets>, ui_assets: Res<UiAssets>) {
-    build_end_screen(&mut commands, &global_assets, &ui_assets, false)
+fn on_lose(
+    mut commands: Commands,
+    global_assets: Res<GlobalAssets>,
+    character_assets: Res<CharacterAssets>,
+) {
+    build_end_screen(&mut commands, &global_assets, &character_assets, false)
 }
 
 fn build_end_screen(
     commands: &mut Commands,
     global_assets: &Res<GlobalAssets>,
-    ui_assets: &Res<UiAssets>,
+    character_assets: &Res<CharacterAssets>,
     win: bool,
 ) {
     commands
@@ -97,6 +105,12 @@ fn build_end_screen(
             EndScreen,
         ))
         .with_children(|parent| {
+            let img = if win {
+                &character_assets.alchemist_win
+            } else {
+                &character_assets.bjorn_dead
+            };
+
             parent.spawn(TextBundle::from_section(
                 if win { "You Win!" } else { "Game Over!" },
                 TextStyle {
@@ -108,8 +122,7 @@ fn build_end_screen(
 
             parent.spawn(ImageBundle {
                 style: Style { ..default() },
-                // todo: different sprite for win vs lose
-                image: UiImage::new(ui_assets.end_screen.clone()),
+                image: UiImage::new(img.clone()),
                 ..default()
             });
 
