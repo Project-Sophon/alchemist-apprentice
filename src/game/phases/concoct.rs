@@ -6,7 +6,7 @@ use crate::{
         ingredients::update_ingredients_used,
         potion::PotionMix,
     },
-    style::color::PALETTE_DARK_BLUE,
+    style::color::PALETTE_DARK_CREAM,
     ui::disable_ui::EnableUiElement,
     world::global_state::GlobalState,
 };
@@ -104,7 +104,7 @@ pub fn spawn_concoct_action(
                     TextStyle {
                         font: font.clone(),
                         font_size: 18.,
-                        color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+                        color: Color::hex(PALETTE_DARK_CREAM).unwrap().into(),
                     },
                 ),
                 style: Style {
