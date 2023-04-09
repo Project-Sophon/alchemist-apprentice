@@ -35,17 +35,17 @@ fn spawn_ailment_statement(
     ui_assets: Res<UiAssets>,
 ) {
     if let Ok(parent) = level_container.get_single() {
-        let intro_text = "Hello my name is Bjorn!";
+        let intro_text = "Hello Assistant! I am Bjorn Bjornson and am in desperate need of alchemical assistance, surely you can help me? Your master is always going on about some rule of 3, how hard can it really be?";
 
         commands.entity(parent).with_children(|parent| {
-            create_dialogue_box(parent, &global_assets.font, &ui_assets, intro_text)
+            create_dialogue_box(parent, &global_assets.font, &ui_assets, intro_text);
         });
-
-        commands.insert_resource(AilmentStatementTimer(Timer::from_seconds(
-            2000.0,
-            TimerMode::Once,
-        )));
     }
+
+    commands.insert_resource(AilmentStatementTimer(Timer::from_seconds(
+        5.0,
+        TimerMode::Once,
+    )));
 }
 
 fn on_ailment_timer(

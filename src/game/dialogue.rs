@@ -51,13 +51,16 @@ pub fn create_dialogue_box(
                     text,
                     TextStyle {
                         font: font.clone(),
-                        font_size: 20.,
+                        font_size: 18.,
                         color: Color::hex(PALETTE_DARK_BLUE).unwrap(),
                     },
                 )
                 .with_text_alignment(TextAlignment::Left)
                 .with_style(Style {
-                    size: Size::new(Val::Px(DIALOGUE_BOX_WIDTH), Val::Px(DIALOGUE_BOX_HEIGHT)),
+                    size: Size::new(
+                        Val::Px(DIALOGUE_BOX_WIDTH - (DIALOGUE_BOX_PADDING * 2.)),
+                        Val::Px(DIALOGUE_BOX_HEIGHT - (DIALOGUE_BOX_PADDING * 2.)),
+                    ),
                     ..default()
                 }),
             );

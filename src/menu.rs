@@ -194,7 +194,6 @@ fn menu_action(
                 MenuButtonAction::Play => {
                     game_state.set(GlobalState::Game);
                     menu_state.set(MenuState::Disabled);
-                    game_phase.set(GamePhase::AilmentStatement);
                 }
                 MenuButtonAction::Settings => menu_state.set(MenuState::Settings),
             }

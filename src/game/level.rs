@@ -13,6 +13,7 @@ use crate::{
 };
 
 use super::{
+    game_phase::GamePhase,
     information::build_information_panel,
     ingredients::{build_ingredients_panel, SelectedIngredient},
     potion::build_potion_panel,
@@ -40,7 +41,7 @@ pub struct GameUiContainer;
 
 // ------ SYSTEMS ------
 
-pub fn build_level(
+fn build_level(
     mut commands: Commands,
     global_assets: Res<GlobalAssets>,
     workshop_assets: Res<WorkshopAssets>,
@@ -48,6 +49,7 @@ pub fn build_level(
     ui_assets: Res<UiAssets>,
     ingredients: Res<Assets<Ingredient>>,
     selected_ingredient: Res<SelectedIngredient>,
+    mut game_phase: ResMut<NextState<GamePhase>>,
 ) {
     build_workshop(&mut commands, &workshop_assets, &character_assets);
 
@@ -131,4 +133,7 @@ pub fn build_level(
                         });
                 });
         });
+
+    // Update GamePhase after level is built
+    game_phase.set(GamePhase::AilmentStatement);
 }
