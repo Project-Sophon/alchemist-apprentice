@@ -93,7 +93,7 @@ fn get_text_for_state(state: &AilmentStatementState, bjorn_status: &BjornStatus)
     }
 
     let first_string = if bjorn_status.side_effects.len() < state.previous_side_effect_count {
-        "I have fewer ailments that before! Soon I'll be good as new!"
+        "I feel better than before. I'll soon be good as new!"
     } else if bjorn_status.side_effects.len() == state.previous_side_effect_count {
         "My old ailments are gone but now I have new ones in their place!"
     } else {
