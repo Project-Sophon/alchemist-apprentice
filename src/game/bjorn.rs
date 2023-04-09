@@ -93,7 +93,7 @@ pub fn give_bjorn_concoction(
 
     info!("Number of side effects {}", side_effects.len().to_string());
     let side_effect_iter = side_effects.clone().iter();
-    let possible_side_effects: Vec<SideEffect> = side_effect_iter
+    let mut possible_side_effects: Vec<SideEffect> = side_effect_iter
         .filter(|s| {
             let side_effect = s.1;
             for excluded in &exclude_classes {
@@ -106,7 +106,18 @@ pub fn give_bjorn_concoction(
         .map(|s| s.1.clone())
         .collect();
 
-    for se in possible_side_effects {
+
+    let mut final_side_effects: Vec<SideEffect> = Vec::new();
+    let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(10);
+    //let rand_index: usize = rng.gen_range(0..initial_side_effect_pool.len());
+    info!("CAUSES LENGTH: {}", causes.len());
+    for _ in 0..causes.len() {
+        let rand_index: usize = rng.gen_range(0..possible_side_effects.len());
+        final_side_effects.push(possible_side_effects.remove(rand_index));
+    }
+
+    info!("final_side_effects{:?}", final_side_effects);
+    for se in final_side_effects {
         bjorn_status.side_effects.insert(se.clone());
     }
 
