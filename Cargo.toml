@@ -1,6 +1,6 @@
 [package]
 name = "alchemist_apprentice"
-version = "0.1.0"
+version = "0.5.0"
 edition = "2021"
 
 # Enable a small amount of optimization in debug mode
