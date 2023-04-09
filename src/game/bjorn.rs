@@ -53,11 +53,13 @@ fn setup_initial_bjorn_status(
     let mut initial_side_effect_pool: HashSet<SideEffect> = HashSet::new();
     info!("Setup initial status on entering game state...");
     for (_, side_effect) in side_effect_assets.iter() {
-        initial_side_effect_pool.insert(side_effect.clone());
+        if (side_effect.class.len() == 1) {
+            initial_side_effect_pool.insert(side_effect.clone());
+        }
     }
 
     let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(10);
-    let rand_index: usize = rng.gen_range(0..2);
+    let rand_index: usize = rng.gen_range(0..initial_side_effect_pool.len());
 
     let initial_side_effect = Vec::from_iter(&initial_side_effect_pool)[rand_index];
     bjorn_status.side_effects = HashSet::from_iter(vec![initial_side_effect.clone()]);
