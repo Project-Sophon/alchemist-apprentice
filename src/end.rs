@@ -2,12 +2,14 @@ use bevy::prelude::*;
 
 use crate::{
     assets::resources_standard::{GlobalAssets, UiAssets},
+    game::game_phase::GamePhase,
     style::color::{PALETTE_CREAM, PALETTE_DARK_BLUE},
     ui::buttons::{
         get_menu_button_style, get_menu_button_text_style, get_normal_menu_button_color, MenuButton,
     },
     world::{
         common::{WINDOW_HEIGHT, WINDOW_WIDTH},
+        despawn::despawn_entity,
         global_state::GlobalState,
     },
 };
@@ -17,7 +19,11 @@ pub struct EndPlugin;
 impl Plugin for EndPlugin {
     fn build(&self, app: &mut App) {
         app.add_system(on_win.in_schedule(OnEnter(GlobalState::Win)))
-            .add_system(on_lose.in_schedule(OnEnter(GlobalState::Lose)));
+            .add_system(on_lose.in_schedule(OnEnter(GlobalState::Lose)))
+            .add_system(reset_state.in_set(OnUpdate(GlobalState::Win)))
+            .add_system(reset_state.in_set(OnUpdate(GlobalState::Lose)))
+            .add_system(despawn_entity::<EndScreen>.in_schedule(OnExit(GlobalState::Win)))
+            .add_system(despawn_entity::<EndScreen>.in_schedule(OnExit(GlobalState::Lose)));
     }
 }
 
@@ -32,6 +38,26 @@ struct EndScreen;
 struct ResetButton;
 
 // ------ SYSTEMS ------
+
+fn reset_state(
+    interaction_query: Query<
+        (&Interaction, &ResetButton),
+        (Changed<Interaction>, With<ResetButton>),
+    >,
+    mut game_state: ResMut<NextState<GlobalState>>,
+    mut game_phase: ResMut<NextState<GamePhase>>,
+) {
+    for (interaction, _) in &interaction_query {
+        match *interaction {
+            Interaction::Clicked => {
+                game_state.set(GlobalState::Game);
+                game_phase.set(GamePhase::PotionAssembly);
+            }
+            Interaction::Hovered => {}
+            Interaction::None => {}
+        }
+    }
+}
 
 fn on_win(mut commands: Commands, global_assets: Res<GlobalAssets>, ui_assets: Res<UiAssets>) {
     build_end_screen(&mut commands, &global_assets, &ui_assets, true)
