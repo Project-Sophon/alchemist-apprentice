@@ -9,6 +9,19 @@
 ![GitHub](https://img.shields.io/github/license/Project-Sophon/alchemist-apprentice?style=for-the-badge)
 ![Bevy](https://img.shields.io/badge/bevy-0.10.1-green?style=for-the-badge)
 
+## Play
+
+### Download
+You can download the latest native clients from the releases page [here.](https://github.com/Project-Sophon/alchemist-apprentice/releases)
+
+### Browser
+
+#### GitHub Pages
+Hosted on GitHub pages: [Play Here](https://project-sophon.github.io/alchemist-apprentice-wasm/)
+
+#### itch.io
+Coming Soon!
+
 ## Development
 
 ### Run
