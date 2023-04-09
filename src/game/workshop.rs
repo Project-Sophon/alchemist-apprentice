@@ -4,9 +4,7 @@ use crate::assets::resources_standard::{CharacterAssets, WorkshopAssets};
 
 pub struct WorkshopPlugin;
 impl Plugin for WorkshopPlugin {
-    fn build(&self, app: &mut App) {
-        app;
-    }
+    fn build(&self, _: &mut App) {}
 }
 
 // ------ COMPONENTS ------

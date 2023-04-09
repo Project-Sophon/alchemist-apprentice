@@ -6,14 +6,13 @@ use crate::{
     world::global_state::GlobalState,
 };
 
-use super::bjorn::BjornStatus;
+use super::{bjorn::BjornStatus, game_phase::GamePhase};
 
 pub struct StatusPlugin;
 impl Plugin for StatusPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(
-            (initial_status_panel_values, update_status_panel).in_set(OnUpdate(GlobalState::Game)),
-        );
+        app.add_system(initial_status_panel_values.in_schedule(OnEnter(GlobalState::Game)))
+            .add_system(update_status_panel.in_schedule(OnEnter(GamePhase::AilmentStatement)));
     }
 }
 
@@ -21,9 +20,6 @@ impl Plugin for StatusPlugin {
 
 #[derive(Component)]
 pub struct StatusPanel;
-
-#[derive(Component)]
-pub struct NotInitialized;
 
 // ------ SYSTEMS ------
 
@@ -44,19 +40,17 @@ pub fn build_status_panel(commands: &mut ChildBuilder, ui_assets: &Res<UiAssets>
         },
         Name::new("Status Panel"),
         StatusPanel,
-        NotInitialized,
     ));
 }
 
 fn initial_status_panel_values(
     mut commands: Commands,
-    query: Query<Entity, (With<StatusPanel>, With<NotInitialized>)>,
+    query: Query<Entity, With<StatusPanel>>,
     global_assets: Res<GlobalAssets>,
     bjorn_status: Res<BjornStatus>,
     tox_assets: Res<ToxAssets>,
 ) {
     query.for_each(|e| {
-        commands.entity(e).remove::<NotInitialized>();
         commands.entity(e).with_children(|parent| {
             render_side_effects_in_panel(
                 parent,
@@ -75,9 +69,6 @@ fn update_status_panel(
     bjorn_status: Res<BjornStatus>,
     tox_assets: Res<ToxAssets>,
 ) {
-    if !bjorn_status.is_changed() {
-        return;
-    }
     query.for_each(|e| {
         commands.entity(e).despawn_descendants();
         commands.entity(e).with_children(|parent| {

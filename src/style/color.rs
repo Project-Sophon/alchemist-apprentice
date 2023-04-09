@@ -1,5 +1,3 @@
-use bevy::prelude::Color;
-
 // Palette Ref: https://lospec.com/palette-list/slso8
 pub const PALETTE_DARK_BLUE: &str = "#0d2b45";
 pub const PALETTE_BLUE: &str = "#203c56";

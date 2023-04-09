@@ -3,7 +3,7 @@ use rand::{Rng, SeedableRng};
 use std::{collections::HashSet, fmt, ops::Sub};
 
 use crate::{
-    assets::assets_game_data::{cant_you_just_do_it, SideEffect, SideEffectClass},
+    assets::assets_game_data::{cant_you_just_do_it, SideEffect},
     world::global_state::GlobalState,
 };
 

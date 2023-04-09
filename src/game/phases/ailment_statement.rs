@@ -1,5 +1,3 @@
-use std::default;
-
 use bevy::prelude::*;
 
 use crate::{
@@ -8,6 +6,7 @@ use crate::{
         bjorn::BjornStatus,
         dialogue::{create_dialogue_box, DialogueBox},
         game_phase::GamePhase,
+        ingredients::IngredientButton,
         level::LevelContainer,
     },
     world::{despawn::despawn_entity, global_state::GlobalState},
@@ -18,10 +17,17 @@ impl Plugin for AilmentStatementPlugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<AilmentStatementState>()
             .add_system(reset_state.in_schedule(OnEnter(GlobalState::Game)))
-            .add_system(spawn_ailment_statement.in_schedule(OnEnter(GamePhase::AilmentStatement)))
+            .add_systems(
+                (spawn_ailment_statement, main_ui_disabled_state)
+                    .in_schedule(OnEnter(GamePhase::AilmentStatement)),
+            )
             .add_system(on_ailment_timer.in_set(OnUpdate(GamePhase::AilmentStatement)))
             .add_systems(
-                (on_ailment_statement_exit, despawn_entity::<DialogueBox>)
+                (
+                    on_ailment_statement_exit,
+                    main_ui_enable_state,
+                    despawn_entity::<DialogueBox>,
+                )
                     .in_schedule(OnExit(GamePhase::AilmentStatement)),
             );
     }
@@ -75,6 +81,18 @@ fn spawn_ailment_statement(
         AILMENT_STATEMENT_DURATION,
         TimerMode::Once,
     )));
+}
+
+fn main_ui_disabled_state(mut bkgs_to_tint: Query<&mut BackgroundColor, With<IngredientButton>>) {
+    for mut bkg in bkgs_to_tint.iter_mut() {
+        *bkg = Color::rgba(0.9, 0.9, 0.9, 1.0).into();
+    }
+}
+
+fn main_ui_enable_state(mut bkgs_to_tint: Query<&mut BackgroundColor, With<IngredientButton>>) {
+    for mut bkg in bkgs_to_tint.iter_mut() {
+        *bkg = BackgroundColor::DEFAULT;
+    }
 }
 
 fn on_ailment_timer(

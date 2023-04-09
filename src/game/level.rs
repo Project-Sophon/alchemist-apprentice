@@ -39,6 +39,10 @@ pub struct LevelContainer;
 #[reflect(Component)]
 pub struct GameUiContainer;
 
+#[derive(Reflect, Component, Default)]
+#[reflect(Component)]
+pub struct GameUiControlArea;
+
 // ------ SYSTEMS ------
 
 fn build_level(
@@ -118,6 +122,7 @@ fn build_level(
                                 image: ui_assets.game_ui_bkg.clone().into(),
                                 ..default()
                             },
+                            GameUiControlArea,
                             Name::new("Game UI Control Area"),
                         ))
                         .with_children(|parent| {

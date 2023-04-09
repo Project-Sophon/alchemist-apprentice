@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use crate::{
-    assets::resources_standard::{CharacterAssets, GlobalAssets, UiAssets},
+    assets::resources_standard::{CharacterAssets, GlobalAssets},
     game::game_phase::GamePhase,
     style::color::{PALETTE_CREAM, PALETTE_DARK_BLUE},
     ui::buttons::{

@@ -8,7 +8,7 @@ mod style;
 mod ui;
 mod world;
 
-use bevy_inspector_egui::quick::WorldInspectorPlugin;
+// use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use end::EndPlugin;
 use style::color::PALETTE_CREAM;
 use world::{

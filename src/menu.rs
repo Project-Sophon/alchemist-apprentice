@@ -1,6 +1,5 @@
 use crate::{
     assets::resources_standard::{AudioAssets, GlobalAssets},
-    game::game_phase::GamePhase,
     style::color::{PALETTE_CREAM, PALETTE_DARK_BLUE},
     ui::buttons::{
         get_menu_button_style, get_menu_button_text_style, get_normal_menu_button_color, MenuButton,
@@ -49,7 +48,6 @@ struct MainMenu;
 #[derive(Component)]
 enum MenuButtonAction {
     Play,
-    Settings,
     Quit,
 }
 
@@ -137,23 +135,6 @@ fn main_menu_setup(mut commands: Commands, global_assets: Res<GlobalAssets>) {
                             ));
                         });
 
-                    // parent
-                    //     .spawn((
-                    //         ButtonBundle {
-                    //             style: get_menu_button_style(),
-                    //             background_color: get_normal_menu_button_color().into(),
-                    //             ..default()
-                    //         },
-                    //         MenuButton,
-                    //         MenuButtonAction::Settings,
-                    //     ))
-                    //     .with_children(|parent| {
-                    //         parent.spawn(TextBundle::from_section(
-                    //             "Settings",
-                    //             get_menu_button_text_style(&font),
-                    //         ));
-                    //     });
-
                     parent
                         .spawn((
                             ButtonBundle {
@@ -182,7 +163,6 @@ fn menu_action(
     mut app_exit_events: EventWriter<AppExit>,
     mut menu_state: ResMut<NextState<MenuState>>,
     mut game_state: ResMut<NextState<GlobalState>>,
-    mut game_phase: ResMut<NextState<GamePhase>>,
     audio_assets: Res<AudioAssets>,
     audio: Res<Audio>,
 ) {
@@ -195,7 +175,6 @@ fn menu_action(
                     game_state.set(GlobalState::Game);
                     menu_state.set(MenuState::Disabled);
                 }
-                MenuButtonAction::Settings => menu_state.set(MenuState::Settings),
             }
         }
     }
