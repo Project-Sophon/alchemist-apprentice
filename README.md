@@ -1,7 +1,4 @@
-
-<p align="center">
-  <img width="100"src="https://github.com/Project-Sophon/alchemist-apprentice/blob/main/docs/splash.png?raw=true" alt="The Aclhemist's Apprentice"/>
-</p>
+<h1 align="center">Alchemist's Apprentice</h1>
 
 <p align="center">
   <img height="350" src="https://github.com/Project-Sophon/alchemist-apprentice/blob/main/docs/aa_gh.png?raw=true" alt="The Aclhemist's Apprentice Screenshot"/>
