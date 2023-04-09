@@ -1,7 +1,10 @@
+use std::default;
+
 use bevy::prelude::*;
+use serde::__private::de;
 
 use crate::{
-    assets::resources_standard::{GlobalAssets, UiAssets},
+    assets::resources_standard::{GlobalAssets, ToxAssets, UiAssets},
     style::color::PALETTE_DARK_BLUE,
     world::global_state::GlobalState,
 };
@@ -49,11 +52,17 @@ fn initial_status_panel_values(
     query: Query<Entity, (With<StatusPanel>, With<NotInitialized>)>,
     global_assets: Res<GlobalAssets>,
     bjorn_status: Res<BjornStatus>,
+    tox_assets: Res<ToxAssets>,
 ) {
     query.for_each(|e| {
         commands.entity(e).remove::<NotInitialized>();
         commands.entity(e).with_children(|parent| {
-            render_side_effects_in_panel(parent, bjorn_status.clone(), &global_assets.font);
+            render_side_effects_in_panel(
+                parent,
+                bjorn_status.clone(),
+                &global_assets.font,
+                &tox_assets,
+            );
         });
     })
 }
@@ -63,6 +72,7 @@ fn update_status_panel(
     query: Query<Entity, With<StatusPanel>>,
     global_assets: Res<GlobalAssets>,
     bjorn_status: Res<BjornStatus>,
+    tox_assets: Res<ToxAssets>,
 ) {
     if !bjorn_status.is_changed() {
         return;
@@ -70,7 +80,12 @@ fn update_status_panel(
     query.for_each(|e| {
         commands.entity(e).despawn_descendants();
         commands.entity(e).with_children(|parent| {
-            render_side_effects_in_panel(parent, bjorn_status.clone(), &global_assets.font);
+            render_side_effects_in_panel(
+                parent,
+                bjorn_status.clone(),
+                &global_assets.font,
+                &tox_assets,
+            );
         });
     });
 }
@@ -79,6 +94,7 @@ fn render_side_effects_in_panel(
     parent: &mut ChildBuilder,
     bjorn_status: BjornStatus,
     font: &Handle<Font>,
+    tox_assets: &Res<ToxAssets>,
 ) {
     let text_sections: Vec<TextSection> = bjorn_status
         .side_effects
@@ -106,27 +122,43 @@ fn render_side_effects_in_panel(
         .flatten()
         .collect();
 
-    parent.spawn(TextBundle {
-        style: Style {
-            margin: UiRect {
-                bottom: Val::Px(8.),
+    parent
+        .spawn(NodeBundle {
+            style: Style {
+                flex_direction: FlexDirection::Row,
+                margin: UiRect {
+                    bottom: Val::Px(8.),
+                    ..default()
+                },
                 ..default()
             },
             ..default()
-        },
-        text: Text {
-            sections: vec![TextSection::new(
-                format!("Toxicity: {}\n", bjorn_status.toxicity),
-                TextStyle {
-                    font: font.clone(),
-                    font_size: 18.,
-                    color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+        })
+        .with_children(|parent| {
+            parent.spawn(TextBundle {
+                text: Text {
+                    sections: vec![TextSection::new(
+                        "Toxicity:",
+                        TextStyle {
+                            font: font.clone(),
+                            font_size: 18.,
+                            color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
+                        },
+                    )],
+                    ..default()
                 },
-            )],
-            ..default()
-        },
-        ..default()
-    });
+                style: Style {
+                    margin: UiRect::right(Val::Px(4.)),
+                    ..default()
+                },
+                ..default()
+            });
+
+            parent.spawn(ImageBundle {
+                image: get_tox_asset(bjorn_status.toxicity, tox_assets).into(),
+                ..default()
+            });
+        });
 
     parent.spawn(TextBundle {
         style: Style {
@@ -164,4 +196,15 @@ fn render_side_effects_in_panel(
         },
         ..default()
     });
+}
+
+fn get_tox_asset(tox: i32, tox_assets: &Res<ToxAssets>) -> Handle<Image> {
+    match tox {
+        0 => tox_assets.tox_0.clone(),
+        1 => tox_assets.tox_1.clone(),
+        2 => tox_assets.tox_2.clone(),
+        3 => tox_assets.tox_3.clone(),
+        4 => tox_assets.tox_4.clone(),
+        default => tox_assets.tox_5.clone(),
+    }
 }

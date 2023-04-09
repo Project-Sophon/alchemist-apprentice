@@ -58,3 +58,19 @@ pub struct WorkshopAssets {
     #[asset(path = "textures/workshop/workshop_bkg.png")]
     pub workshop_bkg: Handle<Image>,
 }
+
+#[derive(AssetCollection, Resource)]
+pub struct ToxAssets {
+    #[asset(path = "textures/tox/tox_0.png")]
+    pub tox_0: Handle<Image>,
+    #[asset(path = "textures/tox/tox_1.png")]
+    pub tox_1: Handle<Image>,
+    #[asset(path = "textures/tox/tox_2.png")]
+    pub tox_2: Handle<Image>,
+    #[asset(path = "textures/tox/tox_3.png")]
+    pub tox_3: Handle<Image>,
+    #[asset(path = "textures/tox/tox_4.png")]
+    pub tox_4: Handle<Image>,
+    #[asset(path = "textures/tox/tox_5.png")]
+    pub tox_5: Handle<Image>,
+}
