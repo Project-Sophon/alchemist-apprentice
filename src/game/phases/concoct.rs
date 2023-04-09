@@ -74,7 +74,7 @@ fn on_concoct(
     } else if num_side_effects == 0 {
         global_state.set(GlobalState::Win);
     } else {
-        game_phase.set(GamePhase::PotionAssembly);
+        game_phase.set(GamePhase::AilmentStatement);
     }
 }
 

@@ -206,6 +206,6 @@ fn get_tox_asset(tox: i32, tox_assets: &Res<ToxAssets>) -> Handle<Image> {
         2 => tox_assets.tox_2.clone(),
         3 => tox_assets.tox_3.clone(),
         4 => tox_assets.tox_4.clone(),
-        default => tox_assets.tox_5.clone(),
+        _ => tox_assets.tox_5.clone(),
     }
 }

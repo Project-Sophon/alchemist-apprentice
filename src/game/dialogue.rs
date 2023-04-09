@@ -51,7 +51,7 @@ pub fn create_dialogue_box(
                     text,
                     TextStyle {
                         font: font.clone(),
-                        font_size: 18.,
+                        font_size: 20.,
                         color: Color::hex(PALETTE_DARK_BLUE).unwrap(),
                     },
                 )

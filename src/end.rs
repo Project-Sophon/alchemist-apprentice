@@ -51,7 +51,7 @@ fn reset_state(
         match *interaction {
             Interaction::Clicked => {
                 game_state.set(GlobalState::Game);
-                game_phase.set(GamePhase::PotionAssembly);
+                game_phase.set(GamePhase::AilmentStatement);
             }
             Interaction::Hovered => {}
             Interaction::None => {}
