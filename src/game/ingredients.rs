@@ -11,6 +11,7 @@ impl Plugin for IngredientsPlugin {
         app.init_resource::<SelectedIngredient>()
             .register_type::<IngredientsPanel>()
             .register_type::<IngredientButton>()
+            .add_system(reset_ingredients.in_schedule(OnEnter(GlobalState::Game)))
             .add_systems(
                 (ingredient_button_interactions, select_ingredient)
                     .in_set(OnUpdate(GlobalState::Game)),
@@ -182,4 +183,8 @@ pub fn update_ingredients_used(
             }
         });
     });
+}
+
+pub fn reset_ingredients(mut ingredients: ResMut<Assets<Ingredient>>) {
+    ingredients.iter_mut().for_each(|i| i.1.used = false);
 }
