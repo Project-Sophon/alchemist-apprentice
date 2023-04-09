@@ -1,36 +1,90 @@
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <style>
-      body {
-        margin: 0;
-        background: linear-gradient(-45deg, #a6a6a6, #5ac05a, #262626, #a6a6a6);
-        background-size: 400% 400%;
-        animation: gradient 15s ease infinite;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      canvas {
-        background-color: white;
+
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(-45deg, #a6a6a6, #5ac05a, #666565, #a6a6a6);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    canvas {
+      background-color: white;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
       }
 
-      @keyframes gradient {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
+      50% {
+        background-position: 100% 50%;
       }
-    </style>
-  </head>
-  <script type="module">
-    import init from './out/alchemist_apprentice.js'
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* example from https://getcssscan.com/css-buttons-examples */
+    .button-89 {
+      --b: 3px;
+      /* border thickness */
+      --s: .45em;
+      /* size of the corner */
+      --color: #373B44;
+
+      padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+      color: var(--color);
+      --_p: var(--s);
+      background:
+        conic-gradient(from 90deg at var(--b) var(--b), #0000 90deg, var(--color) 0) var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+      transition: .3s linear, color 0s, background-color 0s;
+      outline: var(--b) solid #0000;
+      outline-offset: .6em;
+      font-size: 16px;
+
+      border: 0;
+
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+
+    .button-89:hover,
+    .button-89:focus-visible {
+      --_p: 0px;
+      outline-color: var(--color);
+      outline-offset: .05em;
+    }
+
+    .button-89:active {
+      background: var(--color);
+      color: #fff;
+    }
+  </style>
+</head>
+
+
+
+<script type="module">
+  import init from "./out/alchemist_apprentice.js"
+  async function myFunction() {
+    const ele = document.getElementById("play")
+    ele.style.display = "none"
     init()
-  </script>
+  }
+  window.myFunction = myFunction
+</script>
+
+<body>
+  <button id="play" class="button-89" onclick="myFunction()">Play</button>
+</body>
+
 </html>
