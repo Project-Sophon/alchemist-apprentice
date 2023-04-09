@@ -89,7 +89,7 @@ fn render_side_effects_in_panel(
                     format!("- {}\n", s.name.to_string()),
                     TextStyle {
                         font: font.clone(),
-                        font_size: 18.,
+                        font_size: 16.,
                         color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
                     },
                 ),
@@ -97,7 +97,7 @@ fn render_side_effects_in_panel(
                     format!("{}\n", s.description.to_string()),
                     TextStyle {
                         font: font.clone(),
-                        font_size: 14.,
+                        font_size: 12.,
                         color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
                     },
                 ),
@@ -109,7 +109,7 @@ fn render_side_effects_in_panel(
     parent.spawn(TextBundle {
         style: Style {
             margin: UiRect {
-                bottom: Val::Px(2.),
+                bottom: Val::Px(1.),
                 ..default()
             },
             ..default()
@@ -120,7 +120,7 @@ fn render_side_effects_in_panel(
                     format!("Toxicity: {}\n", bjorn_status.toxicity),
                     TextStyle {
                         font: font.clone(),
-                        font_size: 20.,
+                        font_size: 19.,
                         color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
                     },
                 ),
@@ -128,7 +128,7 @@ fn render_side_effects_in_panel(
                     format!("Ailments:\n"),
                     TextStyle {
                         font: font.clone(),
-                        font_size: 20.,
+                        font_size: 19.,
                         color: Color::hex(PALETTE_DARK_BLUE).unwrap().into(),
                     },
                 ),
@@ -141,7 +141,7 @@ fn render_side_effects_in_panel(
     parent.spawn(TextBundle {
         style: Style {
             margin: UiRect {
-                bottom: Val::Px(5.),
+                bottom: Val::Px(3.),
                 ..default()
             },
             size: Size {
