@@ -1,7 +1,7 @@
 use crate::{
     assets::resources_standard::GlobalAssets,
     game::game_phase::GamePhase,
-    style::color::{PALETTE_CREAM, PALETTE_GOLD},
+    style::color::PALETTE_CREAM,
     ui::buttons::{
         get_menu_button_style, get_menu_button_text_style, get_normal_menu_button_color, MenuButton,
     },

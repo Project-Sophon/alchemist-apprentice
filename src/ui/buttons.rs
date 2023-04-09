@@ -1,10 +1,7 @@
 use bevy::prelude::*;
 
 use crate::{
-    style::color::{
-        PALETTE_BLUE, PALETTE_CREAM, PALETTE_DARK_BLUE, PALETTE_DARK_PURPLE, PALETTE_GOLD,
-        PALETTE_PURPLE,
-    },
+    style::color::{PALETTE_BLUE, PALETTE_DARK_BLUE, PALETTE_DARK_CREAM, PALETTE_DARK_PURPLE},
     world::global_state::GlobalState,
 };
 
@@ -36,11 +33,11 @@ pub fn get_normal_menu_button_color() -> Color {
 }
 
 pub fn get_hovered_menu_button_color() -> Color {
-    return Color::hex(PALETTE_DARK_PURPLE).unwrap();
+    return Color::hex(PALETTE_BLUE).unwrap();
 }
 
 pub fn get_pressed_menu_button_color() -> Color {
-    return Color::hex(PALETTE_BLUE).unwrap();
+    return Color::hex(PALETTE_DARK_PURPLE).unwrap();
 }
 
 pub fn get_hovered_pressed_menu_button_color() -> Color {
@@ -83,6 +80,6 @@ pub fn get_menu_button_text_style(font: &Handle<Font>) -> TextStyle {
     TextStyle {
         font: font.clone(),
         font_size: 40.0,
-        color: Color::hex(PALETTE_GOLD).unwrap(),
+        color: Color::hex(PALETTE_DARK_CREAM).unwrap(),
     }
 }

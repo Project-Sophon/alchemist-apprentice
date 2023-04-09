@@ -69,7 +69,7 @@ fn on_concoct(
         give_bjorn_concoction(concoction, &mut bjorn_status, &side_effects);
 
     // Advance game appropriately based on Bjorn's toxicity and side effect count
-    if toxicity == MAX_TOXICITY {
+    if toxicity >= MAX_TOXICITY {
         global_state.set(GlobalState::Lose);
     } else if num_side_effects == 0 {
         global_state.set(GlobalState::Win);
