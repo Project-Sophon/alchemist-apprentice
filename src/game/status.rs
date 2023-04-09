@@ -31,7 +31,7 @@ pub fn build_status_panel(commands: &mut ChildBuilder, ui_assets: &Res<UiAssets>
                 flex_basis: Val::Percent(100.),
                 flex_direction: FlexDirection::Column,
                 align_self: AlignSelf::FlexEnd,
-                padding: UiRect::new(Val::Px(32.), Val::Px(0.), Val::Px(10.), Val::Undefined),
+                padding: UiRect::new(Val::Px(27.), Val::Px(0.), Val::Px(10.), Val::Undefined),
                 margin: UiRect::new(Val::Undefined, Val::Px(10.), Val::Px(10.), Val::Undefined),
                 ..default()
             },
