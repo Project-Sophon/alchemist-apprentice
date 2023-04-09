@@ -106,7 +106,7 @@
       texture: "textures/ingredients/pearl.png",
       cures: [Parasite, Gastrointestinal,Skin ],
       causes: [Mental, Pain],
-      toxicity: 0,
+      toxicity: 3,
       starter: false,
       order: 10
     ),
@@ -116,7 +116,7 @@
       texture: "textures/ingredients/tear.png",
       cures: [Occult, Mental, Pain],
       causes: [Gastrointestinal, Skin],
-      toxicity: 1,
+      toxicity: 3,
       starter: false,
       order: 11
     )
