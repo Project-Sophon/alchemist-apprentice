@@ -140,6 +140,7 @@ pub fn build_ingredient_information(
                 style: Style {
                     flex_direction: FlexDirection::Row,
                     justify_content: JustifyContent::SpaceEvenly,
+                    flex_wrap: FlexWrap::Wrap,
                     ..default()
                 },
                 ..default()
@@ -152,7 +153,7 @@ pub fn build_ingredient_information(
                     NodeBundle {
                         style: Style {
                             flex_direction: FlexDirection::Column,
-                            size: Size::new(Val::Px(140.), Val::Px(200.0)),
+                            size: Size::new(Val::Px(140.), Val::Px(150.0)),
                             ..default()
                         },
                         ..default()
@@ -186,7 +187,7 @@ pub fn build_ingredient_information(
                     NodeBundle {
                         style: Style {
                             flex_direction: FlexDirection::Column,
-                            size: Size::new(Val::Px(140.), Val::Px(200.0)),
+                            size: Size::new(Val::Px(140.), Val::Px(150.0)),
                             ..default()
                         },
                         ..default()
@@ -212,6 +213,13 @@ pub fn build_ingredient_information(
                     parent.spawn((TextBundle::from_sections(text_sections),));
                 });
         });
+    commands.spawn(TextBundle {
+        text: Text {
+            sections: vec![TextSection::new(format!("Toxicity: {}\n", get_tox_or_unknown(ingredient)), get_info_text_style(font, 18.))],
+            ..default()
+        },
+        ..default()
+    });
 }
 
 pub fn build_default_information_text(commands: &mut ChildBuilder, font: &Handle<Font>) {
@@ -233,6 +241,14 @@ fn get_text_or_unknown(side_effect: &SideEffectClass, used: bool, starter: bool)
         side_effect.to_string()
     } else {
         "??????".into()
+    }
+}
+
+fn get_tox_or_unknown(ingredient: &Ingredient) -> String {
+    if ingredient.used || ingredient.starter {
+        ingredient.toxicity.to_string()
+    } else {
+        "?".into()
     }
 }
 
