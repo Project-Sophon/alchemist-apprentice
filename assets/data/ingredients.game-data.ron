@@ -16,7 +16,7 @@
       cures: [Occult],
       causes: [Mental],
       toxicity: 0,
-      starter: true,
+      starter: false,
       order: 1
     ),
   "blackened_skull": Ingredient (
@@ -26,7 +26,7 @@
       cures: [Skin],
       causes: [Pain],
       toxicity: 0,
-      starter: true,
+      starter: false,
       order: 2
     ),
     "claw": Ingredient (
@@ -36,7 +36,7 @@
       cures: [Mental],
       causes: [Parasite],
       toxicity: 0,
-      starter: true,
+      starter: false,
       order: 3
     ),
     "nightshade": Ingredient (
@@ -46,7 +46,7 @@
       cures: [Parasite],
       causes: [Occult],
       toxicity: 0,
-      starter: true,
+      starter: false,
       order: 4
     ),
     "obsidian": Ingredient (
@@ -56,7 +56,7 @@
       cures: [Pain],
       causes: [Gastrointestinal],
       toxicity: 0,
-      starter: true,
+      starter: false,
       order: 5
     ),
   "bowl_of_dust": Ingredient (

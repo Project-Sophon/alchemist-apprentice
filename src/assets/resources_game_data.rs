@@ -46,8 +46,8 @@ pub struct SideEffectAssets {
     pub unseen_presence: Handle<SideEffect>,
     #[asset(key = "explosive_burp")]
     pub explosive_burp: Handle<SideEffect>,
-    #[asset(key = "soothing_balm")]
-    pub soothing_balm: Handle<SideEffect>,
+    #[asset(key = "discoloration")]
+    pub discoloration: Handle<SideEffect>,
     #[asset(key = "euphoric_bliss")]
     pub euphoric_bliss: Handle<SideEffect>,
     #[asset(key = "bitter_aftershock")]

@@ -84,4 +84,6 @@ pub struct AudioAssets {
     pub click: Handle<AudioSource>,
     #[asset(path = "sounds/concoct.wav")]
     pub concoct: Handle<AudioSource>,
+    #[asset(path = "sounds/blocked.wav")]
+    pub blocked: Handle<AudioSource>,
 }

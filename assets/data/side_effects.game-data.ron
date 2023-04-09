@@ -19,9 +19,9 @@
       description: "Uncontrollable and loud burping, which can be embarrassing and disruptive.",
       class: [Gastrointestinal]
     ),
-  "soothing_balm": SideEffect (
-      name: "Soothing Balm",
-      description: "Any wounds or irritations are soothed. However, a temporary blue discoloration on the skin occurs.",
+  "discoloration": SideEffect (
+      name: "Discoloration",
+      description: "Strange pigmentation with various odd colors.",
       class: [Skin]
     ),
   "euphoric_bliss": SideEffect (

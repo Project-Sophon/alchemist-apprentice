@@ -257,6 +257,7 @@ fn concoct_interaction(
                         match *slot {
                             Some(_) => {}
                             None => {
+                                audio.play(audio_assets.blocked.clone());
                                 return;
                             }
                         }
