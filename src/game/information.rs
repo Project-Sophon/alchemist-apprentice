@@ -229,7 +229,7 @@ pub fn build_default_information_text(commands: &mut ChildBuilder, font: &Handle
     commands.spawn((
         TextBundle {
             text: Text::from_section(
-                "Take heed, young apprentice, for this workshop holds ingredients that you have not yet grasped fully. Alchemy is a delicate art that demands precise formulas, as heedless mixing may yield unintended consequences!",
+                "Take heed, young apprentice, for this workshop holds ingredients that you have not yet grasped fully. Alchemy is a delicate art that demands precise formulas, as haphazard mixing may yield unintended consequences!\n\nRemember the rule of 3!",
                 get_info_text_style(font, 20.),
             ),
             style: INFO_TEXT_BUNDLE_STYLE,

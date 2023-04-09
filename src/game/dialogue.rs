@@ -4,8 +4,8 @@ use crate::{assets::resources_standard::UiAssets, style::color::PALETTE_DARK_BLU
 
 // ------ ENUMS, CONSTANTS ------
 
-const DIALOGUE_BOX_POS_X: f32 = 80.0;
-const DIALOGUE_BOX_POS_Y: f32 = 80.0;
+const DIALOGUE_BOX_POS_X: f32 = 110.0;
+const DIALOGUE_BOX_POS_Y: f32 = 75.0;
 const DIALOGUE_BOX_WIDTH: f32 = 371.0;
 const DIALOGUE_BOX_HEIGHT: f32 = 195.0;
 const DIALOGUE_BOX_PADDING: f32 = 20.0;
@@ -36,6 +36,7 @@ pub fn create_dialogue_box(
                         bottom: Val::Px(0.),
                     },
                     size: Size::new(Val::Px(DIALOGUE_BOX_WIDTH), Val::Px(DIALOGUE_BOX_HEIGHT)),
+                    padding: UiRect::all(Val::Px(DIALOGUE_BOX_PADDING)),
                     ..default()
                 },
                 image: UiImage::new(ui_assets.dialogue_bkg.clone()),
@@ -57,7 +58,6 @@ pub fn create_dialogue_box(
                 .with_text_alignment(TextAlignment::Left)
                 .with_style(Style {
                     size: Size::new(Val::Px(DIALOGUE_BOX_WIDTH), Val::Px(DIALOGUE_BOX_HEIGHT)),
-                    padding: UiRect::all(Val::Px(DIALOGUE_BOX_PADDING)),
                     ..default()
                 }),
             );
