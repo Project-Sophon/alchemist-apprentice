@@ -37,7 +37,7 @@ fn main() {
                     primary_window: Some(Window {
                         title: "The Alchemist's Apprentice".into(),
                         resolution: (WINDOW_WIDTH, WINDOW_HEIGHT).into(),
-                        fit_canvas_to_parent: true,
+                        fit_canvas_to_parent: false,
                         prevent_default_event_handling: false,
                         resizable: false,
                         ..default()
