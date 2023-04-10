@@ -20,7 +20,7 @@ You can download the latest native clients from the releases page [here.](https:
 Hosted on GitHub pages: [Play Here](https://project-sophon.github.io/alchemist-apprentice-wasm/)
 
 #### itch.io
-Coming Soon!
+https://tsarbomb.itch.io/alchemists-apprentice
 
 ## Development
 
