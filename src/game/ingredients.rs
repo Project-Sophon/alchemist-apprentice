@@ -20,6 +20,10 @@ impl Plugin for IngredientsPlugin {
             .add_system(reset_ingredients.in_schedule(OnEnter(GlobalState::Game)))
             .add_systems(
                 (ingredient_button_interactions, select_ingredient)
+                    .in_set(OnUpdate(GamePhase::AilmentStatement)),
+            )
+            .add_systems(
+                (ingredient_button_interactions, select_ingredient)
                     .in_set(OnUpdate(GamePhase::PotionAssembly)),
             );
     }
